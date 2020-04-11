@@ -1,11 +1,13 @@
 package be.ducobu.inTime.dto
 
+import java.time.LocalDateTime
+
 class TimeEntryDto {
 
     private Long id
     private Long toggleId
-    private Date startDate
-    private Date endDate
+    private LocalDateTime startDate
+    private LocalDateTime endDate
     private Integer duration
     private String description
     private boolean running
@@ -27,19 +29,19 @@ class TimeEntryDto {
         this.toggleId = toggleId
     }
 
-    Date getStartDate() {
+    LocalDateTime getStartDate() {
         return startDate
     }
 
-    void setStartDate(Date startDate) {
+    void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate
     }
 
-    Date getEndDate() {
+    LocalDateTime getEndDate() {
         return endDate
     }
 
-    void setEndDate(Date endDate) {
+    void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate
     }
 

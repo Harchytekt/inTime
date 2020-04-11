@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS workspaces (
 	id INT NOT NULL AUTO_INCREMENT,
 	toggl_id INT,
 	name VARCHAR(50) NOT NULL,
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS clients (
@@ -16,7 +17,8 @@ CREATE TABLE IF NOT EXISTS clients (
 	name VARCHAR(50) NOT NULL,
 	fk_workspace INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (fk_workspace) REFERENCES workspaces(id)
+	FOREIGN KEY (fk_workspace) REFERENCES workspaces(id),
+	UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS projects (
@@ -28,7 +30,8 @@ CREATE TABLE IF NOT EXISTS projects (
 	fk_client INT NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (fk_workspace) REFERENCES workspaces(id),
-	FOREIGN KEY (fk_client) REFERENCES clients(id)
+	FOREIGN KEY (fk_client) REFERENCES clients(id),
+	UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS time_entries (

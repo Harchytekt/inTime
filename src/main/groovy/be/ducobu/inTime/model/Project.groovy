@@ -3,7 +3,10 @@ package be.ducobu.inTime.model
 import javax.persistence.*
 
 @Entity
-@Table(name = "projects")
+@Table(
+        name = "projects",
+        uniqueConstraints = @UniqueConstraint(columnNames = "name")
+)
 class Project {
 
     @Id

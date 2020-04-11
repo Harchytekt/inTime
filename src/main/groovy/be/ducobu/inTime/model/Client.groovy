@@ -1,10 +1,12 @@
 package be.ducobu.inTime.model
 
-
 import javax.persistence.*
 
 @Entity
-@Table(name = "clients")
+@Table(
+        name = "clients",
+        uniqueConstraints = @UniqueConstraint(columnNames = "name")
+)
 class Client {
 
     @Id
@@ -24,9 +26,7 @@ class Client {
     @OneToMany(mappedBy = "client")
     private Set<Project> projects
 
-    Client() {
-
-    }
+    Client() {}
 
     Client(Long id, String name) {
         this.id = id

@@ -30,9 +30,7 @@ class TimeEntry {
     @JoinColumn(name = "fk_project", nullable = false)
     private Project project
 
-    TimeEntry() {
-
-    }
+    TimeEntry() {}
 
     Long getId() {
         return id

@@ -11,7 +11,7 @@ class TimeEntryDto {
     private Integer duration
     private String description
     private boolean running
-    private Long projectId
+    private String projectName
 
     Long getId() {
         return id
@@ -69,11 +69,11 @@ class TimeEntryDto {
         this.running = running
     }
 
-    Long getProjectId() {
-        return projectId
+    String getProjectName() {
+        return projectName
     }
 
-    void setProjectId(Long projectId) {
-        this.projectId = projectId
+    void setProjectName(String projectName) {
+        this.projectName = projectName
     }
 }

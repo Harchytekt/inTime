@@ -1,4 +1,4 @@
-package be.ducobu.inTime.dto
+package be.ducobu.inTime.dto.timeEntry
 
 import java.time.LocalDateTime
 

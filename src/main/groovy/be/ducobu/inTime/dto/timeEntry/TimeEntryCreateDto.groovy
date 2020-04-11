@@ -1,4 +1,4 @@
-package be.ducobu.inTime.dto
+package be.ducobu.inTime.dto.timeEntry
 
 class TimeEntryCreateDto {
 

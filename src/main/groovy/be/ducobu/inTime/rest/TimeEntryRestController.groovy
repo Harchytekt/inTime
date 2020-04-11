@@ -1,8 +1,8 @@
 package be.ducobu.inTime.rest
 
-import be.ducobu.inTime.dto.TimeEntryCreateDto
-import be.ducobu.inTime.dto.TimeEntryDto
-import be.ducobu.inTime.dto.TimeEntrySaveDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntryCreateDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntrySaveDto
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.TimeEntry
 import be.ducobu.inTime.service.ProjectService

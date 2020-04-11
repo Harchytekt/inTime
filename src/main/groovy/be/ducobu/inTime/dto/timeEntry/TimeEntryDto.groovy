@@ -1,11 +1,11 @@
-package be.ducobu.inTime.dto
+package be.ducobu.inTime.dto.timeEntry
 
 import java.time.LocalDateTime
 
 class TimeEntryDto {
 
     private Long id
-    private Long toggleId
+    private Long togglId
     private LocalDateTime startDate
     private LocalDateTime endDate
     private Integer duration
@@ -21,12 +21,12 @@ class TimeEntryDto {
         this.id = id
     }
 
-    Long getToggleId() {
-        return toggleId
+    Long getTogglId() {
+        return togglId
     }
 
-    void setToggleId(Long toggleId) {
-        this.toggleId = toggleId
+    void setTogglId(Long togglId) {
+        this.togglId = togglId
     }
 
     LocalDateTime getStartDate() {

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ProjectRepository extends JpaRepository<Project, Long> {
 
+    Optional<Project> findByName(String name)
+
 }

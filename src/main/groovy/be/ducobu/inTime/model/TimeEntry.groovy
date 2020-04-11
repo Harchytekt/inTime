@@ -1,6 +1,7 @@
 package be.ducobu.inTime.model
 
 import javax.persistence.*
+import java.time.Duration
 import java.time.LocalDateTime
 
 @Entity
@@ -66,6 +67,8 @@ class TimeEntry {
     }
 
     Long getDuration() {
+        if (duration == null)
+            return Duration.between(startDate, LocalDateTime.now()).getSeconds()
         return duration
     }
 
@@ -104,5 +107,11 @@ class TimeEntry {
                 ", startDate=" + startDate +
                 ", description='" + description + '\'' +
                 '}'
+    }
+
+    void stop() {
+        this.endDate = LocalDateTime.now()
+        this.duration = Duration.between(startDate, endDate).getSeconds()
+        this.running = false
     }
 }

@@ -14,9 +14,17 @@ class TimeEntryService {
         this.timeEntryRepository = timeEntryRepository
     }
 
+    Long save(TimeEntry timeEntry) {
+        return timeEntryRepository.save(timeEntry).getId()
+    }
+
     TimeEntry findById(Long id) {
         return timeEntryRepository.findById(id)
                 .orElseThrow({ -> new CustomEntityNotFoundException("TimeEntry", id as String) })
+    }
+
+    TimeEntry findRunningTimeEntry() {
+        return timeEntryRepository.findByRunningTrue()
     }
 
 }

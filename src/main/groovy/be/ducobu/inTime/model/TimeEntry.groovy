@@ -7,6 +7,7 @@ import javax.persistence.*
 class TimeEntry {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id
 

@@ -7,6 +7,7 @@ import javax.persistence.*
 class Project {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id
 

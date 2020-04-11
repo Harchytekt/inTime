@@ -8,6 +8,7 @@ import javax.persistence.*
 class Client {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id
 

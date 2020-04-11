@@ -101,6 +101,6 @@ class TimeEntry {
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", description='" + description + '\'' +
-                '}';
+                '}'
     }
 }

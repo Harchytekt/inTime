@@ -21,7 +21,7 @@ class Client {
     private Workspace workspace
 
     @OneToMany(mappedBy = "client")
-    private Set<Project> projects;
+    private Set<Project> projects
 
     Client() {
 

@@ -16,9 +16,9 @@ class Workspace {
     private String name
 
     @OneToMany(mappedBy = "workspace")
-    private Set<Client> clients;
+    private Set<Client> clients
     @OneToMany(mappedBy = "workspace")
-    private Set<Project> projects;
+    private Set<Project> projects
 
     Workspace() {
 

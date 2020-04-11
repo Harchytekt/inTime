@@ -16,7 +16,7 @@ class TimeEntryService {
 
     TimeEntry findById(Long id) {
         return timeEntryRepository.findById(id)
-                .orElseThrow({ -> new CustomEntityNotFoundException("TimeEntry", id) })
+                .orElseThrow({ -> new CustomEntityNotFoundException("TimeEntry", id as String) })
     }
 
 }

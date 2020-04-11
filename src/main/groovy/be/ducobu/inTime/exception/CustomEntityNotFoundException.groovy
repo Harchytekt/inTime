@@ -5,8 +5,8 @@ import java.text.MessageFormat
 
 class CustomEntityNotFoundException extends EntityNotFoundException {
 
-    CustomEntityNotFoundException(String entityName, Long entityId) {
-        super(MessageFormat.format("No ''{0}'' with id {1} found!", entityName, entityId))
+    CustomEntityNotFoundException(String entityName, String entityAttribute) {
+        super(MessageFormat.format("No ''{0}'' with attribute ''{1}'' found!", entityName, entityAttribute))
     }
 
 }

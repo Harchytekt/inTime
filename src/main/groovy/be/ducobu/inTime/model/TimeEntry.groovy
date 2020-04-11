@@ -1,6 +1,7 @@
 package be.ducobu.inTime.model
 
 import javax.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "time_entries")
@@ -14,15 +15,15 @@ class TimeEntry {
     @Column(name = "toggl_id")
     private Long togglId
     @Column(name = "start_date")
-    private Date startDate
+    private LocalDateTime startDate = LocalDateTime.now()
     @Column(name = "end_date")
-    private Date endDate
+    private LocalDateTime endDate
     @Column
-    private Integer duration = 0
+    private Long duration
     @Column
     private String description
     @Column
-    private boolean running
+    private boolean running = true
 
     @ManyToOne
     @JoinColumn(name = "fk_project", nullable = false)
@@ -48,27 +49,27 @@ class TimeEntry {
         this.togglId = togglId
     }
 
-    Date getStartDate() {
+    LocalDateTime getStartDate() {
         return startDate
     }
 
-    void setStartDate(Date startDate) {
+    void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate
     }
 
-    Date getEndDate() {
+    LocalDateTime getEndDate() {
         return endDate
     }
 
-    void setEndDate(Date endDate) {
+    void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate
     }
 
-    Integer getDuration() {
+    Long getDuration() {
         return duration
     }
 
-    void setDuration(Integer duration) {
+    void setDuration(Long duration) {
         this.duration = duration
     }
 

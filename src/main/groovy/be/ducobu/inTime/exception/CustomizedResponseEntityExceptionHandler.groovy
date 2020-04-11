@@ -69,4 +69,20 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         return new ResponseEntity<>(exceptionResponse, status)
     }
 
+    @ExceptionHandler(DuplicateEntryException.class)
+    public final ResponseEntity<Object> handleDuplicateEntryException(DuplicateEntryException ex, WebRequest request) {
+        logger.error(ex.getMessage())
+        status = HttpStatus.CONFLICT
+
+        message = ex.getMessage()
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+                status.value(),
+                message,
+                request.getDescription(false)
+        )
+        return new ResponseEntity<>(exceptionResponse, status)
+    }
+
+
 }

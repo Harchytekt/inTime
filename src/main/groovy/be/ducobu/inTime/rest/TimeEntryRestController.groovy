@@ -3,6 +3,8 @@ package be.ducobu.inTime.rest
 import be.ducobu.inTime.dto.timeEntry.TimeEntryCreateDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntrySaveDto
+import be.ducobu.inTime.exception.AlreadyRunningTimeEntryException
+import be.ducobu.inTime.exception.RunningTimeEntryNotFoundException
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.TimeEntry
 import be.ducobu.inTime.service.ProjectService
@@ -66,9 +68,19 @@ class TimeEntryRestController {
     Long stopTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findRunningTimeEntry()
         if (timeEntry == null)
-            return -1
+            throw new RunningTimeEntryNotFoundException()
 
         timeEntry.stop()
+        return timeEntryService.save(timeEntry)
+    }
+
+    @PutMapping("/restart/")
+    Long restartTimeEntry() {
+        TimeEntry timeEntry = timeEntryService.findLastTimeEntry()
+        if (timeEntry.getRunning())
+            throw new AlreadyRunningTimeEntryException()
+
+        timeEntry.restart()
         return timeEntryService.save(timeEntry)
     }
 }

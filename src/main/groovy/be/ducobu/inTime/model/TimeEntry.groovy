@@ -112,4 +112,10 @@ class TimeEntry {
         this.duration = Duration.between(startDate, endDate).getSeconds()
         this.running = false
     }
+
+    void restart() {
+        this.endDate = null
+        this.duration = null
+        this.running = true
+    }
 }

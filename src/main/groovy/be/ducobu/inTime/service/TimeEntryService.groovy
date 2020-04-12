@@ -27,4 +27,9 @@ class TimeEntryService {
         return timeEntryRepository.findByRunningTrue()
     }
 
+    TimeEntry findLastTimeEntry() {
+        List<TimeEntry> timeEntries = timeEntryRepository.findAllByOrderByIdDesc()
+        return timeEntries.get(0)
+    }
+
 }

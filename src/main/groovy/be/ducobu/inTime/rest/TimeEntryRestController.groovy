@@ -69,7 +69,6 @@ class TimeEntryRestController {
     @PutMapping("/{id}")
     Long update(@PathVariable Long id, @RequestBody TimeEntryUpdateDto timeEntryUpdateDto) {
         TimeEntry timeEntry = timeEntryService.findById(id)
-        logger.info timeEntryUpdateDto.getStartDate() as String
 
         if (timeEntryUpdateDto.getTogglId() != null) {
             timeEntry.setTogglId(timeEntryUpdateDto.getTogglId())

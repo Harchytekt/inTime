@@ -66,7 +66,7 @@ class TimeEntry {
 
     Long getDuration() {
         if (duration == null)
-            return Duration.between(startDate, LocalDateTime.now()).getSeconds()
+            return calculateDuration(false)
         return duration
     }
 
@@ -107,9 +107,16 @@ class TimeEntry {
                 '}'
     }
 
+    Long calculateDuration(boolean isStopped = true) {
+        return Duration.between(
+                startDate,
+                isStopped ? endDate : LocalDateTime.now()
+        ).getSeconds()
+    }
+
     void stop() {
         this.endDate = LocalDateTime.now()
-        this.duration = Duration.between(startDate, endDate).getSeconds()
+        this.duration = calculateDuration()
         this.running = false
     }
 

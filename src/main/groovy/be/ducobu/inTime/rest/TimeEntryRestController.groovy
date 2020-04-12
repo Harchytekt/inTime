@@ -3,6 +3,7 @@ package be.ducobu.inTime.rest
 import be.ducobu.inTime.dto.timeEntry.TimeEntryCreateDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntrySaveDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntryUpdateDto
 import be.ducobu.inTime.exception.RunningTimeEntryException
 import be.ducobu.inTime.exception.RunningTimeEntryNotFoundException
 import be.ducobu.inTime.model.Project
@@ -36,7 +37,8 @@ class TimeEntryRestController {
 
     @GetMapping("/{id}")
     TimeEntryDto getById(@PathVariable Long id) {
-        return modelMapper.map(timeEntryService.findById(id),
+        return modelMapper.map(
+                timeEntryService.findById(id),
                 TimeEntryDto.class
         )
     }
@@ -62,6 +64,34 @@ class TimeEntryRestController {
                 timeEntrySaveDto,
                 TimeEntry.class
         ))
+    }
+
+    @PutMapping("/{id}")
+    Long update(@PathVariable Long id, @RequestBody TimeEntryUpdateDto timeEntryUpdateDto) {
+        TimeEntry timeEntry = timeEntryService.findById(id)
+        logger.info timeEntryUpdateDto.getStartDate() as String
+
+        if (timeEntryUpdateDto.getTogglId() != null) {
+            timeEntry.setTogglId(timeEntryUpdateDto.getTogglId())
+        }
+        if (timeEntryUpdateDto.getStartDate() != null) {
+            timeEntry.setStartDate(timeEntryUpdateDto.getStartDate())
+        }
+        if (timeEntryUpdateDto.getEndDate() != null && !timeEntry.getRunning()) {
+            timeEntry.setEndDate(timeEntryUpdateDto.getEndDate())
+            timeEntry.setDuration(timeEntry.calculateDuration())
+        } else if (timeEntryUpdateDto.getEndDate() != null && timeEntry.getRunning()) {
+            throw new RunningTimeEntryException("The 'Time Entry' is still running!")
+        }
+        if (timeEntryUpdateDto.getDescription() != null) {
+            timeEntry.setDescription(timeEntryUpdateDto.getDescription())
+        }
+        if (timeEntryUpdateDto.getProjectName() != null) {
+            Project project = projectService.findByName(timeEntryUpdateDto.getProjectName())
+            timeEntry.setProject(project)
+        }
+
+        return timeEntryService.save(timeEntry)
     }
 
     @PutMapping("/")

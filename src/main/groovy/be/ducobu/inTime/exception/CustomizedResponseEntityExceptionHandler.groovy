@@ -99,8 +99,8 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         return new ResponseEntity<>(exceptionResponse, status)
     }
 
-    @ExceptionHandler(AlreadyRunningTimeEntryException.class)
-    final ResponseEntity<Object> handleAlreadyRunningTimeEntryException(AlreadyRunningTimeEntryException ex, WebRequest request) {
+    @ExceptionHandler(RunningTimeEntryException.class)
+    final ResponseEntity<Object> handleRunningTimeEntryException(RunningTimeEntryException ex, WebRequest request) {
         logger.error(ex.getMessage())
         status = HttpStatus.CONFLICT
 

@@ -59,7 +59,7 @@ class ProjectRestController {
 
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,
-                projectCreateDto.getBillable(),
+                new Boolean(projectCreateDto.getBillable()),
                 workspace.getId(),
                 client.getId()
         )
@@ -69,4 +69,30 @@ class ProjectRestController {
                 Project.class
         ))
     }
+
+    @PutMapping("/{id}")
+    Long update(@PathVariable Long id, @RequestBody ProjectCreateDto projectCreateDto) {
+        Project project = projectService.findById(id)
+
+        if (projectCreateDto.getName() != null) {
+            project.setName(projectCreateDto.getName())
+        }
+        if (projectCreateDto.getBillable() != null) {
+            project.setBillable(projectCreateDto.getBillable())
+        }
+        if (projectCreateDto.getTogglId() != null) {
+            project.setTogglId(projectCreateDto.getTogglId())
+        }
+        if (projectCreateDto.getWorkspaceName() != null) {
+            Workspace workspace = workspaceService.findByName(projectCreateDto.getWorkspaceName())
+            project.setWorkspace(workspace)
+        }
+        if (projectCreateDto.getClientName() != null) {
+            Client client = clientService.findByName(projectCreateDto.getClientName())
+            project.setClient(client)
+        }
+
+        return projectService.save(project)
+    }
+
 }

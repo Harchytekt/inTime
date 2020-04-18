@@ -53,16 +53,16 @@ class TimeEntryRestController {
         LocalDateTime date = LocalDateTime.now()
 
         try {
-            Long stoppedTimeEntryId = this.stopTimeEntry().getId()
-            date = timeEntryService.findById(stoppedTimeEntryId).getEndDate()
+            Long stoppedTimeEntryId = this.stopTimeEntry().id
+            date = timeEntryService.findById(stoppedTimeEntryId).endDate
         } catch (RunningTimeEntryNotFoundException ignored) {
             logger.info "No running 'Time Entry' found, we don't have to stop it then."
         }
 
-        Project project = projectService.findByName(timeEntryCreateDto.getProjectName())
+        Project project = projectService.findByName(timeEntryCreateDto.projectName)
         TimeEntry createdTimeEntry = timeEntryService.save(
                 modelMapper.map(
-                        new TimeEntrySaveDto(project, date, timeEntryCreateDto.getDescription()),
+                        new TimeEntrySaveDto(project, date, timeEntryCreateDto.description),
                         TimeEntry.class
                 )
         )
@@ -77,24 +77,24 @@ class TimeEntryRestController {
     TimeEntryDto update(@PathVariable Long id, @RequestBody TimeEntryUpdateDto timeEntryUpdateDto) {
         TimeEntry timeEntry = timeEntryService.findById(id)
 
-        if (timeEntryUpdateDto.getTogglId() != null) {
-            timeEntry.setTogglId(timeEntryUpdateDto.getTogglId())
+        if (timeEntryUpdateDto.togglId != null) {
+            timeEntry.togglId = timeEntryUpdateDto.togglId
         }
-        if (timeEntryUpdateDto.getStartDate() != null) {
-            timeEntry.setStartDate(timeEntryUpdateDto.getStartDate())
+        if (timeEntryUpdateDto.startDate != null) {
+            timeEntry.startDate = timeEntryUpdateDto.startDate
         }
-        if (timeEntryUpdateDto.getEndDate() != null && !timeEntry.getRunning()) {
-            timeEntry.setEndDate(timeEntryUpdateDto.getEndDate())
-            timeEntry.setDuration(timeEntry.calculateDuration())
-        } else if (timeEntryUpdateDto.getEndDate() != null && timeEntry.getRunning()) {
+        if (timeEntryUpdateDto.endDate != null && !timeEntry.running) {
+            timeEntry.endDate = timeEntryUpdateDto.endDate
+            timeEntry.duration = timeEntry.calculateDuration()
+        } else if (timeEntryUpdateDto.endDate != null && timeEntry.running) {
             throw new RunningTimeEntryException("The 'Time Entry' is still running!")
         }
-        if (timeEntryUpdateDto.getDescription() != null) {
-            timeEntry.setDescription(timeEntryUpdateDto.getDescription())
+        if (timeEntryUpdateDto.description != null) {
+            timeEntry.description = timeEntryUpdateDto.description
         }
-        if (timeEntryUpdateDto.getProjectName() != null) {
-            Project project = projectService.findByName(timeEntryUpdateDto.getProjectName())
-            timeEntry.setProject(project)
+        if (timeEntryUpdateDto.projectName != null) {
+            Project project = projectService.findByName(timeEntryUpdateDto.projectName)
+            timeEntry.project = project
         }
 
         return modelMapper.map(
@@ -120,7 +120,7 @@ class TimeEntryRestController {
     @PutMapping("/restart/")
     TimeEntryDto restartTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findLastTimeEntry()
-        if (timeEntry.getRunning())
+        if (timeEntry.running)
             throw new RunningTimeEntryException("A 'Time Entry' is already running!")
 
         timeEntry.restart()

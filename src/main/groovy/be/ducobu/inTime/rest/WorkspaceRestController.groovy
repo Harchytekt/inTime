@@ -1,8 +1,7 @@
 package be.ducobu.inTime.rest
 
-
-import be.ducobu.inTime.dto.workspace.WorkspaceDto
 import be.ducobu.inTime.dto.workspace.WorkspaceCreateDto
+import be.ducobu.inTime.dto.workspace.WorkspaceDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
 import be.ducobu.inTime.model.Workspace
@@ -38,7 +37,7 @@ class WorkspaceRestController {
     @PostMapping("/")
     Long create(@RequestBody WorkspaceCreateDto workspaceCreateDto) {
 
-        String workspaceName = workspaceCreateDto.getName()
+        String workspaceName = workspaceCreateDto.name
 
         try {
             if (workspaceService.findByName(workspaceName) != null)

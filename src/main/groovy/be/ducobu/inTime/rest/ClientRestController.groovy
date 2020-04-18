@@ -1,9 +1,8 @@
 package be.ducobu.inTime.rest
 
-import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.client.ClientCreateDto
+import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.client.ClientSaveDto
-import be.ducobu.inTime.dto.project.ProjectSaveDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
 import be.ducobu.inTime.model.Client
@@ -42,9 +41,9 @@ class ClientRestController {
 
     @PostMapping("/")
     Long create(@RequestBody ClientCreateDto clientCreateDto) {
-        Workspace workspace = workspaceService.findByName(clientCreateDto.getWorkspaceName())
+        Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
 
-        String clientName = clientCreateDto.getName()
+        String clientName = clientCreateDto.name
 
         try {
             if (clientService.findByName(clientName) != null)
@@ -55,7 +54,7 @@ class ClientRestController {
 
         ClientSaveDto clientSaveDto = new ClientSaveDto(
                 clientName,
-                workspace.getId()
+                workspace.id
         )
 
         return clientService.save(modelMapper.map(

@@ -17,7 +17,7 @@ class ClientService {
     }
 
     Long save(Client client) {
-        return clientRepository.save(client).getId()
+        return clientRepository.save(client).id
     }
 
     Client findById(Long id) {

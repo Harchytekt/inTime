@@ -15,7 +15,7 @@ class WorkspaceService {
     }
 
     Long save(Workspace workspace) {
-        return workspaceRepository.save(workspace).getId()
+        return workspaceRepository.save(workspace).id
     }
 
     Workspace findById(Long id) {

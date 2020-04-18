@@ -45,10 +45,10 @@ class ProjectRestController {
 
     @PostMapping("/")
     Long create(@RequestBody ProjectCreateDto projectCreateDto) {
-        Workspace workspace = workspaceService.findByName(projectCreateDto.getWorkspaceName())
-        Client client = clientService.findByName(projectCreateDto.getClientName())
+        Workspace workspace = workspaceService.findByName(projectCreateDto.workspaceName)
+        Client client = clientService.findByName(projectCreateDto.clientName)
 
-        String projectName = projectCreateDto.getName()
+        String projectName = projectCreateDto.name
 
         try {
             if (projectService.findByName(projectName) != null)
@@ -59,9 +59,9 @@ class ProjectRestController {
 
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,
-                new Boolean(projectCreateDto.getBillable()),
-                workspace.getId(),
-                client.getId()
+                new Boolean(projectCreateDto.billable),
+                workspace.id,
+                client.id
         )
 
         return projectService.save(modelMapper.map(
@@ -74,22 +74,22 @@ class ProjectRestController {
     Long update(@PathVariable Long id, @RequestBody ProjectCreateDto projectCreateDto) {
         Project project = projectService.findById(id)
 
-        if (projectCreateDto.getName() != null) {
-            project.setName(projectCreateDto.getName())
+        if (projectCreateDto.name != null) {
+            project.name = projectCreateDto.name
         }
-        if (projectCreateDto.getBillable() != null) {
-            project.setBillable(projectCreateDto.getBillable())
+        if (projectCreateDto.billable != null) {
+            project.billable = projectCreateDto.billable
         }
-        if (projectCreateDto.getTogglId() != null) {
-            project.setTogglId(projectCreateDto.getTogglId())
+        if (projectCreateDto.togglId != null) {
+            project.togglId = projectCreateDto.togglId
         }
-        if (projectCreateDto.getWorkspaceName() != null) {
-            Workspace workspace = workspaceService.findByName(projectCreateDto.getWorkspaceName())
-            project.setWorkspace(workspace)
+        if (projectCreateDto.workspaceName != null) {
+            Workspace workspace = workspaceService.findByName(projectCreateDto.workspaceName)
+            project.workspace = workspace
         }
-        if (projectCreateDto.getClientName() != null) {
-            Client client = clientService.findByName(projectCreateDto.getClientName())
-            project.setClient(client)
+        if (projectCreateDto.clientName != null) {
+            Client client = clientService.findByName(projectCreateDto.clientName)
+            project.client = client
         }
 
         return projectService.save(project)

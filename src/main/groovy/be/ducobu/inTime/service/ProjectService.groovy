@@ -17,7 +17,7 @@ class ProjectService {
     }
 
     Long save(Project project) {
-        return projectRepository.save(project).getId()
+        return projectRepository.save(project).id
     }
 
     Project findById(Long id) {

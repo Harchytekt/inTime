@@ -1,7 +1,6 @@
 package be.ducobu.inTime
 
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.exception.RunningTimeEntryNotFoundException
 import be.ducobu.inTime.model.TimeEntry
 import be.ducobu.inTime.service.ProjectService
 import be.ducobu.inTime.service.TimeEntryService
@@ -34,17 +33,17 @@ class TimeEntryTest {
         TimeEntry found = timeEntryService.findById(1L)
 
         // then
-        assertEquals 1L, found.getId()
-        assertNull found.getTogglId()
-        assertEquals LocalDateTime.of(2020, 04, 17, 14, 28, 42), found.getStartDate()
-        assertNull found.getEndDate()
-        assertNotNull found.getDuration().getClass()
-        assertEquals Long, found.getDuration().getClass()
-        assertNull found.getDescription()
-        assertTrue found.getRunning()
-        assertNotNull found.getProject()
-        assertEquals 1L, found.getProject().getId()
-        assertEquals "First Project", found.getProject().getName()
+        assertEquals 1L, found.id
+        assertNull found.togglId
+        assertEquals LocalDateTime.of(2020, 04, 17, 14, 28, 42), found.startDate
+        assertNull found.endDate
+        assertNotNull found.duration.getClass()
+        assertEquals Long, found.duration.getClass()
+        assertNull found.description
+        assertTrue found.running
+        assertNotNull found.project
+        assertEquals 1L, found.project.id
+        assertEquals "First Project", found.project.name
     }
 
     @Test
@@ -65,24 +64,24 @@ class TimeEntryTest {
         TimeEntry timeEntry = new TimeEntry()
         LocalDateTime dateTime = LocalDateTime.of(2020, 04, 17, 14, 30, 00)
 
-        timeEntry.setProject projectService.findByName("Second Project")
-        timeEntry.setDescription "Test"
-        timeEntry.setStartDate dateTime
+        timeEntry.project = projectService.findByName("Second Project")
+        timeEntry.description = "Test"
+        timeEntry.startDate = dateTime
         TimeEntry savedTimeEntry = timeEntryService.save(timeEntry)
 
         // then
         assertNotNull savedTimeEntry
-        assertEquals 2L, savedTimeEntry.getId()
-        assertNull savedTimeEntry.getTogglId()
-        assertEquals dateTime, savedTimeEntry.getStartDate()
-        assertNull savedTimeEntry.getEndDate()
-        assertEquals Long, savedTimeEntry.getDuration().getClass()
-        assertNotNull savedTimeEntry.getDescription()
-        assertEquals "Test", savedTimeEntry.getDescription()
-        assertTrue savedTimeEntry.getRunning()
-        assertNotNull savedTimeEntry.getProject()
-        assertEquals 2L, savedTimeEntry.getProject().getId()
-        assertEquals "Second Project", savedTimeEntry.getProject().getName()
+        assertEquals 2L, savedTimeEntry.id
+        assertNull savedTimeEntry.togglId
+        assertEquals dateTime, savedTimeEntry.startDate
+        assertNull savedTimeEntry.endDate
+        assertEquals Long, savedTimeEntry.duration.getClass()
+        assertNotNull savedTimeEntry.description
+        assertEquals "Test", savedTimeEntry.description
+        assertTrue savedTimeEntry.running
+        assertNotNull savedTimeEntry.project
+        assertEquals 2L, savedTimeEntry.project.id
+        assertEquals "Second Project", savedTimeEntry.project.name
     }
 
     @Test
@@ -97,10 +96,10 @@ class TimeEntryTest {
 
         // then
         assertNotNull stoppedTimeEntry
-        assertEquals 2L, stoppedTimeEntry.getId()
-        assertNotNull stoppedTimeEntry.getEndDate()
-        assertEquals Long, stoppedTimeEntry.getDuration().getClass()
-        assertFalse stoppedTimeEntry.getRunning()
+        assertEquals 2L, stoppedTimeEntry.id
+        assertNotNull stoppedTimeEntry.endDate
+        assertEquals Long, stoppedTimeEntry.duration.getClass()
+        assertFalse stoppedTimeEntry.running
     }
 
     @Test
@@ -115,10 +114,10 @@ class TimeEntryTest {
 
         // then
         assertNotNull restartedTimeEntry
-        assertEquals 2L, restartedTimeEntry.getId()
-        assertNull restartedTimeEntry.getEndDate()
-        assertEquals Long, restartedTimeEntry.getDuration().getClass()
-        assertTrue restartedTimeEntry.getRunning()
+        assertEquals 2L, restartedTimeEntry.id
+        assertNull restartedTimeEntry.endDate
+        assertEquals Long, restartedTimeEntry.duration.getClass()
+        assertTrue restartedTimeEntry.running
     }
 
     @Test
@@ -128,25 +127,25 @@ class TimeEntryTest {
         // when
         TimeEntry found = timeEntryService.findById(2L)
         assertNotNull found
-        found.setTogglId 12L
-        found.setProject projectService.findByName("First Project")
+        found.togglId = 12L
+        found.project = projectService.findByName("First Project")
         LocalDateTime dateTime = LocalDateTime.of(2020, 04, 17, 16, 42, 00)
-        found.setStartDate dateTime
-        found.setDescription "Test with update"
+        found.startDate = dateTime
+        found.description = "Test with update"
         TimeEntry updatedTimeEntry = timeEntryService.save(found)
 
         // then
         assertNotNull updatedTimeEntry
-        assertEquals 2L, updatedTimeEntry.getId()
-        assertEquals 12L, updatedTimeEntry.getTogglId()
-        assertEquals dateTime, updatedTimeEntry.getStartDate()
-        assertNull updatedTimeEntry.getEndDate()
-        assertNotNull updatedTimeEntry.getDescription()
-        assertEquals "Test with update", updatedTimeEntry.getDescription()
-        assertTrue updatedTimeEntry.getRunning()
-        assertNotNull updatedTimeEntry.getProject()
-        assertEquals 1L, updatedTimeEntry.getProject().getId()
-        assertEquals "First Project", updatedTimeEntry.getProject().getName()
+        assertEquals 2L, updatedTimeEntry.id
+        assertEquals 12L, updatedTimeEntry.togglId
+        assertEquals dateTime, updatedTimeEntry.startDate
+        assertNull updatedTimeEntry.endDate
+        assertNotNull updatedTimeEntry.description
+        assertEquals "Test with update", updatedTimeEntry.description
+        assertTrue updatedTimeEntry.running
+        assertNotNull updatedTimeEntry.project
+        assertEquals 1L, updatedTimeEntry.project.id
+        assertEquals "First Project", updatedTimeEntry.project.name
     }
 
 }

@@ -2,6 +2,7 @@ package be.ducobu.inTime.rest
 
 import be.ducobu.inTime.dto.timeEntry.TimeEntryCreateDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntryDurationDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntrySaveDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntryUpdateDto
 import be.ducobu.inTime.exception.RunningTimeEntryException
@@ -44,30 +45,39 @@ class TimeEntryRestController {
     }
 
     @GetMapping("/{id}/duration")
-    Long getDurationById(@PathVariable Long id) {
-        return timeEntryService.findById(id).duration
+    TimeEntryDurationDto getDurationById(@PathVariable Long id) {
+        return modelMapper.map(
+                timeEntryService.findById(id),
+                TimeEntryDurationDto.class
+        )
     }
 
     @PostMapping("/")
-    Long create(@RequestBody TimeEntryCreateDto timeEntryCreateDto) {
+    TimeEntryDto create(@RequestBody TimeEntryCreateDto timeEntryCreateDto) {
         LocalDateTime date = LocalDateTime.now()
 
-        Long stoppedTimeEntryId = this.stopTimeEntry()
-        if (stoppedTimeEntryId != -1) {
+        try {
+            Long stoppedTimeEntryId = this.stopTimeEntry().getId()
             date = timeEntryService.findById(stoppedTimeEntryId).getEndDate()
+        } catch (RunningTimeEntryNotFoundException ignored) {
+            logger.info "No running 'Time Entry' found, we don't have to stop it then."
         }
 
         Project project = projectService.findByName(timeEntryCreateDto.getProjectName())
         TimeEntrySaveDto timeEntrySaveDto = new TimeEntrySaveDto(project.getId(), date, timeEntryCreateDto.getDescription())
 
-        return timeEntryService.save(modelMapper.map(
+        TimeEntry createdTimeEntry = timeEntryService.save(modelMapper.map(
                 timeEntrySaveDto,
                 TimeEntry.class
         ))
+        return modelMapper.map(
+                createdTimeEntry,
+                TimeEntryDto.class
+        )
     }
 
     @PutMapping("/{id}")
-    Long update(@PathVariable Long id, @RequestBody TimeEntryUpdateDto timeEntryUpdateDto) {
+    TimeEntryDto update(@PathVariable Long id, @RequestBody TimeEntryUpdateDto timeEntryUpdateDto) {
         TimeEntry timeEntry = timeEntryService.findById(id)
 
         if (timeEntryUpdateDto.getTogglId() != null) {
@@ -90,26 +100,37 @@ class TimeEntryRestController {
             timeEntry.setProject(project)
         }
 
-        return timeEntryService.save(timeEntry)
+        return modelMapper.map(
+                timeEntryService.save(timeEntry),
+                TimeEntryDto.class
+        )
     }
 
     @PutMapping("/")
-    Long stopTimeEntry() {
+    TimeEntryDto stopTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findRunningTimeEntry()
         if (timeEntry == null)
             throw new RunningTimeEntryNotFoundException()
 
         timeEntry.stop()
-        return timeEntryService.save(timeEntry)
+
+        return modelMapper.map(
+                timeEntryService.save(timeEntry),
+                TimeEntryDto.class
+        )
     }
 
     @PutMapping("/restart/")
-    Long restartTimeEntry() {
+    TimeEntryDto restartTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findLastTimeEntry()
         if (timeEntry.getRunning())
             throw new RunningTimeEntryException("A 'Time Entry' is already running!")
 
         timeEntry.restart()
-        return timeEntryService.save(timeEntry)
+
+        return modelMapper.map(
+                timeEntryService.save(timeEntry),
+                TimeEntryDto.class
+        )
     }
 }

@@ -14,8 +14,8 @@ class TimeEntryService {
         this.timeEntryRepository = timeEntryRepository
     }
 
-    Long save(TimeEntry timeEntry) {
-        return timeEntryRepository.save(timeEntry).getId()
+    TimeEntry save(TimeEntry timeEntry) {
+        return timeEntryRepository.save(timeEntry)
     }
 
     TimeEntry findById(Long id) {

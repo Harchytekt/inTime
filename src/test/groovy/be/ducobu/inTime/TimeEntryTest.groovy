@@ -12,12 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest
 
 import java.time.LocalDateTime
 
-import static org.junit.jupiter.api.Assertions.assertThrows
 import static org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
-class TimeEntryTest {
+class TimeEntryTest extends GroovyTestCase {
 
     @Autowired
     private TimeEntryService timeEntryService
@@ -50,10 +49,10 @@ class TimeEntryTest {
     @Order(2)
     void whenFindByWrongId_thenReturnException() {
 
-        Throwable exception = assertThrows CustomEntityNotFoundException.class, { ->
+        def msg = shouldFail CustomEntityNotFoundException, {
             timeEntryService.findById(2L)
         }
-        assert "No 'TimeEntry' with attribute '2' found!" == exception.getMessage()
+        assert "No 'TimeEntry' with attribute '2' found!" == msg
     }
 
     @Test

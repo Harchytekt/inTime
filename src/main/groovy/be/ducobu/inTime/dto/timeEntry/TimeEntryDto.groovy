@@ -1,17 +1,13 @@
 package be.ducobu.inTime.dto.timeEntry
 
-import java.time.LocalDateTime
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 
-class TimeEntryDto {
+@JsonPropertyOrder(["id", "togglId", "startDate", "endDate", "duration", "description", "running", "projectName"])
+class TimeEntryDto extends TimeEntryUpdateDto {
 
     private Long id
-    private Long togglId
-    private LocalDateTime startDate
-    private LocalDateTime endDate
     private Integer duration
-    private String description
     private boolean running
-    private String projectName
 
     Long getId() {
         return id
@@ -19,30 +15,6 @@ class TimeEntryDto {
 
     void setId(Long id) {
         this.id = id
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
-    }
-
-    LocalDateTime getStartDate() {
-        return startDate
-    }
-
-    void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate
-    }
-
-    LocalDateTime getEndDate() {
-        return endDate
-    }
-
-    void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate
     }
 
     Integer getDuration() {
@@ -53,27 +25,11 @@ class TimeEntryDto {
         this.duration = duration
     }
 
-    String getDescription() {
-        return description
-    }
-
-    void setDescription(String description) {
-        this.description = description
-    }
-
     boolean getRunning() {
         return running
     }
 
     void setRunning(boolean running) {
         this.running = running
-    }
-
-    String getProjectName() {
-        return projectName
-    }
-
-    void setProjectName(String projectName) {
-        this.projectName = projectName
     }
 }

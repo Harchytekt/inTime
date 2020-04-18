@@ -1,10 +1,6 @@
 package be.ducobu.inTime.rest
 
-import be.ducobu.inTime.dto.timeEntry.TimeEntryCreateDto
-import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
-import be.ducobu.inTime.dto.timeEntry.TimeEntryDurationDto
-import be.ducobu.inTime.dto.timeEntry.TimeEntrySaveDto
-import be.ducobu.inTime.dto.timeEntry.TimeEntryUpdateDto
+import be.ducobu.inTime.dto.timeEntry.*
 import be.ducobu.inTime.exception.RunningTimeEntryException
 import be.ducobu.inTime.exception.RunningTimeEntryNotFoundException
 import be.ducobu.inTime.model.Project
@@ -64,12 +60,13 @@ class TimeEntryRestController {
         }
 
         Project project = projectService.findByName(timeEntryCreateDto.getProjectName())
-        TimeEntrySaveDto timeEntrySaveDto = new TimeEntrySaveDto(project, date, timeEntryCreateDto.getDescription())
+        TimeEntry createdTimeEntry = timeEntryService.save(
+                modelMapper.map(
+                        new TimeEntrySaveDto(project, date, timeEntryCreateDto.getDescription()),
+                        TimeEntry.class
+                )
+        )
 
-        TimeEntry createdTimeEntry = timeEntryService.save(modelMapper.map(
-                timeEntrySaveDto,
-                TimeEntry.class
-        ))
         return modelMapper.map(
                 createdTimeEntry,
                 TimeEntryDto.class

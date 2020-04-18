@@ -2,13 +2,11 @@ package be.ducobu.inTime.dto.timeEntry
 
 import java.time.LocalDateTime
 
-class TimeEntryUpdateDto {
+class TimeEntryUpdateDto extends TimeEntryCreateDto {
 
     private Long togglId
     private LocalDateTime startDate
     private LocalDateTime endDate
-    private String description
-    private String projectName
 
     Long getTogglId() {
         return togglId
@@ -32,21 +30,5 @@ class TimeEntryUpdateDto {
 
     void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate
-    }
-
-    String getDescription() {
-        return description
-    }
-
-    void setDescription(String description) {
-        this.description = description
-    }
-
-    String getProjectName() {
-        return projectName
-    }
-
-    void setProjectName(String projectName) {
-        this.projectName = projectName
     }
 }

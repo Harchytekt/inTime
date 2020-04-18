@@ -64,7 +64,7 @@ class TimeEntryRestController {
         }
 
         Project project = projectService.findByName(timeEntryCreateDto.getProjectName())
-        TimeEntrySaveDto timeEntrySaveDto = new TimeEntrySaveDto(project.getId(), date, timeEntryCreateDto.getDescription())
+        TimeEntrySaveDto timeEntrySaveDto = new TimeEntrySaveDto(project, date, timeEntryCreateDto.getDescription())
 
         TimeEntry createdTimeEntry = timeEntryService.save(modelMapper.map(
                 timeEntrySaveDto,

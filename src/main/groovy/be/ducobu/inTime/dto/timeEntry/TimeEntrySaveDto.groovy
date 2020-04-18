@@ -1,16 +1,18 @@
 package be.ducobu.inTime.dto.timeEntry
 
+import be.ducobu.inTime.model.Project
+
 import java.time.LocalDateTime
 
 class TimeEntrySaveDto {
 
     private Long id
-    private Long projectId
+    private Project project
     private LocalDateTime startDate
     private String description
 
-    TimeEntrySaveDto(Long projectId, LocalDateTime startDate, String description) {
-        this.projectId = projectId
+    TimeEntrySaveDto(Project project, LocalDateTime startDate, String description) {
+        this.project = project
         this.startDate = startDate
         this.description = description
     }
@@ -23,12 +25,12 @@ class TimeEntrySaveDto {
         this.id = id
     }
 
-    Long getProjectId() {
-        return projectId
+    Project getProject() {
+        return project
     }
 
-    void setProjectId(Long projectId) {
-        this.projectId = projectId
+    void setProject(Project project) {
+        this.project = project
     }
 
     LocalDateTime getStartDate() {

@@ -35,7 +35,7 @@ class WorkspaceRestController {
     }
 
     @PostMapping("/")
-    Long create(@RequestBody WorkspaceCreateDto workspaceCreateDto) {
+    WorkspaceDto create(@RequestBody WorkspaceCreateDto workspaceCreateDto) {
 
         String workspaceName = workspaceCreateDto.name
 
@@ -46,9 +46,16 @@ class WorkspaceRestController {
             logger.info "No 'Workspace' found with this name, we can create it."
         }
 
-        return workspaceService.save(modelMapper.map(
-                workspaceCreateDto,
-                Workspace.class
-        ))
+        Workspace createdWorkspace = workspaceService.save(
+                modelMapper.map(
+                        workspaceCreateDto,
+                        Workspace.class
+                )
+        )
+
+        return modelMapper.map(
+                createdWorkspace,
+                WorkspaceDto.class
+        )
     }
 }

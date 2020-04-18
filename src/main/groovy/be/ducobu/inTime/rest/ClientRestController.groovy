@@ -40,7 +40,7 @@ class ClientRestController {
     }
 
     @PostMapping("/")
-    Long create(@RequestBody ClientCreateDto clientCreateDto) {
+    ClientDto create(@RequestBody ClientCreateDto clientCreateDto) {
         Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
 
         String clientName = clientCreateDto.name
@@ -52,14 +52,16 @@ class ClientRestController {
             logger.info "No 'Client' found with this name, we can create it."
         }
 
-        ClientSaveDto clientSaveDto = new ClientSaveDto(
-                clientName,
-                workspace.id
+        Client createdClient = clientService.save(
+                modelMapper.map(
+                        new ClientSaveDto(clientName, workspace.id),
+                        Client.class
+                )
         )
 
-        return clientService.save(modelMapper.map(
-                clientSaveDto,
-                Client.class
-        ))
+        return modelMapper.map(
+                createdClient,
+                ClientDto.class
+        )
     }
 }

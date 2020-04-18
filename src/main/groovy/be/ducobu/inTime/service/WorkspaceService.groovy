@@ -1,5 +1,6 @@
 package be.ducobu.inTime.service
 
+
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.repository.WorkspaceRepository
@@ -14,8 +15,8 @@ class WorkspaceService {
         this.workspaceRepository = workspaceRepository
     }
 
-    Long save(Workspace workspace) {
-        return workspaceRepository.save(workspace).id
+    Workspace save(Workspace workspace) {
+        return workspaceRepository.save(workspace)
     }
 
     Workspace findById(Long id) {

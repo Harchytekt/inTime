@@ -16,8 +16,8 @@ class ClientService {
         this.clientRepository = clientRepository
     }
 
-    Long save(Client client) {
-        return clientRepository.save(client).id
+    Client save(Client client) {
+        return clientRepository.save(client)
     }
 
     Client findById(Long id) {

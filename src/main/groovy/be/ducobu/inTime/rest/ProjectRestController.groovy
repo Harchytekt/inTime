@@ -44,7 +44,7 @@ class ProjectRestController {
     }
 
     @PostMapping("/")
-    Long create(@RequestBody ProjectCreateDto projectCreateDto) {
+    ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
         Workspace workspace = workspaceService.findByName(projectCreateDto.workspaceName)
         Client client = clientService.findByName(projectCreateDto.clientName)
 
@@ -64,14 +64,21 @@ class ProjectRestController {
                 client.id
         )
 
-        return projectService.save(modelMapper.map(
-                projectSaveDto,
-                Project.class
-        ))
+        Project createdProject = projectService.save(
+                modelMapper.map(
+                        projectSaveDto,
+                        Project.class
+                )
+        )
+
+        return modelMapper.map(
+                createdProject,
+                ProjectDto.class
+        )
     }
 
     @PutMapping("/{id}")
-    Long update(@PathVariable Long id, @RequestBody ProjectCreateDto projectCreateDto) {
+    ProjectDto update(@PathVariable Long id, @RequestBody ProjectCreateDto projectCreateDto) {
         Project project = projectService.findById(id)
 
         if (projectCreateDto.name != null) {
@@ -92,7 +99,10 @@ class ProjectRestController {
             project.client = client
         }
 
-        return projectService.save(project)
+        return modelMapper.map(
+                projectService.save(project),
+                ProjectDto.class
+        )
     }
 
 }

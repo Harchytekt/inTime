@@ -16,8 +16,8 @@ class ProjectService {
         this.projectRepository = projectRepository
     }
 
-    Long save(Project project) {
-        return projectRepository.save(project).id
+    Project save(Project project) {
+        return projectRepository.save(project)
     }
 
     Project findById(Long id) {

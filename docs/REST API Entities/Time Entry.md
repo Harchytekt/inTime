@@ -49,7 +49,7 @@ The duration is calculated at call when the Time Entry is running.
 ##### Sample Response
 ```json
 {
-	"duration": 6347
+    "duration": 6347
 }
 ```
 
@@ -73,8 +73,8 @@ curl -X "POST" "http://localhost:8080/time_entry/" \
 ##### Parameters
 ```json
 {
-	"projectName": "First Project",
-	"description": "Test"
+    "projectName": "First Project",
+    "description": "Test"
 }
 ```
 
@@ -121,11 +121,11 @@ curl -X "PUT" "http://localhost:8080/time_entry/2" \
 ##### Parameters
 ```json
 {
-	"togglId": 1,
-	"projectName": "Project Name",
-	"description": "Description",
-	"startDate": "2020-01-01T00:00:00",
-	"endDate": "2020-01-01T00:00:01"
+    "togglId": 1,
+    "projectName": "Project Name",
+    "description": "Description",
+    "startDate": "2020-01-01T00:00:00",
+    "endDate": "2020-01-01T00:00:01"
 }
 ```
 

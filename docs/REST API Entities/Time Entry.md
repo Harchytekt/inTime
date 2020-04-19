@@ -78,8 +78,8 @@ curl -X "POST" "http://localhost:8080/time_entry/" \
 }
 ```
 
-- `projectName` **String**: The name of the project to which the Time Entry belongs.
-- `description` **String**: The description of the Time Entry. The default for this field is `""`.
+- `projectName` _**String**_: The name of the project to which the Time Entry belongs.
+- `description` _**String**_: The description of the Time Entry. The default for this field is `""`.
 
 #### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
@@ -129,11 +129,11 @@ curl -X "PUT" "http://localhost:8080/time_entry/2" \
 }
 ```
 
-- `togglId` **Long?**: The id of the Time Entry in Toggl.
-- `projectName` **String?**: The name of the project to which the Time Entry belongs.
-- `description` **String?**: The description of the Time Entry. The default for this field is `""`.
-- `startDate` **Date?**: The starting date and time of the Time Entry.
-- `endDate` **Date?**: The ending date and time of the Time Entry.
+- `togglId` _**Long?**_: The id of the Time Entry in Toggl.
+- `projectName` _**String?**_: The name of the project to which the Time Entry belongs.
+- `description` _**String?**_: The description of the Time Entry. The default for this field is `""`.
+- `startDate` _**Date?**_: The starting date and time of the Time Entry.
+- `endDate` _**Date?**_: The ending date and time of the Time Entry.
 > ⚠️ If the Time Entry is still running, you won't be able to change the `endDate`.
 
 #### RETURNS

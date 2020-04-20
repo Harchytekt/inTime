@@ -6,7 +6,6 @@ class ProjectDto {
     private Long togglId
     private String name
     private boolean billable
-    private String workspaceName
     private String clientName
 
     Long getId() {
@@ -39,14 +38,6 @@ class ProjectDto {
 
     void setBillable(boolean billable) {
         this.billable = billable
-    }
-
-    String getWorkspaceName() {
-        return workspaceName
-    }
-
-    void setWorkspaceName(String workspaceName) {
-        this.workspaceName = workspaceName
     }
 
     String getClientName() {

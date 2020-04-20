@@ -20,9 +20,6 @@ class Project {
     private String name
     @Column
     private boolean billable
-    @ManyToOne
-    @JoinColumn(name = "fk_workspace", nullable = false)
-    private Workspace workspace
 
     @ManyToOne
     @JoinColumn(name = "fk_client", nullable = false)
@@ -65,14 +62,6 @@ class Project {
 
     void setBillable(boolean billable) {
         this.billable = billable
-    }
-
-    Workspace getWorkspace() {
-        return workspace
-    }
-
-    void setWorkspace(Workspace workspace) {
-        this.workspace = workspace
     }
 
     Client getClient() {

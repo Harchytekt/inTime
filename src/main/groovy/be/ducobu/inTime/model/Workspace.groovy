@@ -21,8 +21,6 @@ class Workspace {
 
     @OneToMany(mappedBy = "workspace")
     private Set<Client> clients
-    @OneToMany(mappedBy = "workspace")
-    private Set<Project> projects
 
     Workspace() {}
 
@@ -61,13 +59,5 @@ class Workspace {
 
     void setClients(Set<Client> clients) {
         this.clients = clients
-    }
-
-    Set<Project> getProjects() {
-        return projects
-    }
-
-    void setProjects(Set<Project> projects) {
-        this.projects = projects
     }
 }

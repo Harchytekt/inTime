@@ -7,10 +7,8 @@ import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
 import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Project
-import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.ClientService
 import be.ducobu.inTime.service.ProjectService
-import be.ducobu.inTime.service.WorkspaceService
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -26,13 +24,11 @@ class ProjectRestController {
 
     private final ClientService clientService
     private final ProjectService projectService
-    private final WorkspaceService workspaceService
     private final ModelMapper modelMapper
 
-    ProjectRestController(ClientService clientService, ProjectService projectService, WorkspaceService workspaceService, ModelMapper modelMapper) {
+    ProjectRestController(ClientService clientService, ProjectService projectService, ModelMapper modelMapper) {
         this.clientService = clientService
         this.projectService = projectService
-        this.workspaceService = workspaceService
         this.modelMapper = modelMapper
     }
 
@@ -45,7 +41,6 @@ class ProjectRestController {
 
     @PostMapping("/")
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
-        Workspace workspace = workspaceService.findByName(projectCreateDto.workspaceName)
         Client client = clientService.findByName(projectCreateDto.clientName)
 
         String projectName = projectCreateDto.name
@@ -60,7 +55,6 @@ class ProjectRestController {
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,
                 new Boolean(projectCreateDto.billable),
-                workspace.id,
                 client.id
         )
 
@@ -89,10 +83,6 @@ class ProjectRestController {
         }
         if (projectCreateDto.togglId != null) {
             project.togglId = projectCreateDto.togglId
-        }
-        if (projectCreateDto.workspaceName != null) {
-            Workspace workspace = workspaceService.findByName(projectCreateDto.workspaceName)
-            project.workspace = workspace
         }
         if (projectCreateDto.clientName != null) {
             Client client = clientService.findByName(projectCreateDto.clientName)

@@ -1,16 +1,18 @@
 package be.ducobu.inTime.dto.project
 
+import be.ducobu.inTime.model.Client
+
 class ProjectSaveDto {
 
     private Long id
     private String name
     private boolean billable
-    private Long clientId
+    private Client client
 
-    ProjectSaveDto(String name, boolean billable, Long clientId) {
+    ProjectSaveDto(String name, boolean billable, Client client) {
         this.name = name
         this.billable = billable
-        this.clientId = clientId
+        this.client = client
     }
 
     Long getId() {
@@ -37,11 +39,11 @@ class ProjectSaveDto {
         this.billable = billable
     }
 
-    Long getClientId() {
-        return clientId
+    Client getClient() {
+        return client
     }
 
-    void setClientId(Long clientId) {
-        this.clientId = clientId
+    void setClient(Client client) {
+        this.client = client
     }
 }

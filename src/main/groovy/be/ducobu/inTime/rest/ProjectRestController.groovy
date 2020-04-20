@@ -55,7 +55,7 @@ class ProjectRestController {
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,
                 new Boolean(projectCreateDto.billable),
-                client.id
+                client
         )
 
         Project createdProject = projectService.save(

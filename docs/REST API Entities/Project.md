@@ -33,28 +33,28 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 #### METHOD
 `POST`
 
+##### Parameters
+```json
+{
+    "name": "Project name",
+    "billable": false,
+    "clientName": "Client name"
+}
+```
+
+- `name` _**String**_: The name of the project.
+- `billable` _**Boolean?**_: The billable state of the Project. The default for this field is `false`.
+- `clientName` _**String**_: The name of the client to which the Project belongs.
+
 #### EXAMPLE
 ```curl
 curl -X "POST" "http://localhost:8080/project/" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
   "name": "Third Project",
-  "clientName": "First Client",
-  "Billable": false
+  "clientName": "First Client"
 }'
 ```
-
-##### Parameters
-```json
-{
-    "name": "Third Project",
-    "clientName": "First Client"
-}
-```
-
-- `name` _**String**_: The name of the project.
-- `clientName` _**String**_: The name of the client to which the Project belongs.
-- `billable` _**Boolean?**_: The billable state of the Project. The default for this field is `false`.
 
 #### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).  
@@ -78,16 +78,6 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 #### METHOD
 `PUT`
 
-#### EXAMPLE
-```curl
-curl -X "PUT" "http://localhost:8080/project/3" \
-     -H 'Content-Type: application/json; charset=utf-8' \
-     -d $'{
-  "togglId": 12,
-  "billable": true
-}'
-```
-
 ##### Parameters
 ```json
 {
@@ -102,6 +92,16 @@ curl -X "PUT" "http://localhost:8080/project/3" \
 - `name` _**String?**_: The name of the Project.
 - `billable` _**String?**_: The billable state of the Project. The default for this field is `false`.
 - `clientName` _**String?**_:  The name of the client to which the Project belongs.
+
+#### EXAMPLE
+```curl
+curl -X "PUT" "http://localhost:8080/project/3" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "togglId": 12,
+  "billable": true
+}'
+```
 
 #### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).

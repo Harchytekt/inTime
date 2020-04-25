@@ -31,6 +31,15 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the n
 #### METHOD
 `POST`
 
+##### Parameters
+```json
+{
+    "name": "Workspace name"
+}
+```
+
+- `name` _**String**_: The name of the Workspace.
+
 #### EXAMPLE
 ```curl
 curl -X "POST" "http://localhost:8080/workspace/" \
@@ -39,15 +48,6 @@ curl -X "POST" "http://localhost:8080/workspace/" \
   "name": "My second workspace"
 }'
 ```
-
-##### Parameters
-```json
-{
-    "name": "My second workspace"
-}
-```
-
-- `name` _**String**_: The name of the Workspace.
 
 #### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the workspace name (`name`).  
@@ -69,15 +69,6 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the w
 #### METHOD
 `PUT`
 
-#### EXAMPLE
-```curl
-curl -X "PUT" "http://localhost:8080/workspace/3" \
-     -H 'Content-Type: application/json; charset=utf-8' \
-     -d $'{
-  "togglId": 2
-}'
-```
-
 ##### Parameters
 ```json
 {
@@ -86,8 +77,17 @@ curl -X "PUT" "http://localhost:8080/workspace/3" \
 }
 ```
 
-- `togglId` _**Long?**_: The id of the Client in Toggl.
+- `togglId` _**Long?**_: The id of the Workspace in Toggl.
 - `name` _**String?**_: The name of the Workspace.
+
+#### EXAMPLE
+```curl
+curl -X "PUT" "http://localhost:8080/workspace/2" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "togglId": 2
+}'
+```
 
 #### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the workspace name (`name`).

@@ -60,6 +60,17 @@ The duration is calculated at call when the Time Entry is running.
 #### METHOD
 `POST`
 
+##### Parameters
+```json
+{
+    "projectName": "Project name",
+    "description": "description"
+}
+```
+
+- `projectName` _**String**_: The name of the project to which the Time Entry belongs.
+- `description` _**String**_: The description of the Time Entry. The default for this field is `""`.
+
 #### EXAMPLE
 ```curl
 curl -X "POST" "http://localhost:8080/time_entry/" \
@@ -69,17 +80,6 @@ curl -X "POST" "http://localhost:8080/time_entry/" \
   "description": "Test"
 }'
 ```
-
-##### Parameters
-```json
-{
-    "projectName": "First Project",
-    "description": "Test"
-}
-```
-
-- `projectName` _**String**_: The name of the project to which the Time Entry belongs.
-- `description` _**String**_: The description of the Time Entry. The default for this field is `""`.
 
 #### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
@@ -107,23 +107,11 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), starting
 #### METHOD
 `PUT`
 
-#### EXAMPLE
-```curl
-curl -X "PUT" "http://localhost:8080/time_entry/2" \
-     -H 'Content-Type: application/json; charset=utf-8' \
-     -d $'{
-  "togglId": 42,
-  "projectName": "Second Project",
-  "description": "Test with update",
-  "startDate": "2020-04-17T16:20:56"
-}'
-```
-
 ##### Parameters
 ```json
 {
     "togglId": 1,
-    "projectName": "Project Name",
+    "projectName": "Project name",
     "description": "Description",
     "startDate": "2020-01-01T00:00:00",
     "endDate": "2020-01-01T00:00:01"
@@ -136,6 +124,18 @@ curl -X "PUT" "http://localhost:8080/time_entry/2" \
 - `startDate` _**Date?**_: The starting date and time of the Time Entry.
 - `endDate` _**Date?**_: The ending date and time of the Time Entry.
 > ⚠️ If the Time Entry is still running, you won't be able to change the `endDate`.
+
+#### EXAMPLE
+```curl
+curl -X "PUT" "http://localhost:8080/time_entry/2" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "togglId": 42,
+  "projectName": "Second Project",
+  "description": "Test with update",
+  "startDate": "2020-04-17T16:20:56"
+}'
+```
 
 #### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  

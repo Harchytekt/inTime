@@ -77,25 +77,23 @@ class TimeEntryRestController {
     TimeEntryDto update(@PathVariable Long id, @RequestBody TimeEntryUpdateDto timeEntryUpdateDto) {
         TimeEntry timeEntry = timeEntryService.findById(id)
 
-        if (timeEntryUpdateDto.togglId != null) {
+        if (timeEntryUpdateDto.togglId != null)
             timeEntry.togglId = timeEntryUpdateDto.togglId
-        }
-        if (timeEntryUpdateDto.startDate != null) {
+
+        if (timeEntryUpdateDto.startDate != null)
             timeEntry.startDate = timeEntryUpdateDto.startDate
-        }
+
         if (timeEntryUpdateDto.endDate != null && !timeEntry.running) {
-            timeEntry.endDate = timeEntryUpdateDto.endDate
-            timeEntry.duration = timeEntry.calculateDuration()
+            timeEntry.updateEndDate(timeEntryUpdateDto.endDate)
         } else if (timeEntryUpdateDto.endDate != null && timeEntry.running) {
             throw new RunningTimeEntryException("The 'Time Entry' is still running!")
         }
-        if (timeEntryUpdateDto.description != null) {
+
+        if (timeEntryUpdateDto.description != null)
             timeEntry.description = timeEntryUpdateDto.description
-        }
-        if (timeEntryUpdateDto.projectName != null) {
-            Project project = projectService.findByName(timeEntryUpdateDto.projectName)
-            timeEntry.project = project
-        }
+
+        if (timeEntryUpdateDto.projectName != null)
+            timeEntry.project = projectService.findByName(timeEntryUpdateDto.projectName)
 
         return modelMapper.map(
                 timeEntryService.save(timeEntry),

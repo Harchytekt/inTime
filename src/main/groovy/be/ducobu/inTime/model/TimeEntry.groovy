@@ -120,6 +120,11 @@ class TimeEntry {
         this.running = false
     }
 
+    void updateEndDate(LocalDateTime endDate) {
+        this.endDate = endDate
+        this.duration = calculateDuration()
+    }
+
     void restart() {
         this.endDate = null
         this.duration = null

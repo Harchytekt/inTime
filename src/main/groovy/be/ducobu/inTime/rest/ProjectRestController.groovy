@@ -75,19 +75,17 @@ class ProjectRestController {
     ProjectDto update(@PathVariable Long id, @RequestBody ProjectCreateDto projectCreateDto) {
         Project project = projectService.findById(id)
 
-        if (projectCreateDto.name != null) {
+        if (projectCreateDto.name != null)
             project.name = projectCreateDto.name
-        }
-        if (projectCreateDto.billable != null) {
+
+        if (projectCreateDto.billable != null)
             project.billable = projectCreateDto.billable
-        }
-        if (projectCreateDto.togglId != null) {
+
+        if (projectCreateDto.togglId != null)
             project.togglId = projectCreateDto.togglId
-        }
-        if (projectCreateDto.clientName != null) {
-            Client client = clientService.findByName(projectCreateDto.clientName)
-            project.client = client
-        }
+
+        if (projectCreateDto.clientName != null)
+            project.client = clientService.findByName(projectCreateDto.clientName)
 
         return modelMapper.map(
                 projectService.save(project),

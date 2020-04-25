@@ -1,9 +1,12 @@
 package be.ducobu.inTime.rest
 
+import be.ducobu.inTime.dto.client.ClientCreateDto
+import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.workspace.WorkspaceCreateDto
 import be.ducobu.inTime.dto.workspace.WorkspaceDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
+import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.WorkspaceService
 import org.modelmapper.ModelMapper
@@ -55,6 +58,19 @@ class WorkspaceRestController {
 
         return modelMapper.map(
                 createdWorkspace,
+                WorkspaceDto.class
+        )
+    }
+
+    @PutMapping("/{id}")
+    WorkspaceDto update(@PathVariable Long id, @RequestBody WorkspaceCreateDto workspaceCreateDto) {
+        Workspace workspace = workspaceService.findById(id)
+
+        if (workspaceCreateDto.name != null)
+            workspace.name = workspaceCreateDto.name
+
+        return modelMapper.map(
+                workspaceService.save(workspace),
                 WorkspaceDto.class
         )
     }

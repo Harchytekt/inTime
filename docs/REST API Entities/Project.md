@@ -1,4 +1,4 @@
-## Project
+# Project
 
 ### Get by id
 #### URL STRUCTURE
@@ -35,11 +35,12 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 
 #### EXAMPLE
 ```curl
-curl -X "POST" "http://localhost:8080/project/"  \
+curl -X "POST" "http://localhost:8080/project/" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
   "name": "Third Project",
-  "clientName": "First Client"
+  "clientName": "First Client",
+  "Billable": false
 }'
 ```
 
@@ -51,13 +52,15 @@ curl -X "POST" "http://localhost:8080/project/"  \
 }
 ```
 
-- `name` _**String**_: The name of the project to create.
-- `clientName` _**String**_: The name of the client to which the project is associated.
+- `name` _**String**_: The name of the project.
+- `clientName` _**String**_: The name of the client to which the Project belongs.
+- `billable` _**Boolean?**_: The billable state of the Project. The default for this field is `false`.
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
+A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).  
+> The Toggl id is obviously `null` at this point.
 
-###### Sample Response
+##### Sample Response 
 ```json
 {
     "id": 3,
@@ -80,37 +83,36 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 curl -X "PUT" "http://localhost:8080/project/3" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "name": "Third Project",
   "togglId": 12,
-  "billable": true,
-  "clientName": "Second Client"
+  "billable": true
 }'
 ```
 
 ##### Parameters
 ```json
 {
-    "togglId": 12,
+    "togglId": 1,
+    "name": "Project name",
     "billable": true,
-    "clientName": "Second Client"
+    "clientName": "Client name"
 }
 ```
 
-- `name` _**String?**_ The name of the project.
-- `togglId` _**Long?**_ The id of the Project in Toggl.
-- `billable` _**Boolean?**_ The billable state of the project.
-- `clientName` _**String?**_ The name of the Client to which the Project belongs.
+- `togglId` _**Long?**_: The id of the Project in Toggl.
+- `name` _**String?**_: The name of the Project.
+- `billable` _**String?**_: The billable state of the Project. The default for this field is `false`.
+- `clientName` _**String?**_:  The name of the client to which the Project belongs.
 
 #### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
 
-###### Sample Response
+##### Sample Response 
 ```json
 {
     "id": 3,
     "togglId": 12,
     "name": "Third Project",
     "billable": true,
-    "clientName": "Second Client"
+    "clientName": "First Client"
 }
 ```

@@ -69,6 +69,9 @@ class WorkspaceRestController {
         if (workspaceCreateDto.name != null)
             workspace.name = workspaceCreateDto.name
 
+        if (workspaceCreateDto.togglId != null)
+            workspace.togglId = workspaceCreateDto.togglId
+
         return modelMapper.map(
                 workspaceService.save(workspace),
                 WorkspaceDto.class

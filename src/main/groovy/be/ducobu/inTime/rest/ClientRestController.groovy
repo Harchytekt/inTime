@@ -75,6 +75,9 @@ class ClientRestController {
         if (clientCreateDto.name != null)
             client.name = clientCreateDto.name
 
+        if (clientCreateDto.togglId != null)
+            client.togglId = clientCreateDto.togglId
+
         if (clientCreateDto.workspaceName != null)
             client.workspace = workspaceService.findByName(clientCreateDto.workspaceName)
 

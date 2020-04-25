@@ -2,8 +2,17 @@ package be.ducobu.inTime.dto.client
 
 class ClientCreateDto {
 
+    private Long togglId
     private String name
     private String workspaceName
+
+    Long getTogglId() {
+        return togglId
+    }
+
+    void setTogglId(Long togglId) {
+        this.togglId = togglId
+    }
 
     String getName() {
         return name

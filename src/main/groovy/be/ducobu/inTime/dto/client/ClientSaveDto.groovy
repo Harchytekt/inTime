@@ -1,14 +1,16 @@
 package be.ducobu.inTime.dto.client
 
+import be.ducobu.inTime.model.Workspace
+
 class ClientSaveDto {
 
     private Long id
     private String name
-    private Long workspaceId
+    private Workspace workspace
 
-    ClientSaveDto(String name, Long workspaceId) {
+    ClientSaveDto(String name, Workspace workspace) {
         this.name = name
-        this.workspaceId = workspaceId
+        this.workspace = workspace
     }
 
     Long getId() {
@@ -27,11 +29,11 @@ class ClientSaveDto {
         this.name = name
     }
 
-    Long getWorkspaceId() {
-        return workspaceId
+    Workspace getWorkspace() {
+        return workspace
     }
 
-    void setWorkspaceId(Long workspaceId) {
-        this.workspaceId = workspaceId
+    void setWorkspace(Workspace workspace) {
+        this.workspace = workspace
     }
 }

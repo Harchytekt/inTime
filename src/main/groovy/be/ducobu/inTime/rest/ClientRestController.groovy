@@ -57,7 +57,7 @@ class ClientRestController {
 
         Client createdClient = clientService.save(
                 modelMapper.map(
-                        new ClientSaveDto(clientName, workspace.id),
+                        new ClientSaveDto(clientName, workspace),
                         Client.class
                 )
         )

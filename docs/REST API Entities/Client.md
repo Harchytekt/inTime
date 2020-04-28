@@ -1,8 +1,8 @@
 # Client
 **TLDR**  
-`GET` /client/:id  
-`POST` /client/:id  
-`PUT` /client/:id
+`GET`  /client/{id}  
+`POST` /client/{id}  
+`PUT`  /client/{id}
 
 ### Get by id
 #### URL STRUCTURE

@@ -30,4 +30,8 @@ class ProjectService {
                 .orElseThrow({ -> new CustomEntityNotFoundException("Project", name) })
     }
 
+    List<Project> findByClientId(Long clientId) {
+        return projectRepository.findByClientId(clientId)
+    }
+
 }

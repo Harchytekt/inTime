@@ -3,6 +3,7 @@ Back to the [menu](../README.md)
 
 ## Summary
 - `GET`  `/project/{id}` [🔗](#get-project-by-id)
+- `GET`  `/project/client/{clientId}` [🔗](#get-projects-by-client-id)
 - `POST` `/project/{id}` + body [🔗](#create-a-new-project)
 - `PUT`  `/project/{id}` + body [🔗](#update-project)
 
@@ -32,6 +33,43 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
     "billable": false,
     "clientName": "First Client"
 }
+```
+
+## Get Projects by Client ID
+### URL STRUCTURE
+`http://localhost:8080/project/client/{clientId}`
+
+### METHOD
+`GET`
+
+### EXAMPLE
+```curl
+curl "http://localhost:8080/project/client/1"
+```
+
+### RETURNS
+> HTTP Status code: `200`
+
+A list of JSON-encoded dictionaries including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
+
+#### Sample response
+```json
+[
+  {
+    "id": 1,
+    "togglId": 1,
+    "name": "Project name",
+    "billable": true,
+    "clientName": "Client name"
+  },
+  {
+    "id": 2,
+    "togglId": null,
+    "name": "Project names",
+    "billable": false,
+    "clientName": "Client name"
+  }
+]
 ```
 
 ## Create a new Project

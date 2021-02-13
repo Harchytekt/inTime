@@ -40,6 +40,13 @@ class ProjectRestController {
         )
     }
 
+    @GetMapping("/client/{clientId}")
+    List<ProjectDto> getByClientId(@PathVariable Long clientId) {
+        return modelMapper.map(projectService.findByClientId(clientId),
+                ProjectDto[].class
+        )
+    }
+
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {

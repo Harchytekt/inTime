@@ -9,4 +9,6 @@ interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Optional<Project> findByName(String name)
 
+    List<Project> findByClientId(Long clientId)
+
 }

@@ -4,24 +4,29 @@
 `POST` /client/{id}  
 `PUT`  /client/{id}
 
-### Get Client by ID
-#### URL STRUCTURE
+**Summary**  
+- `GET`  `/client/{id}` [🔗](#get-client-by-id)
+- `POST` `/client/{id}` + body [🔗](#create-a-new-client)
+- `PUT`  `/client/{id}` + body [🔗](#update-client)
+
+## Get Client by ID
+### URL STRUCTURE
 `http://localhost:8080/client/{id}`
 
-#### METHOD
+### METHOD
 `GET`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl "http://localhost:8080/client/1"
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`) and the workspace name (`workspaceName`).
 
-##### Sample response
+#### Sample response
 ```json
 {
     "id": 1,
@@ -31,14 +36,14 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
 }
 ```
 
-### Create a new Client
-#### URL STRUCTURE
+## Create a new Client
+### URL STRUCTURE
 `http://localhost:8080/client`
 
-#### METHOD
+### METHOD
 `POST`
 
-##### Parameters
+#### Parameters
 ```json
 {
     "name": "Client name",
@@ -49,7 +54,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
 - `name` _**String**_: The name of the Client.
 - `workspaceName` _**String**_: The name of the workspace to which the Client belongs.
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "POST" "http://localhost:8080/client" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -59,13 +64,13 @@ curl -X "POST" "http://localhost:8080/client" \
 }'
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `201`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), and the workspace name (`workspaceName`).  
 > The Toggl ID is obviously `null` at this point.
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 3,
@@ -75,14 +80,14 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
 }
 ```
 
-### Update Client
-#### URL STRUCTURE
+## Update Client
+### URL STRUCTURE
 `http://localhost:8080/client/{id}`
 
-#### METHOD
+### METHOD
 `PUT`
 
-##### Parameters
+#### Parameters
 ```json
 {
     "togglId": 1,
@@ -95,7 +100,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
 - `name` _**String?**_: The name of the Client.
 - `workspaceName` _**String?**_:  The name of the workspace to which the Client belongs.
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "PUT" "http://localhost:8080/client/3" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -104,12 +109,12 @@ curl -X "PUT" "http://localhost:8080/client/3" \
 }'
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), and the workspace name (`workspaceName`).
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 3,

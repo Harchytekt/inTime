@@ -243,7 +243,7 @@ curl -X "DELETE" "http://localhost:8080/time_entry/1"
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 > ⚠️ If the Time Entry is still running, you won't be able to delete it.  
-> If you want to delete a running Time Entry, you may use a _force delete_.
+> If you want to delete a running Time Entry, you may use a _[force delete](https://github.com/Harchytekt/inTime/blob/master/docs/REST%20API%20Entities/Time%20Entry.md#force-delete-time-entry-by-id)_.
 
 ##### Sample Response
 ```json

@@ -4,7 +4,7 @@
 `POST` /client/{id}  
 `PUT`  /client/{id}
 
-### Get by id
+### Get Client by ID
 #### URL STRUCTURE
 `http://localhost:8080/client/{id}`
 
@@ -17,7 +17,7 @@ curl "http://localhost:8080/client/1"
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`) and the workspace name (`workspaceName`).
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`) and the workspace name (`workspaceName`).
 
 ##### Sample response
 ```json
@@ -31,7 +31,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 
 ### Create a new Client
 #### URL STRUCTURE
-`http://localhost:8080/client/`
+`http://localhost:8080/client`
 
 #### METHOD
 `POST`
@@ -49,7 +49,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 
 #### EXAMPLE
 ```curl
-curl -X "POST" "http://localhost:8080/client/" \
+curl -X "POST" "http://localhost:8080/client" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
   "name": "Third Client",
@@ -58,8 +58,8 @@ curl -X "POST" "http://localhost:8080/client/" \
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), and the workspace name (`workspaceName`).  
-> The Toggl id is obviously `null` at this point.
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), and the workspace name (`workspaceName`).  
+> The Toggl ID is obviously `null` at this point.
 
 ##### Sample Response 
 ```json
@@ -87,7 +87,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 }
 ```
 
-- `togglId` _**Long?**_: The id of the Client in Toggl.
+- `togglId` _**Long?**_: The ID of the Client in Toggl.
 - `name` _**String?**_: The name of the Client.
 - `workspaceName` _**String?**_:  The name of the workspace to which the Client belongs.
 
@@ -101,7 +101,7 @@ curl -X "PUT" "http://localhost:8080/client/3" \
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), and the workspace name (`workspaceName`).
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), and the workspace name (`workspaceName`).
 
 ##### Sample Response 
 ```json

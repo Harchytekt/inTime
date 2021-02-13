@@ -1,6 +1,6 @@
 # Project
 
-### Get by id
+### Get Project by ID
 #### URL STRUCTURE
 `http://localhost:8080/project/{id}`
 
@@ -13,7 +13,7 @@ curl "http://localhost:8080/project/1"
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
 
 ##### Sample response
 ```json
@@ -28,7 +28,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 
 ### Create a new Project
 #### URL STRUCTURE
-`http://localhost:8080/project/`
+`http://localhost:8080/project`
 
 #### METHOD
 `POST`
@@ -48,7 +48,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 
 #### EXAMPLE
 ```curl
-curl -X "POST" "http://localhost:8080/project/" \
+curl -X "POST" "http://localhost:8080/project" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
   "name": "Third Project",
@@ -57,8 +57,8 @@ curl -X "POST" "http://localhost:8080/project/" \
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).  
-> The Toggl id is obviously `null` at this point.
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).  
+> The Toggl ID is obviously `null` at this point.
 
 ##### Sample Response 
 ```json
@@ -88,7 +88,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 }
 ```
 
-- `togglId` _**Long?**_: The id of the Project in Toggl.
+- `togglId` _**Long?**_: The ID of the Project in Toggl.
 - `name` _**String?**_: The name of the Project.
 - `billable` _**String?**_: The billable state of the Project. The default for this field is `false`.
 - `clientName` _**String?**_:  The name of the client to which the Project belongs.
@@ -104,7 +104,7 @@ curl -X "PUT" "http://localhost:8080/project/3" \
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
 
 ##### Sample Response 
 ```json

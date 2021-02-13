@@ -1,6 +1,6 @@
 # Workspace
 
-### Get by id
+### Get Workspace by ID
 #### URL STRUCTURE
 `http://localhost:8080/workspace/{id}`
 
@@ -13,7 +13,7 @@ curl "http://localhost:8080/workspace/1"
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the name (`name`).
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the name (`name`).
 
 ##### Sample response
 ```json
@@ -26,7 +26,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the n
 
 ### Create a new Workspace
 #### URL STRUCTURE
-`http://localhost:8080/workspace/`
+`http://localhost:8080/workspace`
 
 #### METHOD
 `POST`
@@ -42,7 +42,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the n
 
 #### EXAMPLE
 ```curl
-curl -X "POST" "http://localhost:8080/workspace/" \
+curl -X "POST" "http://localhost:8080/workspace" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
   "name": "My second workspace"
@@ -50,8 +50,8 @@ curl -X "POST" "http://localhost:8080/workspace/" \
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the workspace name (`name`).  
-> The Toggl id is obviously `null` at this point.
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the workspace name (`name`).  
+> The Toggl ID is obviously `null` at this point.
 
 ##### Sample Response 
 ```json
@@ -77,7 +77,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the w
 }
 ```
 
-- `togglId` _**Long?**_: The id of the Workspace in Toggl.
+- `togglId` _**Long?**_: The ID of the Workspace in Toggl.
 - `name` _**String?**_: The name of the Workspace.
 
 #### EXAMPLE
@@ -90,7 +90,7 @@ curl -X "PUT" "http://localhost:8080/workspace/2" \
 ```
 
 #### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`) and the workspace name (`name`).
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the workspace name (`name`).
 
 ##### Sample Response 
 ```json

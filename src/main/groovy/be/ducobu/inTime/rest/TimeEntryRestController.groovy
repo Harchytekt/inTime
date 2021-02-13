@@ -130,4 +130,31 @@ class TimeEntryRestController {
                 TimeEntryDto.class
         )
     }
+
+    @DeleteMapping("/{id}")
+    TimeEntryDto deleteTimeEntry(@PathVariable Long id) {
+        TimeEntry timeEntry = timeEntryService.findById(id)
+
+        if (timeEntry.running)
+            throw new RunningTimeEntryException("The 'Time Entry' is still running!")
+
+        timeEntryService.deleteById(id)
+
+        return modelMapper.map(
+                timeEntry,
+                TimeEntryDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}/force")
+    TimeEntryDto forceDeleteTimeEntry(@PathVariable Long id) {
+        TimeEntry timeEntry = timeEntryService.findById(id)
+
+        timeEntryService.deleteById(id)
+
+        return modelMapper.map(
+                timeEntry,
+                TimeEntryDto.class
+        )
+    }
 }

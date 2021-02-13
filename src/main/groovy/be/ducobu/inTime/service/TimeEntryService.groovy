@@ -32,4 +32,8 @@ class TimeEntryService {
         return timeEntries.get(0)
     }
 
+    void deleteById(Long id) {
+        timeEntryRepository.deleteById(id)
+    }
+
 }

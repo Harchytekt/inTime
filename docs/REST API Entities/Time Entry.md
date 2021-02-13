@@ -225,3 +225,67 @@ The duration is calculated at call.
     "projectName": "First Project"
 }
 ```
+
+### Delete Time Entry by ID
+#### URL STRUCTURE
+`http://localhost:8080/time_entry/{id}`
+
+#### METHOD
+`DELETE`
+
+#### EXAMPLE
+```curl
+curl -X "DELETE" "http://localhost:8080/time_entry/1"
+```
+
+#### RETURNS
+> HTTP Status code: `200`
+
+A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
+> ⚠️ If the Time Entry is still running, you won't be able to delete it.  
+> If you want to delete a running Time Entry, you may use a _force delete_.
+
+##### Sample Response
+```json
+{
+  "id": 1,
+  "togglId": null,
+  "startDate": "2020-04-17T14:28:42",
+  "endDate": "2020-04-17T14:31:42",
+  "duration": 180,
+  "description": null,
+  "running": true,
+  "projectName": "First Project"
+}
+```
+
+### Force Delete Time Entry by ID
+#### URL STRUCTURE
+`http://localhost:8080/time_entry/{id}/force`
+
+#### METHOD
+`DELETE`
+
+#### EXAMPLE
+```curl
+curl -X "DELETE" "http://localhost:8080/time_entry/2/force"
+```
+
+#### RETURNS
+A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
+The duration is calculated at call when the Time Entry is running.
+> ⚠️ If the Time Entry is still running, it will be deleted without warning.
+
+##### Sample Response 
+```json
+{
+  "id": 2,
+  "togglId": null,
+  "startDate": "2020-04-17T16:14:29",
+  "endDate": null,
+  "duration": 1672,
+  "description": "Test",
+  "running": true,
+  "projectName": "First Project"
+}
+```

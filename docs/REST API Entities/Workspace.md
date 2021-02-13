@@ -1,23 +1,29 @@
 # Workspace
+Back to the [menu](../README.md)
 
-### Get Workspace by ID
-#### URL STRUCTURE
+**Summary**
+- `GET`  `/workspace/{id}` [🔗](#get-workspace-by-id)
+- `POST` `/workspace/{id}` + body [🔗](#create-a-new-workspace)
+- `PUT`  `/workspace/{id}` + body [🔗](#update-workspace)
+
+## Get Workspace by ID
+### URL STRUCTURE
 `http://localhost:8080/workspace/{id}`
 
-#### METHOD
+### METHOD
 `GET`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl "http://localhost:8080/workspace/1"
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the name (`name`).
 
-##### Sample response
+#### Sample response
 ```json
 {
     "id": 1,
@@ -26,14 +32,14 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the n
 }
 ```
 
-### Create a new Workspace
-#### URL STRUCTURE
+## Create a new Workspace
+### URL STRUCTURE
 `http://localhost:8080/workspace`
 
-#### METHOD
+### METHOD
 `POST`
 
-##### Parameters
+#### Parameters
 ```json
 {
     "name": "Workspace name"
@@ -42,7 +48,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the n
 
 - `name` _**String**_: The name of the Workspace.
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "POST" "http://localhost:8080/workspace" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -51,13 +57,13 @@ curl -X "POST" "http://localhost:8080/workspace" \
 }'
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `201`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the workspace name (`name`).  
 > The Toggl ID is obviously `null` at this point.
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 2,
@@ -66,14 +72,14 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the w
 }
 ```
 
-### Update Workspace
-#### URL STRUCTURE
+## Update Workspace
+### URL STRUCTURE
 `http://localhost:8080/workspace/{id}`
 
-#### METHOD
+### METHOD
 `PUT`
 
-##### Parameters
+#### Parameters
 ```json
 {
     "togglId": 1,
@@ -84,7 +90,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the w
 - `togglId` _**Long?**_: The ID of the Workspace in Toggl.
 - `name` _**String?**_: The name of the Workspace.
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "PUT" "http://localhost:8080/workspace/2" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -93,12 +99,12 @@ curl -X "PUT" "http://localhost:8080/workspace/2" \
 }'
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the workspace name (`name`).
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 2,

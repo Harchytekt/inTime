@@ -1,24 +1,35 @@
 # Time Entry
+Back to the [menu](../README.md)
 
-### Get Time Entry by ID
-#### URL STRUCTURE
+**Summary**
+- `GET`  `/time_entry/{id}` [🔗](#get-time-entry-by-id)
+- `GET`  `/time_entry/{id}/duration` [🔗](#get-duration)
+- `POST` `/time_entry/{id}` + body [🔗](#create-a-new-time-entry)
+- `PUT`  `/time_entry/{id}` + body [🔗](#update-time-entry)
+- `PUT`  `/time_entry/stop` [🔗](#stop-current-time-entry)
+- `PUT`  `/time_entry/restart` [🔗](#restart-last-time-entry)
+- `DELETE`  `/time_entry/{id}` [🔗](#delete-time-entry-by-id)
+- `DELETE`  `/time_entry/{id}/force` [🔗](#force-delete-time-entry-by-id)
+
+## Get Time Entry by ID
+### URL STRUCTURE
 `http://localhost:8080/time_entry/{id}`
 
-#### METHOD
+### METHOD
 `GET`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl "http://localhost:8080/time_entry/1"
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 The duration is calculated at call when the Time Entry is running.
 
-##### Sample response
+#### Sample response
 ```json
 {
     "id": 1,
@@ -32,39 +43,39 @@ The duration is calculated at call when the Time Entry is running.
 }
 ```
 
-### Get duration
-#### URL STRUCTURE
+## Get duration
+### URL STRUCTURE
 `http://localhost:8080/time_entry/{id}/duration`
 
-#### METHOD
+### METHOD
 `GET`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl "http://localhost:8080/time_entry/1/duration"
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including the duration in milliseconds (`duration`).  
 The duration is calculated at call when the Time Entry is running.
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "duration": 6347
 }
 ```
 
-### Create a new Time Entry
-#### URL STRUCTURE
+## Create a new Time Entry
+### URL STRUCTURE
 `http://localhost:8080/time_entry`
 
-#### METHOD
+### METHOD
 `POST`
 
-##### Parameters
+#### Parameters
 ```json
 {
     "projectName": "Project name",
@@ -75,7 +86,7 @@ The duration is calculated at call when the Time Entry is running.
 - `projectName` _**String**_: The name of the project to which the Time Entry belongs.
 - `description` _**String**_: The description of the Time Entry. The default for this field is `""`.
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "POST" "http://localhost:8080/time_entry/" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -85,14 +96,14 @@ curl -X "POST" "http://localhost:8080/time_entry/" \
 }'
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `201`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 > The duration is calculated at call, its value is obviously `0`.  
 > The Toggl ID is obviously `null` at this point.
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 2,
@@ -106,14 +117,14 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting
 }
 ```
 
-### Update Time Entry
-#### URL STRUCTURE
+## Update Time Entry
+### URL STRUCTURE
 `http://localhost:8080/time_entry/{id}`
 
-#### METHOD
+### METHOD
 `PUT`
 
-##### Parameters
+#### Parameters
 ```json
 {
     "togglId": 1,
@@ -131,7 +142,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting
 - `endDate` _**Date?**_: The ending date and time of the Time Entry.
 > ⚠️ If the Time Entry is still running, you won't be able to change the `endDate`.
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "PUT" "http://localhost:8080/time_entry/2" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -143,13 +154,13 @@ curl -X "PUT" "http://localhost:8080/time_entry/2" \
 }'
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 The duration is calculated at call when the Time Entry is running.
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 2,
@@ -163,24 +174,24 @@ The duration is calculated at call when the Time Entry is running.
 }
 ```
 
-### Stop Current Time Entry
-#### URL STRUCTURE
+## Stop Current Time Entry
+### URL STRUCTURE
 `http://localhost:8080/time_entry/stop`
 
-#### METHOD
+### METHOD
 `PUT`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "PUT" "http://localhost:8080/time_entry/stop"
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 2,
@@ -194,25 +205,25 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting
 }
 ```
 
-### Restart Last Time Entry
-#### URL STRUCTURE
+## Restart Last Time Entry
+### URL STRUCTURE
 `http://localhost:8080/time_entry/restart`
 
-#### METHOD
+### METHOD
 `PUT`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "PUT" "http://localhost:8080/time_entry/restart"
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 The duration is calculated at call.
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 2,
@@ -226,26 +237,26 @@ The duration is calculated at call.
 }
 ```
 
-### Delete Time Entry by ID
-#### URL STRUCTURE
+## Delete Time Entry by ID
+### URL STRUCTURE
 `http://localhost:8080/time_entry/{id}`
 
-#### METHOD
+### METHOD
 `DELETE`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "DELETE" "http://localhost:8080/time_entry/1"
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 > ⚠️ If the Time Entry is still running, you won't be able to delete it.  
 > If you want to delete a running Time Entry, you may use a _[force delete](https://github.com/Harchytekt/inTime/blob/master/docs/REST%20API%20Entities/Time%20Entry.md#force-delete-time-entry-by-id)_.
 
-##### Sample Response
+#### Sample Response
 ```json
 {
   "id": 1,
@@ -259,24 +270,24 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting
 }
 ```
 
-### Force Delete Time Entry by ID
-#### URL STRUCTURE
+## Force Delete Time Entry by ID
+### URL STRUCTURE
 `http://localhost:8080/time_entry/{id}/force`
 
-#### METHOD
+### METHOD
 `DELETE`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "DELETE" "http://localhost:8080/time_entry/2/force"
 ```
 
-#### RETURNS
+### RETURNS
 A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 The duration is calculated at call when the Time Entry is running.
 > ⚠️ If the Time Entry is still running, it will be deleted without warning.
 
-##### Sample Response 
+#### Sample Response 
 ```json
 {
   "id": 2,

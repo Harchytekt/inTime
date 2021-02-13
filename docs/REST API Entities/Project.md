@@ -1,23 +1,29 @@
 # Project
+Back to the [menu](../README.md)
 
-### Get Project by ID
-#### URL STRUCTURE
+**Summary**
+- `GET`  `/project/{id}` [🔗](#get-project-by-id)
+- `POST` `/project/{id}` + body [🔗](#create-a-new-project)
+- `PUT`  `/project/{id}` + body [🔗](#update-project)
+
+## Get Project by ID
+### URL STRUCTURE
 `http://localhost:8080/project/{id}`
 
-#### METHOD
+### METHOD
 `GET`
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl "http://localhost:8080/project/1"
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
 
-##### Sample response
+#### Sample response
 ```json
 {
     "id": 1,
@@ -28,14 +34,14 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
 }
 ```
 
-### Create a new Project
-#### URL STRUCTURE
+## Create a new Project
+### URL STRUCTURE
 `http://localhost:8080/project`
 
-#### METHOD
+### METHOD
 `POST`
 
-##### Parameters
+#### Parameters
 ```json
 {
     "name": "Project name",
@@ -48,7 +54,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
 - `billable` _**Boolean?**_: The billable state of the Project. The default for this field is `false`.
 - `clientName` _**String**_: The name of the client to which the Project belongs.
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "POST" "http://localhost:8080/project" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -58,13 +64,13 @@ curl -X "POST" "http://localhost:8080/project" \
 }'
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `201`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).  
 > The Toggl ID is obviously `null` at this point.
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 3,
@@ -75,14 +81,14 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
 }
 ```
 
-### Update Project
-#### URL STRUCTURE
+## Update Project
+### URL STRUCTURE
 `http://localhost:8080/project/{id}`
 
-#### METHOD
+### METHOD
 `PUT`
 
-##### Parameters
+#### Parameters
 ```json
 {
     "togglId": 1,
@@ -97,7 +103,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`n
 - `billable` _**String?**_: The billable state of the Project. The default for this field is `false`.
 - `clientName` _**String?**_:  The name of the client to which the Project belongs.
 
-#### EXAMPLE
+### EXAMPLE
 ```curl
 curl -X "PUT" "http://localhost:8080/project/3" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -107,12 +113,12 @@ curl -X "PUT" "http://localhost:8080/project/3" \
 }'
 ```
 
-#### RETURNS
+### RETURNS
 > HTTP Status code: `200`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
 
-##### Sample Response
+#### Sample Response
 ```json
 {
     "id": 3,

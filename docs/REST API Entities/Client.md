@@ -71,7 +71,7 @@ A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), name (`n
 }
 ```
 
-### Update Project
+### Update Client
 #### URL STRUCTURE
 `http://localhost:8080/client/{id}`
 

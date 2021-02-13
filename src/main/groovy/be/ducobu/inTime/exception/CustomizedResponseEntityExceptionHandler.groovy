@@ -22,7 +22,7 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         status = HttpStatus.INTERNAL_SERVER_ERROR
         logger.error(status)
 
-        message = "A technical problem has occured!"
+        message = "A technical problem has occurred!"
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 new Date(),

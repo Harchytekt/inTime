@@ -10,7 +10,7 @@ class ExceptionResponse {
         this.timestamp = timestamp
         this.status = status
         this.message = message
-        this.path = path
+        this.path = path.startsWith("uri=") ? path.split("=")[1] : path
     }
 
     Date getTimestamp() {

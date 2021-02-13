@@ -86,7 +86,7 @@ curl -X "POST" "http://localhost:8080/time_entry/" \
 ```
 
 #### RETURNS
-> HTTP Status code: `200`
+> HTTP Status code: `201`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 > The duration is calculated at call, its value is obviously `0`.  

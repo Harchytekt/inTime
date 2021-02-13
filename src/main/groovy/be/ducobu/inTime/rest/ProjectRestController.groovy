@@ -12,6 +12,7 @@ import be.ducobu.inTime.service.ProjectService
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
@@ -40,6 +41,7 @@ class ProjectRestController {
     }
 
     @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
         Client client = clientService.findByName(projectCreateDto.clientName)
 

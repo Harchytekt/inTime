@@ -59,7 +59,7 @@ curl -X "POST" "http://localhost:8080/project" \
 ```
 
 #### RETURNS
-> HTTP Status code: `200`
+> HTTP Status code: `201`
 
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).  
 > The Toggl ID is obviously `null` at this point.

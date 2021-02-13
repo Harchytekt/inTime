@@ -15,6 +15,7 @@ import be.ducobu.inTime.service.WorkspaceService
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
@@ -43,6 +44,7 @@ class ClientRestController {
     }
 
     @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
     ClientDto create(@RequestBody ClientCreateDto clientCreateDto) {
         Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
 

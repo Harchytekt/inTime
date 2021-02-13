@@ -1,7 +1,7 @@
 # Workspace
 Back to the [menu](../README.md)
 
-**Summary**
+## Summary
 - `GET`  `/workspace/{id}` [🔗](#get-workspace-by-id)
 - `POST` `/workspace/{id}` + body [🔗](#create-a-new-workspace)
 - `PUT`  `/workspace/{id}` + body [🔗](#update-workspace)

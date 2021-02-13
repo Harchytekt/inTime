@@ -1,7 +1,7 @@
 # Project
 Back to the [menu](../README.md)
 
-**Summary**
+## Summary
 - `GET`  `/project/{id}` [🔗](#get-project-by-id)
 - `POST` `/project/{id}` + body [🔗](#create-a-new-project)
 - `PUT`  `/project/{id}` + body [🔗](#update-project)

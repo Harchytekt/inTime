@@ -1,7 +1,7 @@
 # Client
 Back to the [menu](../README.md)  
 
-**Summary**
+## Summary
 - `GET`  `/client/{id}` [🔗](#get-client-by-id)
 - `POST` `/client/{id}` + body [🔗](#create-a-new-client)
 - `PUT`  `/client/{id}` + body [🔗](#update-client)

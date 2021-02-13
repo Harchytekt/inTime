@@ -1,7 +1,7 @@
 # Time Entry
 Back to the [menu](../README.md)
 
-**Summary**
+## Summary
 - `GET`  `/time_entry/{id}` [🔗](#get-time-entry-by-id)
 - `GET`  `/time_entry/{id}/duration` [🔗](#get-duration)
 - `POST` `/time_entry/{id}` + body [🔗](#create-a-new-time-entry)

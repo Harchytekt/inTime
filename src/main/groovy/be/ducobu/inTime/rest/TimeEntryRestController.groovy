@@ -101,7 +101,7 @@ class TimeEntryRestController {
         )
     }
 
-    @PutMapping("/")
+    @PutMapping("/stop")
     TimeEntryDto stopTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findRunningTimeEntry()
         if (timeEntry == null)

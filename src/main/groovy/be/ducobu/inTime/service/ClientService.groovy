@@ -2,9 +2,7 @@ package be.ducobu.inTime.service
 
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.model.Client
-import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.repository.ClientRepository
-import be.ducobu.inTime.repository.WorkspaceRepository
 import org.springframework.stereotype.Service
 
 @Service

@@ -1,6 +1,5 @@
 package be.ducobu.inTime.service
 
-
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.repository.WorkspaceRepository

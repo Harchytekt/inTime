@@ -13,6 +13,8 @@ curl "http://localhost:8080/time_entry/1"
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 The duration is calculated at call when the Time Entry is running.
 
@@ -43,6 +45,8 @@ curl "http://localhost:8080/time_entry/1/duration"
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including the duration in milliseconds (`duration`).  
 The duration is calculated at call when the Time Entry is running.
 
@@ -82,11 +86,13 @@ curl -X "POST" "http://localhost:8080/time_entry/" \
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 > The duration is calculated at call, its value is obviously `0`.  
 > The Toggl ID is obviously `null` at this point.
 
-##### Sample Response 
+##### Sample Response
 ```json
 {
     "id": 2,
@@ -138,10 +144,12 @@ curl -X "PUT" "http://localhost:8080/time_entry/2" \
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 The duration is calculated at call when the Time Entry is running.
 
-##### Sample Response 
+##### Sample Response
 ```json
 {
     "id": 2,
@@ -168,9 +176,11 @@ curl -X "PUT" "http://localhost:8080/time_entry/stop"
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).
 
-##### Sample Response 
+##### Sample Response
 ```json
 {
     "id": 2,
@@ -197,10 +207,12 @@ curl -X "PUT" "http://localhost:8080/time_entry/restart"
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
 The duration is calculated at call.
 
-##### Sample Response 
+##### Sample Response
 ```json
 {
     "id": 2,

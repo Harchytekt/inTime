@@ -13,6 +13,8 @@ curl "http://localhost:8080/project/1"
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
 
 ##### Sample response
@@ -57,10 +59,12 @@ curl -X "POST" "http://localhost:8080/project" \
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).  
 > The Toggl ID is obviously `null` at this point.
 
-##### Sample Response 
+##### Sample Response
 ```json
 {
     "id": 3,
@@ -104,9 +108,11 @@ curl -X "PUT" "http://localhost:8080/project/3" \
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), name (`name`), billable state (`billable`) and the client name (`clientName`).
 
-##### Sample Response 
+##### Sample Response
 ```json
 {
     "id": 3,

@@ -13,6 +13,8 @@ curl "http://localhost:8080/workspace/1"
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the name (`name`).
 
 ##### Sample response
@@ -50,10 +52,12 @@ curl -X "POST" "http://localhost:8080/workspace" \
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the workspace name (`name`).  
 > The Toggl ID is obviously `null` at this point.
 
-##### Sample Response 
+##### Sample Response
 ```json
 {
     "id": 2,
@@ -90,9 +94,11 @@ curl -X "PUT" "http://localhost:8080/workspace/2" \
 ```
 
 #### RETURNS
+> HTTP Status code: `200`
+
 A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the workspace name (`name`).
 
-##### Sample Response 
+##### Sample Response
 ```json
 {
     "id": 2,

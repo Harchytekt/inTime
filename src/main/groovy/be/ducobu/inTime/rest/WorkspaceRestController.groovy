@@ -1,15 +1,12 @@
 package be.ducobu.inTime.rest
 
 import be.ducobu.inTime.dto.client.ClientDto
-import be.ducobu.inTime.dto.project.ProjectDto
-import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
 import be.ducobu.inTime.dto.workspace.WorkspaceCreateDto
 import be.ducobu.inTime.dto.workspace.WorkspaceDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
 import be.ducobu.inTime.exception.ExistingChildFoundException
 import be.ducobu.inTime.exception.NoEntryFoundException
-import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.WorkspaceService
 import org.modelmapper.ModelMapper

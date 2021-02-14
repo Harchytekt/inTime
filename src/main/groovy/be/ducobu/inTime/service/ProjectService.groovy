@@ -32,4 +32,8 @@ class ProjectService {
         return projectRepository.findByClientId(clientId)
     }
 
+    void deleteById(Long id) {
+        projectRepository.deleteById(id)
+    }
+
 }

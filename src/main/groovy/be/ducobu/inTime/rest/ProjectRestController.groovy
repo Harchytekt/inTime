@@ -47,6 +47,14 @@ class ProjectRestController {
         )
     }
 
+    @GetMapping("/{id}/timeentries")
+    List<TimeEntryDto> getTimeEntriesById(@PathVariable Long id) {
+        Project project = projectService.findById(id)
+        return modelMapper.map(project.getTimeEntries(),
+                TimeEntryDto[].class
+        )
+    }
+
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
@@ -98,6 +106,33 @@ class ProjectRestController {
 
         return modelMapper.map(
                 projectService.save(project),
+                ProjectDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}")
+    ProjectDto deleteProject(@PathVariable Long id) {
+        Project project = projectService.findById(id)
+
+        if (!project.getTimeEntries().isEmpty())
+            throw new ExistingChildFoundException("Time Entry")
+
+        projectService.deleteById(id)
+
+        return modelMapper.map(
+                project,
+                ProjectDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}/force")
+    ProjectDto forceDeleteProject(@PathVariable Long id) {
+        Project project = projectService.findById(id)
+
+        projectService.deleteById(id)
+
+        return modelMapper.map(
+                project,
                 ProjectDto.class
         )
     }

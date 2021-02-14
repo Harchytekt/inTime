@@ -8,6 +8,7 @@ import be.ducobu.inTime.dto.workspace.WorkspaceDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
 import be.ducobu.inTime.exception.ExistingChildFoundException
+import be.ducobu.inTime.exception.NoEntryFoundException
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.WorkspaceService
@@ -31,6 +32,19 @@ class WorkspaceRestController {
     WorkspaceRestController(WorkspaceService workspaceService, ModelMapper modelMapper) {
         this.workspaceService = workspaceService
         this.modelMapper = modelMapper
+    }
+
+    @GetMapping()
+    List<WorkspaceDto> getAll() {
+        List<Workspace> workspaces = workspaceService.findAll()
+
+        if (workspaces.isEmpty()) {
+            throw new NoEntryFoundException("Workspace")
+        }
+
+        return modelMapper.map(workspaceService.findAll(),
+                WorkspaceDto[].class
+        )
     }
 
     @GetMapping("/{id}")

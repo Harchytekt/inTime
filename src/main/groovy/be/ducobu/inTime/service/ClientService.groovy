@@ -2,6 +2,7 @@ package be.ducobu.inTime.service
 
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.model.Client
+import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.repository.ClientRepository
 import org.springframework.stereotype.Service
 
@@ -16,6 +17,10 @@ class ClientService {
 
     Client save(Client client) {
         return clientRepository.save(client)
+    }
+
+    List<Client> findAll() {
+        return clientRepository.findAll()
     }
 
     Client findById(Long id) {

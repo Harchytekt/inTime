@@ -18,6 +18,10 @@ class ProjectService {
         return projectRepository.save(project)
     }
 
+    List<Project> findAll() {
+        return projectRepository.findAll()
+    }
+
     Project findById(Long id) {
         return projectRepository.findById(id)
                 .orElseThrow({ -> new CustomEntityNotFoundException("Project", id as String) })

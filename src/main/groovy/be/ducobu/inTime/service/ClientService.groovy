@@ -28,4 +28,8 @@ class ClientService {
                 .orElseThrow({ -> new CustomEntityNotFoundException("Client", name) })
     }
 
+    void deleteById(Long id) {
+        clientRepository.deleteById(id)
+    }
+
 }

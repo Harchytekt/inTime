@@ -3,8 +3,12 @@ package be.ducobu.inTime.rest
 import be.ducobu.inTime.dto.project.ProjectCreateDto
 import be.ducobu.inTime.dto.project.ProjectDto
 import be.ducobu.inTime.dto.project.ProjectSaveDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
+import be.ducobu.inTime.exception.ExistingChildFoundException
+import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.RunningTimeEntryException
 import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.service.ClientService
@@ -40,10 +44,18 @@ class ProjectRestController {
         )
     }
 
-    @GetMapping("/client/{clientId}")
+    /*@GetMapping("/client/{clientId}")
     List<ProjectDto> getByClientId(@PathVariable Long clientId) {
         return modelMapper.map(projectService.findByClientId(clientId),
                 ProjectDto[].class
+        )
+    }*/
+
+    @GetMapping("/{id}/timeentries")
+    List<TimeEntryDto> getTimeEntriesById(@PathVariable Long id) {
+        Project project = projectService.findById(id)
+        return modelMapper.map(project.getTimeEntries(),
+                TimeEntryDto[].class
         )
     }
 
@@ -98,6 +110,33 @@ class ProjectRestController {
 
         return modelMapper.map(
                 projectService.save(project),
+                ProjectDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}")
+    ProjectDto deleteProject(@PathVariable Long id) {
+        Project project = projectService.findById(id)
+
+        if (!project.getTimeEntries().isEmpty())
+            throw new ExistingChildFoundException("Time Entry")
+
+        projectService.deleteById(id)
+
+        return modelMapper.map(
+                project,
+                ProjectDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}/force")
+    ProjectDto forceDeleteProject(@PathVariable Long id) {
+        Project project = projectService.findById(id)
+
+        projectService.deleteById(id)
+
+        return modelMapper.map(
+                project,
                 ProjectDto.class
         )
     }

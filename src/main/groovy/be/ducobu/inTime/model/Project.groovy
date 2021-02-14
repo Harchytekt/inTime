@@ -25,6 +25,10 @@ class Project {
     @JoinColumn(name = "fk_client", nullable = false)
     private Client client
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
+    private List<TimeEntry> timeEntries
+
     Project() {}
 
     Project(Long id, String name) {
@@ -70,5 +74,13 @@ class Project {
 
     void setClient(Client client) {
         this.client = client
+    }
+
+    List<TimeEntry> getTimeEntries() {
+        return timeEntries
+    }
+
+    void setTimeEntries(List<TimeEntry> timeEntries) {
+        this.timeEntries = timeEntries
     }
 }

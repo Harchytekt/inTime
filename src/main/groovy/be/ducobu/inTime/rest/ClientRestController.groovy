@@ -3,9 +3,13 @@ package be.ducobu.inTime.rest
 import be.ducobu.inTime.dto.client.ClientCreateDto
 import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.client.ClientSaveDto
+import be.ducobu.inTime.dto.project.ProjectDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
+import be.ducobu.inTime.exception.ExistingChildFoundException
 import be.ducobu.inTime.model.Client
+import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.ClientService
 import be.ducobu.inTime.service.WorkspaceService
@@ -37,6 +41,14 @@ class ClientRestController {
     ClientDto getById(@PathVariable Long id) {
         return modelMapper.map(clientService.findById(id),
                 ClientDto.class
+        )
+    }
+
+    @GetMapping("/{id}/projects")
+    List<ProjectDto> getProjectsById(@PathVariable Long id) {
+        Client client = clientService.findById(id)
+        return modelMapper.map(client.getProjects(),
+                ProjectDto[].class
         )
     }
 
@@ -82,6 +94,33 @@ class ClientRestController {
 
         return modelMapper.map(
                 clientService.save(client),
+                ClientDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}")
+    ClientDto deleteClient(@PathVariable Long id) {
+        Client client = clientService.findById(id)
+
+        if (!client.getProjects().isEmpty())
+            throw new ExistingChildFoundException("Project")
+
+        clientService.deleteById(id)
+
+        return modelMapper.map(
+                client,
+                ClientDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}/force")
+    ClientDto forceDeleteClient(@PathVariable Long id) {
+        Client client = clientService.findById(id)
+
+        clientService.deleteById(id)
+
+        return modelMapper.map(
+                client,
                 ClientDto.class
         )
     }

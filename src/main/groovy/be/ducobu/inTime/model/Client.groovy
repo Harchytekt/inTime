@@ -23,7 +23,8 @@ class Client {
     @JoinColumn(name = "fk_workspace", nullable = false)
     private Workspace workspace
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
     private Set<Project> projects
 
     Client() {}

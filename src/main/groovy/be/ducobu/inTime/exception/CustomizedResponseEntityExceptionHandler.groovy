@@ -54,8 +54,10 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         return new ResponseEntity<>(exceptionResponse, status)
     }
 
-    @ExceptionHandler(CustomEntityNotFoundException.class)
-    final ResponseEntity<Object> handleCustomEntityNotFoundException(CustomEntityNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(value = [CustomEntityNotFoundException.class,
+            RunningTimeEntryNotFoundException.class,
+            NoEntryFoundException.class])
+    final ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
         logger.error(ex.getMessage())
         status = HttpStatus.NOT_FOUND
 
@@ -69,38 +71,10 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         return new ResponseEntity<>(exceptionResponse, status)
     }
 
-    @ExceptionHandler(RunningTimeEntryNotFoundException.class)
-    final ResponseEntity<Object> handleRunningTimeEntryNotFoundException(RunningTimeEntryNotFoundException ex, WebRequest request) {
-        logger.error(ex.getMessage())
-        status = HttpStatus.NOT_FOUND
-
-        message = ex.getMessage()
-
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
-                status.value(),
-                message,
-                request.getDescription(false)
-        )
-        return new ResponseEntity<>(exceptionResponse, status)
-    }
-
-    @ExceptionHandler(DuplicateEntryException.class)
-    final ResponseEntity<Object> handleDuplicateEntryException(DuplicateEntryException ex, WebRequest request) {
-        logger.error(ex.getMessage())
-        status = HttpStatus.CONFLICT
-
-        message = ex.getMessage()
-
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
-                status.value(),
-                message,
-                request.getDescription(false)
-        )
-        return new ResponseEntity<>(exceptionResponse, status)
-    }
-
-    @ExceptionHandler(RunningTimeEntryException.class)
-    final ResponseEntity<Object> handleRunningTimeEntryException(RunningTimeEntryException ex, WebRequest request) {
+    @ExceptionHandler([DuplicateEntryException.class,
+            ExistingChildFoundException.class,
+            RunningTimeEntryException.class])
+    final ResponseEntity<Object> handleConflictException(Exception ex, WebRequest request) {
         logger.error(ex.getMessage())
         status = HttpStatus.CONFLICT
 

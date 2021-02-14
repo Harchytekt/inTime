@@ -8,6 +8,7 @@ import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
 import be.ducobu.inTime.exception.ExistingChildFoundException
+import be.ducobu.inTime.exception.NoEntryFoundException
 import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.Workspace
@@ -35,6 +36,19 @@ class ClientRestController {
         this.clientService = clientService
         this.workspaceService = workspaceService
         this.modelMapper = modelMapper
+    }
+
+    @GetMapping()
+    List<ClientDto> getAll() {
+        List<Client> clients = clientService.findAll()
+
+        if (clients.isEmpty()) {
+            throw new NoEntryFoundException("Client")
+        }
+
+        return modelMapper.map(clientService.findAll(),
+                ClientDto[].class
+        )
     }
 
     @GetMapping("/{id}")

@@ -1,6 +1,8 @@
 package be.ducobu.inTime.rest
 
+import be.ducobu.inTime.dto.project.ProjectDto
 import be.ducobu.inTime.dto.timeEntry.*
+import be.ducobu.inTime.exception.NoEntryFoundException
 import be.ducobu.inTime.exception.RunningTimeEntryException
 import be.ducobu.inTime.exception.RunningTimeEntryNotFoundException
 import be.ducobu.inTime.model.Project
@@ -31,6 +33,19 @@ class TimeEntryRestController {
         this.projectService = projectService
         this.timeEntryService = timeEntryService
         this.modelMapper = modelMapper
+    }
+
+    @GetMapping()
+    List<TimeEntryDto> getAll() {
+        List<TimeEntry> timeEntry = timeEntryService.findAll()
+
+        if (timeEntry.isEmpty()) {
+            throw new NoEntryFoundException("Time Entry")
+        }
+
+        return modelMapper.map(timeEntryService.findAll(),
+                TimeEntryDto[].class
+        )
     }
 
     @GetMapping("/{id}")

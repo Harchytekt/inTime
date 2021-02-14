@@ -1,9 +1,14 @@
 package be.ducobu.inTime.rest
 
+import be.ducobu.inTime.dto.client.ClientDto
+import be.ducobu.inTime.dto.project.ProjectDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
 import be.ducobu.inTime.dto.workspace.WorkspaceCreateDto
 import be.ducobu.inTime.dto.workspace.WorkspaceDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
+import be.ducobu.inTime.exception.ExistingChildFoundException
+import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.WorkspaceService
 import org.modelmapper.ModelMapper
@@ -32,6 +37,14 @@ class WorkspaceRestController {
     WorkspaceDto getById(@PathVariable Long id) {
         return modelMapper.map(workspaceService.findById(id),
                 WorkspaceDto.class
+        )
+    }
+
+    @GetMapping("/{id}/clients")
+    List<ClientDto> getClientsById(@PathVariable Long id) {
+        Workspace workspace = workspaceService.findById(id)
+        return modelMapper.map(workspace.getClients(),
+                ClientDto[].class
         )
     }
 
@@ -73,6 +86,33 @@ class WorkspaceRestController {
 
         return modelMapper.map(
                 workspaceService.save(workspace),
+                WorkspaceDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}")
+    WorkspaceDto deleteWorkspace(@PathVariable Long id) {
+        Workspace workspace = workspaceService.findById(id)
+
+        if (!workspace.getClients().isEmpty())
+            throw new ExistingChildFoundException("Client")
+
+        workspaceService.deleteById(id)
+
+        return modelMapper.map(
+                workspace,
+                WorkspaceDto.class
+        )
+    }
+
+    @DeleteMapping("/{id}/force")
+    WorkspaceDto forceDeleteWorkspace(@PathVariable Long id) {
+        Workspace workspace = workspaceService.findById(id)
+
+        workspaceService.deleteById(id)
+
+        return modelMapper.map(
+                workspace,
                 WorkspaceDto.class
         )
     }

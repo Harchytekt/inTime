@@ -19,7 +19,8 @@ class Workspace {
     @Column
     private String name
 
-    @OneToMany(mappedBy = "workspace")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workspace", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
     private Set<Client> clients
 
     Workspace() {}

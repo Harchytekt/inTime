@@ -3,8 +3,12 @@ package be.ducobu.inTime.rest
 import be.ducobu.inTime.dto.project.ProjectCreateDto
 import be.ducobu.inTime.dto.project.ProjectDto
 import be.ducobu.inTime.dto.project.ProjectSaveDto
+import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.exception.DuplicateEntryException
+import be.ducobu.inTime.exception.ExistingChildFoundException
+import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.RunningTimeEntryException
 import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.service.ClientService
@@ -40,12 +44,12 @@ class ProjectRestController {
         )
     }
 
-    @GetMapping("/client/{clientId}")
+    /*@GetMapping("/client/{clientId}")
     List<ProjectDto> getByClientId(@PathVariable Long clientId) {
         return modelMapper.map(projectService.findByClientId(clientId),
                 ProjectDto[].class
         )
-    }
+    }*/
 
     @GetMapping("/{id}/timeentries")
     List<TimeEntryDto> getTimeEntriesById(@PathVariable Long id) {

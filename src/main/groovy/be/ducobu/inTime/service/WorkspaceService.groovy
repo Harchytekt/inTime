@@ -28,4 +28,8 @@ class WorkspaceService {
                 .orElseThrow({ -> new CustomEntityNotFoundException("Workspace", name) })
     }
 
+    void deleteById(Long id) {
+        workspaceRepository.deleteById(id)
+    }
+
 }

@@ -2,6 +2,8 @@
 Back to the [menu](../README.md)
 
 ## Summary
+
+- `GET`  `/time_entry` [🔗](#get-all-time-entries)
 - `GET`  `/time_entry/{id}` [🔗](#get-time-entry-by-id)
 - `GET`  `/time_entry/{id}/duration` [🔗](#get-duration)
 - `POST` `/time_entry/{id}` + body [🔗](#create-a-new-time-entry)
@@ -11,14 +13,69 @@ Back to the [menu](../README.md)
 - `DELETE`  `/time_entry/{id}` [🔗](#delete-time-entry-by-id)
 - `DELETE`  `/time_entry/{id}/force` [🔗](#force-delete-time-entry-by-id)
 
-## Get Time Entry by ID
+## Get All Time Entries
+
 ### URL STRUCTURE
-`http://localhost:8080/time_entry/{id}`
+
+`http://localhost:8080/time_entry`
 
 ### METHOD
+
 `GET`
 
 ### EXAMPLE
+
+```curl
+curl "http://localhost:8080/time_entry"
+```
+
+### RETURNS
+
+> HTTP Status code: `200`
+
+A list of JSON-encoded dictionaries including an ID (`id`), Toggl ID (`togglId`), starting date and time (`startDate`),
+ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running
+state (`running`) and the project name (`projectName`).
+
+#### Sample response
+
+```json
+[
+        {
+        "id": 1,
+        "togglId": null,
+        "startDate": "2020-04-17T14:28:42",
+        "endDate": "2020-04-17T14:31:42",
+        "duration": 180,
+        "description": null,
+        "running": false,
+        "projectName": "First Project"
+    },
+    {
+        "id": 2,
+        "togglId": null,
+        "startDate": "2020-04-17T16:14:29",
+        "endDate": null,
+        "duration": 1672,
+        "description": "Test",
+        "running": true,
+        "projectName": "First Project"
+    }
+]
+```
+
+## Get Time Entry by ID
+
+### URL STRUCTURE
+
+`http://localhost:8080/time_entry/{id}`
+
+### METHOD
+
+`GET`
+
+### EXAMPLE
+
 ```curl
 curl "http://localhost:8080/time_entry/1"
 ```
@@ -257,6 +314,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting
 > If you want to delete a running Time Entry, you may use a _[force delete](https://github.com/Harchytekt/inTime/blob/master/docs/REST%20API%20Entities/Time%20Entry.md#force-delete-time-entry-by-id)_.
 
 #### Sample Response
+
 ```json
 {
   "id": 1,
@@ -265,7 +323,7 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting
   "endDate": "2020-04-17T14:31:42",
   "duration": 180,
   "description": null,
-  "running": true,
+  "running": false,
   "projectName": "First Project"
 }
 ```
@@ -275,19 +333,27 @@ A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`), starting
 `http://localhost:8080/time_entry/{id}/force`
 
 ### METHOD
+
 `DELETE`
 
 ### EXAMPLE
+
 ```curl
 curl -X "DELETE" "http://localhost:8080/time_entry/2/force"
 ```
 
 ### RETURNS
-A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), starting date and time (`startDate`), ending date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`) and the project name (`projectName`).  
+
+> HTTP Status code: `200`
+
+A JSON-encoded dictionary including an id (`id`), Toggl id (`togglId`), starting date and time (`startDate`), ending
+date and time (`endDate`), duration in milliseconds (`duration`), description (`description`), running state (`running`)
+and the project name (`projectName`).  
 The duration is calculated at call when the Time Entry is running.
 > ⚠️ If the Time Entry is still running, it will be deleted without warning.
 
-#### Sample Response 
+#### Sample Response
+
 ```json
 {
   "id": 2,

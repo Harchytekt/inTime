@@ -83,4 +83,8 @@ class Project {
     void setTimeEntries(List<TimeEntry> timeEntries) {
         this.timeEntries = timeEntries
     }
+
+    String toJson() {
+        return "{\"name\": \"$name\", \"clientName\": \"${client.name}\"}"
+    }
 }

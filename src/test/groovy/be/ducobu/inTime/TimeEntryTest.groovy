@@ -192,7 +192,7 @@ class TimeEntryTest extends GroovyTestCase {
 
     @Test
     @Order(11)
-    void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry() throws Exception {
+    void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(put("/time_entry/2")
                 .content("{\"description\": \"Test with update\", \"projectName\": \"My First Project\"}")
@@ -205,5 +205,62 @@ class TimeEntryTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.startDate', notNullValue()))
                 .andExpect(jsonPath('$.endDate', emptyOrNullString()))
                 .andExpect(jsonPath('$.projectName', is("My First Project")))
+    }
+
+    @Test
+    @Order(12)
+    void whenDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
+
+        mvc.perform(delete("/time_entry/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(1)))
+                .andExpect(jsonPath('$.startDate', is("2021-01-01T14:28:42")))
+                .andExpect(jsonPath('$.running', is(false)))
+                .andExpect(jsonPath('$.endDate', notNullValue()))
+                .andExpect(jsonPath('$.projectName', is("My First Project")))
+    }
+
+    @Test
+    @Order(12)
+    void whenDeleteRunningTimeEntryById_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(delete("/time_entry/2")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("The 'TimeEntry' is still running!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/2")))
+    }
+
+    @Test
+    @Order(13)
+    void whenForceDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
+
+        mvc.perform(delete("/time_entry/2/force")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.description', is("Test with update")))
+                .andExpect(jsonPath('$.running', is(true)))
+                .andExpect(jsonPath('$.startDate', notNullValue()))
+                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.projectName', is("My First Project")))
+    }
+
+    @Test
+    @Order(14)
+    void whenForceDeleteTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
+
+        mvc.perform(delete("/time_entry/3")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '3' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/3")))
     }
 }

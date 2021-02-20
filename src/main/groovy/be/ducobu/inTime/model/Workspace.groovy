@@ -61,4 +61,8 @@ class Workspace {
     void setClients(Set<Client> clients) {
         this.clients = clients
     }
+
+    String toJson() {
+        return "{\"name\": \"$name\"}"
+    }
 }

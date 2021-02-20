@@ -40,7 +40,7 @@ class TimeEntryRestController {
         List<TimeEntry> timeEntry = timeEntryService.findAll()
 
         if (timeEntry.isEmpty()) {
-            throw new NoEntryFoundException("Time Entry")
+            throw new NoEntryFoundException("TimeEntry")
         }
 
         return modelMapper.map(timeEntryService.findAll(),

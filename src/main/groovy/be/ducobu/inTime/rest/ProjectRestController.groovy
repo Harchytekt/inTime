@@ -131,7 +131,7 @@ class ProjectRestController {
         Project project = projectService.findById(id)
 
         if (!project.getTimeEntries().isEmpty())
-            throw new ExistingChildFoundException("Time Entry")
+            throw new ExistingChildFoundException("TimeEntry")
 
         projectService.deleteById(id)
 

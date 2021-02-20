@@ -1,150 +1,266 @@
 package be.ducobu.inTime
 
-import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.model.TimeEntry
 import be.ducobu.inTime.service.ProjectService
-import be.ducobu.inTime.service.TimeEntryService
+import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
+import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
+import org.springframework.test.context.TestPropertySource
+import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.web.servlet.MockMvc
 
 import java.time.LocalDateTime
 
-import static org.junit.jupiter.api.MethodOrderer.OrderAnnotation
+import static org.hamcrest.Matchers.*
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@TestMethodOrder(OrderAnnotation.class)
+@AutoConfigureMockMvc
+@TestPropertySource(
+        locations = "classpath:application.properties")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TimeEntryTest extends GroovyTestCase {
 
     @Autowired
-    private TimeEntryService timeEntryService
+    private MockMvc mvc
 
     @Autowired
     private ProjectService projectService
 
     @Test
     @Order(1)
-    void whenFindById_thenReturnTimeEntry() {
+    void whenGetTimeEntryById_thenReturnTimeEntry_withStatus200() throws Exception {
 
-        // when
-        TimeEntry found = timeEntryService.findById(1L)
-
-        // then
-        assert 1L == found.id
-        assert null == found.togglId
-        assert LocalDateTime.of(2020, 04, 17, 14, 28, 42) == found.startDate
-        assert null == found.endDate
-        assert null != found.duration.getClass()
-        assert Long == found.duration.getClass()
-        assert null == found.description
-        assert found.running
-        assert null != found.project
-        assert 1L == found.project.id
-        assert "First Project" == found.project.name
+        mvc.perform(get("/time_entry/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(1)))
+                .andExpect(jsonPath('$.startDate', is("2021-01-01T14:28:42")))
+                .andExpect(jsonPath('$.running', is(true)))
+                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.projectName', is("My First Project")))
     }
 
     @Test
     @Order(2)
-    void whenFindByWrongId_thenReturnException() {
+    void whenGetTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
 
-        def msg = shouldFail CustomEntityNotFoundException, {
-            timeEntryService.findById(2L)
-        }
-        assert "No 'TimeEntry' with attribute '2' found!" == msg
+        mvc.perform(get("/time_entry/2")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '2' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/2")))
     }
 
     @Test
     @Order(3)
-    void whenSaveTimeEntry_thenReturnTimeEntry() {
+    void whenGetDurationByTimeEntryId_thenReturnDuration_withStatus200() throws Exception {
 
-        // when
-        TimeEntry timeEntry = new TimeEntry()
-        LocalDateTime dateTime = LocalDateTime.of(2020, 04, 17, 14, 30, 00)
-
-        timeEntry.project = projectService.findByName("Second Project")
-        timeEntry.description = "Test"
-        timeEntry.startDate = dateTime
-        TimeEntry savedTimeEntry = timeEntryService.save(timeEntry)
-
-        // then
-        assert null != savedTimeEntry
-        assert 2L == savedTimeEntry.id
-        assert null == savedTimeEntry.togglId
-        assert dateTime == savedTimeEntry.startDate
-        assert null == savedTimeEntry.endDate
-        assert Long == savedTimeEntry.duration.getClass()
-        assert null != savedTimeEntry.description
-        assert "Test" == savedTimeEntry.description
-        assert savedTimeEntry.running
-        assert null != savedTimeEntry.project
-        assert 2L == savedTimeEntry.project.id
-        assert "Second Project" == savedTimeEntry.project.name
+        mvc.perform(get("/time_entry/1/duration")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.duration', notNullValue()))
+                .andExpect(jsonPath('$.duration', isA(Integer)))
     }
 
     @Test
     @Order(4)
-    void whenStopTimeEntry_thenReturnStoppedTimeEntry() {
+    void whenGetDurationByWrongTimeEntryId_thenReturnException_withStatus404() throws Exception {
 
-        // when
-        TimeEntry found = timeEntryService.findById(2L)
-        assert null != found
-        found.stop()
-        TimeEntry stoppedTimeEntry = timeEntryService.save(found)
-
-        // then
-        assert null != stoppedTimeEntry
-        assert 2L == stoppedTimeEntry.id
-        assert null != stoppedTimeEntry.endDate
-        assert Long == stoppedTimeEntry.duration.getClass()
-        assert !stoppedTimeEntry.running
+        mvc.perform(get("/time_entry/2/duration")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '2' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/2/duration")))
     }
 
     @Test
     @Order(5)
-    void whenRestartTimeEntry_thenReturnRestartedTimeEntry() {
+    void whenCreateTimeEntry_thenReturnTimeEntry_withStatus201() throws Exception {
 
         // when
-        TimeEntry found = timeEntryService.findById(2L)
-        assert null != found
-        found.restart()
-        TimeEntry restartedTimeEntry = timeEntryService.save(found)
+        TimeEntry timeEntry = new TimeEntry()
+        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
 
-        // then
-        assert null != restartedTimeEntry
-        assert 2L == restartedTimeEntry.id
-        assert null == restartedTimeEntry.endDate
-        assert Long == restartedTimeEntry.duration.getClass()
-        assert restartedTimeEntry.running
+        timeEntry.project = projectService.findByName("My Second Project")
+        timeEntry.description = "Test"
+        timeEntry.startDate = dateTime
+
+        mvc.perform(post("/time_entry/")
+                .content(timeEntry.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.description', is("Test")))
+                .andExpect(jsonPath('$.running', is(true)))
+                .andExpect(jsonPath('$.startDate', notNullValue()))
+                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.projectName', is("My Second Project")))
     }
 
     @Test
     @Order(6)
-    void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry() {
+    void whenGetAllTimeEntries_thenReturnTimeEntries_withStatus200() throws Exception {
 
-        // when
-        TimeEntry found = timeEntryService.findById(2L)
-        assert null != found
-        found.togglId = 12L
-        found.project = projectService.findByName("First Project")
-        LocalDateTime dateTime = LocalDateTime.of(2020, 04, 17, 16, 42, 00)
-        found.startDate = dateTime
-        found.description = "Test with update"
-        TimeEntry updatedTimeEntry = timeEntryService.save(found)
-
-        // then
-        assert null != updatedTimeEntry
-        assert 2L == updatedTimeEntry.id
-        assert 12L == updatedTimeEntry.togglId
-        assert dateTime == updatedTimeEntry.startDate
-        assert null == updatedTimeEntry.endDate
-        assert null != updatedTimeEntry.description
-        assert "Test with update" == updatedTimeEntry.description
-        assert updatedTimeEntry.running
-        assert null != updatedTimeEntry.project
-        assert 1L == updatedTimeEntry.project.id
-        assert "First Project" == updatedTimeEntry.project.name
+        mvc.perform(get("/time_entry")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$', hasSize(2)))
+                .andExpect(jsonPath('$[0].id', is(1)))
+                .andExpect(jsonPath('$[0].startDate', notNullValue()))
+                .andExpect(jsonPath('$[0].endDate', notNullValue()))
+                .andExpect(jsonPath('$[0].projectName', is("My First Project")))
+                .andExpect(jsonPath('$[1].id', is(2)))
+                .andExpect(jsonPath('$[1].startDate', notNullValue()))
+                .andExpect(jsonPath('$[1].endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$[1].projectName', is("My Second Project")))
     }
 
+    @Test
+    @Order(7)
+    void whenStopCurrentTimeEntry_thenReturnStoppedTimeEntry_withStatus200() throws Exception {
+
+        mvc.perform(put("/time_entry/stop")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.description', is("Test")))
+                .andExpect(jsonPath('$.running', is(false)))
+                .andExpect(jsonPath('$.startDate', notNullValue()))
+                .andExpect(jsonPath('$.endDate', notNullValue()))
+                .andExpect(jsonPath('$.projectName', is("My Second Project")))
+    }
+
+    @Test
+    @Order(8)
+    void whenStopAlreadyStoppedTimeEntry_thenReturnException_withStatus404() throws Exception {
+
+        mvc.perform(put("/time_entry/stop")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No running 'TimeEntry' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/stop")))
+    }
+
+    @Test
+    @Order(9)
+    void whenRestartLastTimeEntry_thenReturnRestartedTimeEntry_withStatus200() throws Exception {
+
+        mvc.perform(put("/time_entry/restart")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.description', is("Test")))
+                .andExpect(jsonPath('$.running', is(true)))
+                .andExpect(jsonPath('$.startDate', notNullValue()))
+                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.projectName', is("My Second Project")))
+    }
+
+    @Test
+    @Order(10)
+    void whenRestartAlreadyRunningTimeEntry_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(put("/time_entry/restart")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("A 'TimeEntry' is already running!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/restart")))
+    }
+
+    @Test
+    @Order(11)
+    void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry_withStatus200() throws Exception {
+
+        mvc.perform(put("/time_entry/2")
+                .content("{\"description\": \"Test with update\", \"projectName\": \"My First Project\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.description', is("Test with update")))
+                .andExpect(jsonPath('$.running', is(true)))
+                .andExpect(jsonPath('$.startDate', notNullValue()))
+                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.projectName', is("My First Project")))
+    }
+
+    @Test
+    @Order(12)
+    void whenDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
+
+        mvc.perform(delete("/time_entry/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(1)))
+                .andExpect(jsonPath('$.startDate', is("2021-01-01T14:28:42")))
+                .andExpect(jsonPath('$.running', is(false)))
+                .andExpect(jsonPath('$.endDate', notNullValue()))
+                .andExpect(jsonPath('$.projectName', is("My First Project")))
+    }
+
+    @Test
+    @Order(12)
+    void whenDeleteRunningTimeEntryById_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(delete("/time_entry/2")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("The 'TimeEntry' is still running!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/2")))
+    }
+
+    @Test
+    @Order(13)
+    void whenForceDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
+
+        mvc.perform(delete("/time_entry/2/force")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.description', is("Test with update")))
+                .andExpect(jsonPath('$.running', is(true)))
+                .andExpect(jsonPath('$.startDate', notNullValue()))
+                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.projectName', is("My First Project")))
+    }
+
+    @Test
+    @Order(14)
+    void whenForceDeleteTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
+
+        mvc.perform(delete("/time_entry/3")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '3' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/3")))
+    }
 }

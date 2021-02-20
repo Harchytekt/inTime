@@ -1,6 +1,6 @@
 package be.ducobu.inTime.rest
 
-import be.ducobu.inTime.dto.project.ProjectDto
+
 import be.ducobu.inTime.dto.timeEntry.*
 import be.ducobu.inTime.exception.NoEntryFoundException
 import be.ducobu.inTime.exception.RunningTimeEntryException
@@ -73,7 +73,7 @@ class TimeEntryRestController {
             Long stoppedTimeEntryId = this.stopTimeEntry().id
             date = timeEntryService.findById(stoppedTimeEntryId).endDate
         } catch (RunningTimeEntryNotFoundException ignored) {
-            logger.info "No running 'Time Entry' found, we don't have to stop it then."
+            logger.info "No running 'TimeEntry' found, we don't have to stop it then."
         }
 
         Project project = projectService.findByName(timeEntryCreateDto.projectName)
@@ -103,7 +103,7 @@ class TimeEntryRestController {
         if (timeEntryUpdateDto.endDate != null && !timeEntry.running) {
             timeEntry.updateEndDate(timeEntryUpdateDto.endDate)
         } else if (timeEntryUpdateDto.endDate != null && timeEntry.running) {
-            throw new RunningTimeEntryException("The 'Time Entry' is still running!")
+            throw new RunningTimeEntryException("The 'TimeEntry' is still running!")
         }
 
         if (timeEntryUpdateDto.description != null)
@@ -132,11 +132,11 @@ class TimeEntryRestController {
         )
     }
 
-    @PutMapping("/restart/")
+    @PutMapping("/restart")
     TimeEntryDto restartTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findLastTimeEntry()
         if (timeEntry.running)
-            throw new RunningTimeEntryException("A 'Time Entry' is already running!")
+            throw new RunningTimeEntryException("A 'TimeEntry' is already running!")
 
         timeEntry.restart()
 
@@ -151,7 +151,7 @@ class TimeEntryRestController {
         TimeEntry timeEntry = timeEntryService.findById(id)
 
         if (timeEntry.running)
-            throw new RunningTimeEntryException("The 'Time Entry' is still running!")
+            throw new RunningTimeEntryException("The 'TimeEntry' is still running!")
 
         timeEntryService.deleteById(id)
 

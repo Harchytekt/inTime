@@ -34,7 +34,7 @@ class TimeEntryTest extends GroovyTestCase {
         // then
         assert 1L == found.id
         assert null == found.togglId
-        assert LocalDateTime.of(2020, 04, 17, 14, 28, 42) == found.startDate
+        assert LocalDateTime.of(2021, 01, 01, 14, 28, 42) == found.startDate
         assert null == found.endDate
         assert null != found.duration.getClass()
         assert Long == found.duration.getClass()
@@ -42,7 +42,7 @@ class TimeEntryTest extends GroovyTestCase {
         assert found.running
         assert null != found.project
         assert 1L == found.project.id
-        assert "First Project" == found.project.name
+        assert "My First Project" == found.project.name
     }
 
     @Test
@@ -61,9 +61,9 @@ class TimeEntryTest extends GroovyTestCase {
 
         // when
         TimeEntry timeEntry = new TimeEntry()
-        LocalDateTime dateTime = LocalDateTime.of(2020, 04, 17, 14, 30, 00)
+        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
 
-        timeEntry.project = projectService.findByName("Second Project")
+        timeEntry.project = projectService.findByName("My Second Project")
         timeEntry.description = "Test"
         timeEntry.startDate = dateTime
         TimeEntry savedTimeEntry = timeEntryService.save(timeEntry)
@@ -80,11 +80,24 @@ class TimeEntryTest extends GroovyTestCase {
         assert savedTimeEntry.running
         assert null != savedTimeEntry.project
         assert 2L == savedTimeEntry.project.id
-        assert "Second Project" == savedTimeEntry.project.name
+        assert "My Second Project" == savedTimeEntry.project.name
     }
 
     @Test
     @Order(4)
+    void whenFindAll_thenReturnTimeEntries() {
+
+        // when
+        List<TimeEntry> found = timeEntryService.findAll()
+
+        // then
+        assert 2 == found.size()
+        assert "My First Project" == found[0].project.name
+        assert "My Second Project" == found[1].project.name
+    }
+
+    @Test
+    @Order(5)
     void whenStopTimeEntry_thenReturnStoppedTimeEntry() {
 
         // when
@@ -102,7 +115,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void whenRestartTimeEntry_thenReturnRestartedTimeEntry() {
 
         // when
@@ -120,14 +133,14 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry() {
 
         // when
         TimeEntry found = timeEntryService.findById(2L)
         assert null != found
         found.togglId = 12L
-        found.project = projectService.findByName("First Project")
+        found.project = projectService.findByName("My First Project")
         LocalDateTime dateTime = LocalDateTime.of(2020, 04, 17, 16, 42, 00)
         found.startDate = dateTime
         found.description = "Test with update"
@@ -144,7 +157,7 @@ class TimeEntryTest extends GroovyTestCase {
         assert updatedTimeEntry.running
         assert null != updatedTimeEntry.project
         assert 1L == updatedTimeEntry.project.id
-        assert "First Project" == updatedTimeEntry.project.name
+        assert "My First Project" == updatedTimeEntry.project.name
     }
 
 }

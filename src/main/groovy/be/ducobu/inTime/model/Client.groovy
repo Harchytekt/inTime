@@ -73,4 +73,8 @@ class Client {
     void setProjects(Set<Project> projects) {
         this.projects = projects
     }
+
+    String toJson() {
+        return "{\"name\": \"$name\", \"workspaceName\": \"${workspace.name}\"}"
+    }
 }

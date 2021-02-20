@@ -96,7 +96,7 @@ class TimeEntryTest extends GroovyTestCase {
         TimeEntry timeEntry = new TimeEntry()
         LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
 
-        timeEntry.project = projectService.findByName("My Second Project")
+        timeEntry.project = projectService.findById(2)
         timeEntry.description = "Test"
         timeEntry.startDate = dateTime
 

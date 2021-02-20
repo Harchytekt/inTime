@@ -68,7 +68,7 @@ class ProjectTest extends GroovyTestCase {
         // when
         Project project = new Project()
 
-        project.client = clientService.findByName("My Second Client")
+        project.client = clientService.findById(2)
         project.name = "My third Project"
 
         mvc.perform(post("/project/")
@@ -98,7 +98,7 @@ class ProjectTest extends GroovyTestCase {
                 .andExpect(MockMvcResultMatchers.jsonPath('$[1].id', is(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath('$[1].name', is("My Second Project")))
                 .andExpect(jsonPath('$[1].billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[1].clientName', is("My Second Client")))
+                .andExpect(MockMvcResultMatchers.jsonPath('$[1].clientName', is("My First Client")))
                 .andExpect(MockMvcResultMatchers.jsonPath('$[2].id', is(3)))
                 .andExpect(MockMvcResultMatchers.jsonPath('$[2].name', is("My third Project")))
                 .andExpect(jsonPath('$[2].billable', is(false)))
@@ -107,7 +107,7 @@ class ProjectTest extends GroovyTestCase {
 
     @Test
     @Order(5)
-    void whenGetAllTimeEntriesByProjectId_thenReturnProjects_withStatus200() throws Exception {
+    void whenGetAllTimeEntriesByProjectId_thenReturnTimeEntries_withStatus200() throws Exception {
 
         mvc.perform(get("/project/1/timeentries")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -184,7 +184,7 @@ class ProjectTest extends GroovyTestCase {
 
     @Test
     @Order(10)
-    void whenForceDeleteTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
+    void whenForceDeleteProjectByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/project/1/force")
                 .contentType(MediaType.APPLICATION_JSON))

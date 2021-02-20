@@ -123,8 +123,24 @@ class TimeEntryTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.projectName', is("My Second Project")))
     }
 
+//    @Test
+//    @Order(6)
+//    void whenStopAlreadyStoppedTimeEntry_thenReturnException_withStatus200() throws Exception {
+//
+//        mvc.perform(put("/time_entry/stop")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath('$.id', is(2)))
+//                .andExpect(jsonPath('$.description', is("Test")))
+//                .andExpect(jsonPath('$.running', is(false)))
+//                .andExpect(jsonPath('$.startDate', notNullValue()))
+//                .andExpect(jsonPath('$.endDate', notNullValue()))
+//                .andExpect(jsonPath('$.projectName', is("My Second Project")))
+//    }
+
     @Test
-    @Order(6)
+    @Order(7)
     void whenRestartLastTimeEntry_thenReturnRestartedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(put("/time_entry/restart")
@@ -139,8 +155,24 @@ class TimeEntryTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.projectName', is("My Second Project")))
     }
 
+//    @Test
+//    @Order(8)
+//    void whenRestartLastTimeEntry_thenReturnRestartedTimeEntry_withStatus200() throws Exception {
+//
+//        mvc.perform(put("/time_entry/restart")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath('$.id', is(2)))
+//                .andExpect(jsonPath('$.description', is("Test")))
+//                .andExpect(jsonPath('$.running', is(true)))
+//                .andExpect(jsonPath('$.startDate', notNullValue()))
+//                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+//                .andExpect(jsonPath('$.projectName', is("My Second Project")))
+//    }
+
     @Test
-    @Order(7)
+    @Order(9)
     void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry() throws Exception {
 
         mvc.perform(put("/time_entry/2")

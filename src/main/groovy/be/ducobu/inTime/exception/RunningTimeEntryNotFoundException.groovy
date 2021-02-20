@@ -5,7 +5,7 @@ import javax.persistence.EntityNotFoundException
 class RunningTimeEntryNotFoundException extends EntityNotFoundException {
 
     RunningTimeEntryNotFoundException() {
-        super("No running 'Time Entry' found!")
+        super("No running 'TimeEntry' found!")
     }
 
 }

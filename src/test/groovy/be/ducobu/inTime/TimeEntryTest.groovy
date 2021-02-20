@@ -45,8 +45,8 @@ class TimeEntryTest extends GroovyTestCase {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.id', is(1)))
                 .andExpect(jsonPath('$.startDate', is("2021-01-01T14:28:42")))
-                .andExpect(jsonPath('$.running', is(true)))
-                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.endDate', is("2021-01-01T14:29:08")))
+                .andExpect(jsonPath('$.running', is(false)))
                 .andExpect(jsonPath('$.projectName', is("My First Project")))
     }
 
@@ -54,13 +54,13 @@ class TimeEntryTest extends GroovyTestCase {
     @Order(2)
     void whenGetTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
 
-        mvc.perform(get("/time_entry/2")
+        mvc.perform(get("/time_entry/3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.status', is(404)))
-                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '2' found!")))
-                .andExpect(jsonPath('$.path', is("/time_entry/2")))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '3' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/3")))
     }
 
     @Test
@@ -79,13 +79,13 @@ class TimeEntryTest extends GroovyTestCase {
     @Order(4)
     void whenGetDurationByWrongTimeEntryId_thenReturnException_withStatus404() throws Exception {
 
-        mvc.perform(get("/time_entry/2/duration")
+        mvc.perform(get("/time_entry/3/duration")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.status', is(404)))
-                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '2' found!")))
-                .andExpect(jsonPath('$.path', is("/time_entry/2/duration")))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '3' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/3/duration")))
     }
 
     @Test
@@ -105,7 +105,7 @@ class TimeEntryTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.id', is(3)))
                 .andExpect(jsonPath('$.description', is("Test")))
                 .andExpect(jsonPath('$.running', is(true)))
                 .andExpect(jsonPath('$.startDate', notNullValue()))
@@ -121,15 +121,22 @@ class TimeEntryTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$', hasSize(2)))
+                .andExpect(jsonPath('$', hasSize(3)))
                 .andExpect(jsonPath('$[0].id', is(1)))
-                .andExpect(jsonPath('$[0].startDate', notNullValue()))
-                .andExpect(jsonPath('$[0].endDate', notNullValue()))
+                .andExpect(jsonPath('$[0].startDate', is("2021-01-01T14:28:42")))
+                .andExpect(jsonPath('$[0].endDate', is("2021-01-01T14:29:08")))
+                .andExpect(jsonPath('$[0].running', is(false)))
                 .andExpect(jsonPath('$[0].projectName', is("My First Project")))
                 .andExpect(jsonPath('$[1].id', is(2)))
-                .andExpect(jsonPath('$[1].startDate', notNullValue()))
-                .andExpect(jsonPath('$[1].endDate', emptyOrNullString()))
-                .andExpect(jsonPath('$[1].projectName', is("My Second Project")))
+                .andExpect(jsonPath('$[1].startDate', is("2021-01-01T14:29:08")))
+                .andExpect(jsonPath('$[1].endDate', notNullValue()))
+                .andExpect(jsonPath('$[1].running', is(false)))
+                .andExpect(jsonPath('$[1].projectName', is("My First Project")))
+                .andExpect(jsonPath('$[2].id', is(3)))
+                .andExpect(jsonPath('$[2].startDate', notNullValue()))
+                .andExpect(jsonPath('$[2].endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$[2].running', is(true)))
+                .andExpect(jsonPath('$[2].projectName', is("My Second Project")))
     }
 
     @Test
@@ -140,7 +147,7 @@ class TimeEntryTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.id', is(3)))
                 .andExpect(jsonPath('$.description', is("Test")))
                 .andExpect(jsonPath('$.running', is(false)))
                 .andExpect(jsonPath('$.startDate', notNullValue()))
@@ -169,7 +176,7 @@ class TimeEntryTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.id', is(3)))
                 .andExpect(jsonPath('$.description', is("Test")))
                 .andExpect(jsonPath('$.running', is(true)))
                 .andExpect(jsonPath('$.startDate', notNullValue()))
@@ -194,12 +201,12 @@ class TimeEntryTest extends GroovyTestCase {
     @Order(11)
     void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry_withStatus200() throws Exception {
 
-        mvc.perform(put("/time_entry/2")
-                .content("{\"description\": \"Test with update\", \"projectName\": \"My First Project\"}")
+        mvc.perform(put("/time_entry/3")
+                .content('{"description": "Test with update", "projectName": "My First Project"}')
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.id', is(3)))
                 .andExpect(jsonPath('$.description', is("Test with update")))
                 .andExpect(jsonPath('$.running', is(true)))
                 .andExpect(jsonPath('$.startDate', notNullValue()))
@@ -226,24 +233,24 @@ class TimeEntryTest extends GroovyTestCase {
     @Order(12)
     void whenDeleteRunningTimeEntryById_thenReturnException_withStatus409() throws Exception {
 
-        mvc.perform(delete("/time_entry/2")
+        mvc.perform(delete("/time_entry/3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.status', is(409)))
                 .andExpect(jsonPath('$.message', is("The 'TimeEntry' is still running!")))
-                .andExpect(jsonPath('$.path', is("/time_entry/2")))
+                .andExpect(jsonPath('$.path', is("/time_entry/3")))
     }
 
     @Test
     @Order(13)
     void whenForceDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
 
-        mvc.perform(delete("/time_entry/2/force")
+        mvc.perform(delete("/time_entry/3/force")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(2)))
+                .andExpect(jsonPath('$.id', is(3)))
                 .andExpect(jsonPath('$.description', is("Test with update")))
                 .andExpect(jsonPath('$.running', is(true)))
                 .andExpect(jsonPath('$.startDate', notNullValue()))

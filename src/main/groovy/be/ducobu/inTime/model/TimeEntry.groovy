@@ -108,7 +108,7 @@ class TimeEntry {
     }
 
     String toJson() {
-        return "{\"projectName\":\"$project.name\",\"description\":\"$description\"}"
+        return "{\"projectName\": \"${project.name}\", \"description\": \"$description\"}"
     }
 
     Long calculateDuration(boolean isStopped = true) {

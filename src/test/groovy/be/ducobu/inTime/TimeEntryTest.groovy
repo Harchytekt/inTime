@@ -65,6 +65,31 @@ class TimeEntryTest extends GroovyTestCase {
 
     @Test
     @Order(3)
+    void whenGetDurationByTimeEntryId_thenReturnDuration_withStatus200() throws Exception {
+
+        mvc.perform(get("/time_entry/1/duration")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.duration', notNullValue()))
+                .andExpect(jsonPath('$.duration', isA(Integer)))
+    }
+
+    @Test
+    @Order(4)
+    void whenGetDurationByWrongTimeEntryId_thenReturnException_withStatus404() throws Exception {
+
+        mvc.perform(get("/time_entry/2/duration")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '2' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/2/duration")))
+    }
+
+    @Test
+    @Order(5)
     void whenCreateTimeEntry_thenReturnTimeEntry_withStatus201() throws Exception {
 
         // when
@@ -89,7 +114,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(4)
+    @Order(6)
     void whenGetAllTimeEntries_thenReturnTimeEntries_withStatus200() throws Exception {
 
         mvc.perform(get("/time_entry")
@@ -108,7 +133,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(5)
+    @Order(7)
     void whenStopCurrentTimeEntry_thenReturnStoppedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(put("/time_entry/stop")
@@ -124,7 +149,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(6)
+    @Order(8)
     void whenStopAlreadyStoppedTimeEntry_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(put("/time_entry/stop")
@@ -137,7 +162,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(7)
+    @Order(9)
     void whenRestartLastTimeEntry_thenReturnRestartedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(put("/time_entry/restart")
@@ -153,7 +178,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(8)
+    @Order(10)
     void whenRestartAlreadyRunningTimeEntry_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(put("/time_entry/restart")
@@ -166,7 +191,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(9)
+    @Order(11)
     void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry() throws Exception {
 
         mvc.perform(put("/time_entry/2")

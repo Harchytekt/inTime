@@ -1,6 +1,6 @@
 package be.ducobu.inTime.rest
 
-import be.ducobu.inTime.dto.project.ProjectDto
+
 import be.ducobu.inTime.dto.timeEntry.*
 import be.ducobu.inTime.exception.NoEntryFoundException
 import be.ducobu.inTime.exception.RunningTimeEntryException
@@ -132,7 +132,7 @@ class TimeEntryRestController {
         )
     }
 
-    @PutMapping("/restart/")
+    @PutMapping("/restart")
     TimeEntryDto restartTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findLastTimeEntry()
         if (timeEntry.running)

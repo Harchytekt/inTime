@@ -140,4 +140,58 @@ class ProjectTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.billable', is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My Second Client")))
     }
+
+    @Test
+    @Order(7)
+    void whenDeleteProjectById_thenReturnDeletedProject_withStatus200() throws Exception {
+
+        mvc.perform(delete("/project/3")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(3)))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My Third Project")))
+                .andExpect(jsonPath('$.billable', is(true)))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My Second Client")))
+    }
+
+    @Test
+    @Order(8)
+    void whenDeleteProjectWithChildrenById_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(delete("/project/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.status', is(409)))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.message', is("One or more 'TimeEntry' still linked to this entity.")))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.path', is("/project/1")))
+    }
+
+    @Test
+    @Order(9)
+    void whenForceDeleteProjectWithChildrenById_thenReturnDeletedProject_withStatus200() throws Exception {
+
+        mvc.perform(delete("/project/1/force")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My First Project")))
+                .andExpect(jsonPath('$.billable', is(false)))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My First Client")))
+    }
+
+    @Test
+    @Order(10)
+    void whenForceDeleteTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
+
+        mvc.perform(delete("/project/1/force")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.status', is(404)))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.message', is("No 'Project' with attribute '1' found!")))
+                .andExpect(MockMvcResultMatchers.jsonPath('$.path', is("/project/1/force")))
+    }
 }

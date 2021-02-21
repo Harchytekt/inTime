@@ -1,19 +1,17 @@
 # Get All Workspaces
-
 > Last modified: 21/02/2021 (v0.0.1)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
-Get a list of all workspaces from the server.
+Get a list of all Workspaces from the server.
 
 **Auth required:** No  
 **Permissions required:** None
-
 **Enpoint's URL:** `GET /workspace`
 
 ## Response parameters
 
-For the description of the workspaces, see [Get Workspace by ID](Get-Workspace-by-ID.md).
+For the description of the Workspaces, see [Get Workspace by ID](Get-Workspace-by-ID.md).
 
 ## Sample
 
@@ -23,7 +21,7 @@ For the description of the workspaces, see [Get Workspace by ID](Get-Workspace-b
 curl "http://localhost:8080/workspace
 ```
 
-**Code:** `200 CREATED`
+**Code:** `200 SUCCESS`
 
 **Content:**
 
@@ -32,12 +30,12 @@ curl "http://localhost:8080/workspace
   {
     "id": 1,
     "togglId": null,
-    "name": "My workspace"
+    "name": "My First Workspace"
   },
   {
     "id": 2,
     "togglId": null,
-    "name": "My second workspace"
+    "name": "My Second Workspace"
   }
 ]
 ```
@@ -56,7 +54,7 @@ curl "http://localhost:8080/workspace
 
 ```json
 {
-  "timestamp": "2021-02-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000+0000",
   "status": 404,
   "message": "No entity 'Workspace' found!",
   "path": "/workspace"

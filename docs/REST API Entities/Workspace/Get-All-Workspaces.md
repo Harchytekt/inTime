@@ -6,7 +6,7 @@ Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 Get a list of all Workspaces from the server.
 
 **Auth required:** No  
-**Permissions required:** None
+**Permissions required:** None  
 **Enpoint's URL:** `GET /workspace`
 
 ## Response parameters

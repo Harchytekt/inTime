@@ -12,12 +12,18 @@ Get a Workspace by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | |:--:|:--:|:--:| | id | Long | The ID of the requested Workspace |
+| Name | Type | Description |
+|:--:|:--:|:--:|
+| id | Long | The ID of the requested Workspace |
 
 ## Response parameters
 
-| Name | Type | Description | |:--:|:--:|:--:| | id | Long | The ID of the requested Workspace | | togglId | Long | The
-ID of the corresponding Toggl Workspace (_if any_) | | name | String | The name of the requested Workspace |
+| Name | Type | Description |
+|:--:|:--:|:--:|
+| id | Long | The ID of the requested Workspace |
+| togglId | Long | The
+ID of the corresponding Toggl Workspace (_if any_) |
+| name | String | The name of the requested Workspace |
 
 ## Sample
 

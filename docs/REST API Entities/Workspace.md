@@ -2,85 +2,14 @@
 
 Back to the [menu](../README.md)
 
-## Summary
 
-- `GET`  `/workspace` [🔗](#get-all-workspaces)
-- `GET`  `/workspace/{id}` [🔗](#get-workspace-by-id)
+- [Get All Workspaces (`GET /workspace`) 🔗](Workspace/Get-All-Workspaces.md)
+- [Get Workspace by ID (`GET /workspace/{id}`) 🔗](Workspace/Get-Workspace-by-ID.md)
 - `GET`  `/workspace/{id}/clients` [🔗](#get-clients-by-workspace-id)
 - `POST` `/workspace/{id}` + body [🔗](#create-a-new-workspace)
 - `PUT`  `/workspace/{id}` + body [🔗](#update-workspace)
 - `DELETE`  `/workspace/{id}` [🔗](#delete-workspace-by-id)
 - `DELETE`  `/workspace/{id}/force` [🔗](#force-delete-workspace-by-id)
-
-## Get All Workspaces
-
-### URL STRUCTURE
-
-`http://localhost:8080/workspace`
-
-### METHOD
-
-`GET`
-
-### EXAMPLE
-
-```curl
-curl "http://localhost:8080/workspace"
-```
-
-### RETURNS
-
-> HTTP Status code: `200`
-
-A list of JSON-encoded dictionaries including an ID (`id`), Toggl ID (`togglId`) and the name (`name`).
-
-#### Sample response
-
-```json
-[
-  {
-    "id": 1,
-    "togglId": null,
-    "name": "My workspace"
-  },
-  {
-    "id": 2,
-    "togglId": null,
-    "name": "My second workspace"
-  }
-]
-```
-
-## Get Workspace by ID
-
-### URL STRUCTURE
-
-`http://localhost:8080/workspace/{id}`
-
-### METHOD
-
-`GET`
-
-### EXAMPLE
-
-```curl
-curl "http://localhost:8080/workspace/1"
-```
-
-### RETURNS
-> HTTP Status code: `200`
-
-A JSON-encoded dictionary including an ID (`id`), Toggl ID (`togglId`) and the name (`name`).
-
-#### Sample response
-
-```json
-{
-  "id": 1,
-  "togglId": null,
-  "name": "My workspace"
-}
-```
 
 ## Get Clients by Workspace ID
 

@@ -13,7 +13,7 @@ Get a list of all Clients linked to the Workspace from the server.
 ## Request parameters
 
 | Name | Type | Description | Required |
-|:--|:--|:--|:--|
+|:--|:--|:--|:--:|
 | id | Long | The ID of the Workspace | ✔️ |
 
 ## Response parameters

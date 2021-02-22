@@ -13,7 +13,7 @@ Get a Workspace by ID from the server.
 ## Request parameters
 
 | Name | Type | Description | Required |
-|:--|:--|:--|:--|
+|:--|:--|:--|:--:|
 | id | Long | The ID of the requested Workspace | ✔️ |
 
 ## Response parameters

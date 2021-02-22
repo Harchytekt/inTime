@@ -13,7 +13,7 @@ Create a new Workspace on the server.
 ## Request parameters
 
 | Name | Type | Description | Required |
-|:--|:--|:--|:--|
+|:--|:--|:--|:--:|
 | togglId | Long | The ID of the corresponding Toggl Workspace | ❌ |
 | name | String | The name of the requested Workspace | ❌ |
 

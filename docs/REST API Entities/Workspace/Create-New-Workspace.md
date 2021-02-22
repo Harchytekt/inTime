@@ -25,7 +25,7 @@ For the description of the Workspaces, see [Get Workspace by ID](Get-Workspace-b
 
 ### Success
 
-```curl
+```shell
 curl -X "POST" "http://localhost:8080/workspace" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
@@ -49,7 +49,7 @@ curl -X "POST" "http://localhost:8080/workspace" \
 
 #### Conflict (duplicate entry)
 
-```curl
+```shel
 curl -X "POST" "http://localhost:8080/workspace" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{

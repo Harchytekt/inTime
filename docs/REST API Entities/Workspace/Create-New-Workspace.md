@@ -6,8 +6,8 @@ Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
 Create a new Workspace on the server.
 
-**Auth required:** No  
-**Permissions required:** None  
+**Auth required:** _No_  
+**Permissions required:** _None_  
 **Enpoint's URL:** `POST /workspace`
 
 ## Request parameters

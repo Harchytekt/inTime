@@ -6,8 +6,8 @@ Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
 Get a list of all Clients linked to the Workspace from the server.
 
-**Auth required:** No  
-**Permissions required:** None  
+**Auth required:** _No_  
+**Permissions required:** _None_  
 **Enpoint's URL:** `GET /workspace/{id}/clients`
 
 ## Request parameters

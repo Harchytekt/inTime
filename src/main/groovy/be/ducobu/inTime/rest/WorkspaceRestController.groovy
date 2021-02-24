@@ -3,10 +3,7 @@ package be.ducobu.inTime.rest
 import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.workspace.WorkspaceCreateDto
 import be.ducobu.inTime.dto.workspace.WorkspaceDto
-import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.WorkspaceService
 import org.modelmapper.ModelMapper
@@ -88,6 +85,12 @@ class WorkspaceRestController {
     @PutMapping("/{id}")
     WorkspaceDto update(@PathVariable Long id, @RequestBody WorkspaceCreateDto workspaceCreateDto) {
         Workspace workspace = workspaceService.findById(id)
+
+        if (workspaceCreateDto.name == null && workspaceCreateDto.togglId == null) {
+            logger.info "The entity 'Workspace' with attribute '$id' couldn't be updated! Nothing was sent in the body."
+            throw new NotModifiedEntityException("Workspace", id as String, "Nothing was sent in the body.")
+        }
+        // TODO: add check if name and togglId values are the same as the current ones
 
         if (workspaceCreateDto.name != null)
             workspace.name = workspaceCreateDto.name

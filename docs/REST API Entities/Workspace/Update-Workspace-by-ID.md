@@ -14,14 +14,14 @@ Update a Workspace by ID.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| id | Long | The ID of the requested Workspace | ✔️ |
+| togglId | Long | The ID of the corresponding Toggl Workspace | ❌ |
+| name | String | The name of the requested Workspace | ❌ |
+
+> At least one of the two is needed.
 
 ## Response parameters
 
-| Name | Type | Description |
-|:--|:--|:--|
-| togglId | Long | The ID of the corresponding Toggl Workspace |
-| name | String | The name of the requested Workspace |
+For the description of the Workspaces, see [Get Workspace by ID](Get-Workspace-by-ID.md).
 
 ## Sample
 
@@ -69,5 +69,26 @@ curl -X "PUT" "http://localhost:8080/workspace/404" \
   "status": 404,
   "message": "No 'Workspace' with attribute '404' found!",
   "path": "/workspace/404"
+}
+```
+<!-- TODO: Add this case + error message -->
+#### No data sent
+
+```shell
+curl -X "PUT" "http://localhost:8080/workspace/1" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{}'
+```
+
+**Code:** `304 NOT MODIFIED`
+
+**Content:**
+
+```json
+{
+  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "status": 304,
+  "message": "REDACTED",
+  "path": "/workspace/1"
 }
 ```

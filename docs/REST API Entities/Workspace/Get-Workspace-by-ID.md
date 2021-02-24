@@ -8,7 +8,7 @@ Get a Workspace by ID from the server.
 
 **Auth required:** _No_  
 **Permissions required:** _None_  
-**Enpoint's URL:** `GET /workspace/{id}`
+**Endpoint's URL:** `GET /workspace/{id}`
 
 ## Request parameters
 
@@ -21,7 +21,7 @@ Get a Workspace by ID from the server.
 | Name | Type | Description |
 |:--|:--|:--|
 | id | Long | The ID of the requested Workspace |
-| togglId | Long | The ID of the corresponding Toggl Workspace (_if any_) |
+| togglId | Long | The ID of the corresponding Toggl Workspace |
 | name | String | The name of the requested Workspace |
 
 ## Sample

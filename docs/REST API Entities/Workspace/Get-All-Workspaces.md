@@ -7,7 +7,7 @@ Get a list of all Workspaces from the server.
 
 **Auth required:** _No_  
 **Permissions required:** _None_  
-**Enpoint's URL:** `GET /workspace`
+**Endpoint's URL:** `GET /workspace`
 
 ## Response parameters
 

@@ -8,7 +8,7 @@ Get a list of all Clients linked to the Workspace from the server.
 
 **Auth required:** _No_  
 **Permissions required:** _None_  
-**Enpoint's URL:** `GET /workspace/{id}/clients`
+**Endpoint's URL:** `GET /workspace/{id}/clients`
 
 ## Request parameters
 

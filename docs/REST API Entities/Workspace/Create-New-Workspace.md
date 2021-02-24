@@ -8,7 +8,7 @@ Create a new Workspace on the server.
 
 **Auth required:** _No_  
 **Permissions required:** _None_  
-**Enpoint's URL:** `POST /workspace`
+**Endpoint's URL:** `POST /workspace`
 
 ## Request parameters
 

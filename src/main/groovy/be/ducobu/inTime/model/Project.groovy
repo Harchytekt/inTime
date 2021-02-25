@@ -36,6 +36,15 @@ class Project {
         this.name = name
     }
 
+    Project(Project projectToCopy) {
+        this.id = projectToCopy.id
+        this.name = projectToCopy.name
+        this.togglId = projectToCopy.togglId
+        this.billable = projectToCopy.billable
+        this.client = projectToCopy.client
+        this.timeEntries = projectToCopy.timeEntries
+    }
+
     Long getId() {
         return id
     }
@@ -86,5 +95,21 @@ class Project {
 
     String toJson() {
         return "{\"name\": \"$name\", \"clientName\": \"${client.name}\"}"
+    }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
+
+        Project project = (Project) o
+
+        if (billable != project.billable) return false
+        if (client != project.client) return false
+        if (id != project.id) return false
+        if (name != project.name) return false
+        if (timeEntries != project.timeEntries) return false
+        if (togglId != project.togglId) return false
+
+        return true
     }
 }

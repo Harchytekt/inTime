@@ -4,13 +4,8 @@ import be.ducobu.inTime.dto.client.ClientCreateDto
 import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.client.ClientSaveDto
 import be.ducobu.inTime.dto.project.ProjectDto
-import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
-import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Client
-import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.ClientService
 import be.ducobu.inTime.service.WorkspaceService
@@ -96,6 +91,10 @@ class ClientRestController {
     @PutMapping("/{id}")
     ClientDto update(@PathVariable Long id, @RequestBody ClientCreateDto clientCreateDto) {
         Client client = clientService.findById(id)
+        Client unmodifiedClient = new Client(client)
+
+        if (clientCreateDto.isEmpty())
+            throw new NotModifiedEntityException("Client", id as String, "Nothing was sent in the body.")
 
         if (clientCreateDto.name != null)
             client.name = clientCreateDto.name
@@ -105,6 +104,10 @@ class ClientRestController {
 
         if (clientCreateDto.workspaceName != null)
             client.workspace = workspaceService.findByName(clientCreateDto.workspaceName)
+
+        // Check if any change were made to the Client
+        if (client == unmodifiedClient)
+            throw new NotModifiedEntityException("Client", id as String)
 
         return modelMapper.map(
                 clientService.save(client),

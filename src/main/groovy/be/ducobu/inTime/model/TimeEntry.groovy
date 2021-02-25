@@ -32,6 +32,17 @@ class TimeEntry {
 
     TimeEntry() {}
 
+    TimeEntry(TimeEntry timeEntryToCopy) {
+        this.id = timeEntryToCopy.id
+        this.togglId = timeEntryToCopy.togglId
+        this.startDate = timeEntryToCopy.startDate
+        this.endDate = timeEntryToCopy.endDate
+        this.duration = timeEntryToCopy.duration
+        this.description = timeEntryToCopy.description
+        this.running = timeEntryToCopy.running
+        this.project = timeEntryToCopy.project
+    }
+
     Long getId() {
         return id
     }
@@ -109,6 +120,24 @@ class TimeEntry {
 
     String toJson() {
         return "{\"projectName\": \"${project.name}\", \"description\": \"$description\"}"
+    }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
+
+        TimeEntry timeEntry = (TimeEntry) o
+
+        if (running != timeEntry.running) return false
+        if (description != timeEntry.description) return false
+        if (duration != timeEntry.duration) return false
+        if (endDate != timeEntry.endDate) return false
+        if (id != timeEntry.id) return false
+        if (project != timeEntry.project) return false
+        if (startDate != timeEntry.startDate) return false
+        if (togglId != timeEntry.togglId) return false
+
+        return true
     }
 
     Long calculateDuration(boolean isStopped = true) {

@@ -3,6 +3,7 @@ package be.ducobu.inTime.rest
 
 import be.ducobu.inTime.dto.timeEntry.*
 import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.NotModifiedEntityException
 import be.ducobu.inTime.exception.RunningTimeEntryException
 import be.ducobu.inTime.exception.RunningTimeEntryNotFoundException
 import be.ducobu.inTime.model.Project
@@ -93,6 +94,10 @@ class TimeEntryRestController {
     @PutMapping("/{id}")
     TimeEntryDto update(@PathVariable Long id, @RequestBody TimeEntryUpdateDto timeEntryUpdateDto) {
         TimeEntry timeEntry = timeEntryService.findById(id)
+        TimeEntry unmodifiedTimeEntry = new TimeEntry(timeEntry)
+
+        if (timeEntryUpdateDto.isEmpty())
+            throw new NotModifiedEntityException("TimeEntry", id as String, "Nothing was sent in the body.")
 
         if (timeEntryUpdateDto.togglId != null)
             timeEntry.togglId = timeEntryUpdateDto.togglId
@@ -111,6 +116,10 @@ class TimeEntryRestController {
 
         if (timeEntryUpdateDto.projectName != null)
             timeEntry.project = projectService.findByName(timeEntryUpdateDto.projectName)
+
+        // Check if any change were made to the Workspace
+        if (timeEntry == unmodifiedTimeEntry)
+            throw new NotModifiedEntityException("TimeEntry", id as String)
 
         return modelMapper.map(
                 timeEntryService.save(timeEntry),

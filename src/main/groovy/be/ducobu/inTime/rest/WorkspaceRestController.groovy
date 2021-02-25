@@ -85,12 +85,10 @@ class WorkspaceRestController {
     @PutMapping("/{id}")
     WorkspaceDto update(@PathVariable Long id, @RequestBody WorkspaceCreateDto workspaceCreateDto) {
         Workspace workspace = workspaceService.findById(id)
+        Workspace unmodifiedWorkspace = new Workspace(workspace)
 
-        if (workspaceCreateDto.name == null && workspaceCreateDto.togglId == null) {
-            logger.info "The entity 'Workspace' with attribute '$id' couldn't be updated! Nothing was sent in the body."
+        if (workspaceCreateDto.isEmpty())
             throw new NotModifiedEntityException("Workspace", id as String, "Nothing was sent in the body.")
-        }
-        // TODO: add check if name and togglId values are the same as the current ones
 
         if (workspaceCreateDto.name != null)
             workspace.name = workspaceCreateDto.name
@@ -98,11 +96,17 @@ class WorkspaceRestController {
         if (workspaceCreateDto.togglId != null)
             workspace.togglId = workspaceCreateDto.togglId
 
+        // Check if any change were made to the Workspace
+        if (workspace == unmodifiedWorkspace)
+            throw new NotModifiedEntityException("Workspace", id as String)
+
         return modelMapper.map(
                 workspaceService.save(workspace),
                 WorkspaceDto.class
         )
     }
+
+    // TODO: Add remove togglId
 
     @DeleteMapping("/{id}")
     WorkspaceDto deleteWorkspace(@PathVariable Long id) {

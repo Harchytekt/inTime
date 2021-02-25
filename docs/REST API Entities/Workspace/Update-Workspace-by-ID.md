@@ -71,7 +71,7 @@ curl -X "PUT" "http://localhost:8080/workspace/404" \
   "path": "/workspace/404"
 }
 ```
-<!-- TODO: Add this case + error message -->
+
 #### No data sent
 
 ```shell
@@ -80,15 +80,38 @@ curl -X "PUT" "http://localhost:8080/workspace/1" \
      -d $'{}'
 ```
 
-**Code:** `304 NOT MODIFIED`
+**Code:** `400 BAD REQUEST`
 
 **Content:**
 
 ```json
 {
   "timestamp": "2021-06-21T09:41:00.000+0000",
-  "status": 304,
-  "message": "REDACTED",
+  "status": 400,
+  "message": "The entity 'Workspace' with attribute '1' couldn't be updated! Nothing was sent in the body.",
+  "path": "/workspace/1"
+}
+```
+
+#### No change
+
+```shell
+curl -X "PUT" "http://localhost:8080/workspace/1" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "name": "My First Workspace"
+}'
+```
+
+**Code:** `400 BAD REQUEST`
+
+**Content:**
+
+```json
+{
+  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "status": 400,
+  "message": "The entity 'Workspace' with attribute '1' couldn't be updated! Please check the changes you've made.",
   "path": "/workspace/1"
 }
 ```

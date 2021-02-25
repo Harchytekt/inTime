@@ -29,4 +29,8 @@ class ClientCreateDto {
     void setWorkspaceName(String workspaceName) {
         this.workspaceName = workspaceName
     }
+
+    boolean isEmpty() {
+        return name == null && workspaceName == null && togglId == null
+    }
 }

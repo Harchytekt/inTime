@@ -4,10 +4,7 @@ import be.ducobu.inTime.dto.project.ProjectCreateDto
 import be.ducobu.inTime.dto.project.ProjectDto
 import be.ducobu.inTime.dto.project.ProjectSaveDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
-import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.service.ClientService
@@ -107,6 +104,10 @@ class ProjectRestController {
     @PutMapping("/{id}")
     ProjectDto update(@PathVariable Long id, @RequestBody ProjectCreateDto projectCreateDto) {
         Project project = projectService.findById(id)
+        Project unmodifiedProject = new Project(project)
+
+        if (projectCreateDto.isEmpty())
+            throw new NotModifiedEntityException("Project", id as String, "Nothing was sent in the body.")
 
         if (projectCreateDto.name != null)
             project.name = projectCreateDto.name
@@ -119,6 +120,10 @@ class ProjectRestController {
 
         if (projectCreateDto.clientName != null)
             project.client = clientService.findByName(projectCreateDto.clientName)
+
+        // Check if any change were made to the Project
+        if (project == unmodifiedProject)
+            throw new NotModifiedEntityException("Project", id as String)
 
         return modelMapper.map(
                 projectService.save(project),

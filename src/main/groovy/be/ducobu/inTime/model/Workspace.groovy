@@ -30,6 +30,13 @@ class Workspace {
         this.name = name
     }
 
+    Workspace(Workspace workspaceToCopy) {
+        this.id = workspaceToCopy.id
+        this.name = workspaceToCopy.name
+        this.togglId = workspaceToCopy.togglId
+        this.clients = workspaceToCopy.clients
+    }
+
     Long getId() {
         return id
     }
@@ -64,5 +71,19 @@ class Workspace {
 
     String toJson() {
         return "{\"name\": \"$name\"}"
+    }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
+
+        Workspace workspace = (Workspace) o
+
+        if (clients != workspace.clients) return false
+        if (id != workspace.id) return false
+        if (name != workspace.name) return false
+        if (togglId != workspace.togglId) return false
+
+        return true
     }
 }

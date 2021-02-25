@@ -20,4 +20,8 @@ class WorkspaceCreateDto {
     void setName(String name) {
         this.name = name
     }
+
+    boolean isEmpty() {
+        return name == null && togglId == null
+    }
 }

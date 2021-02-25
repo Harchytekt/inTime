@@ -31,4 +31,8 @@ class TimeEntryUpdateDto extends TimeEntryCreateDto {
     void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate
     }
+
+    boolean isEmpty() {
+        return description == null && projectName == null && startDate == null && endDate == null && togglId == null
+    }
 }

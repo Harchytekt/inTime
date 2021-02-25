@@ -3,10 +3,7 @@ package be.ducobu.inTime.rest
 import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.workspace.WorkspaceCreateDto
 import be.ducobu.inTime.dto.workspace.WorkspaceDto
-import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.WorkspaceService
 import org.modelmapper.ModelMapper
@@ -88,6 +85,10 @@ class WorkspaceRestController {
     @PutMapping("/{id}")
     WorkspaceDto update(@PathVariable Long id, @RequestBody WorkspaceCreateDto workspaceCreateDto) {
         Workspace workspace = workspaceService.findById(id)
+        Workspace unmodifiedWorkspace = new Workspace(workspace)
+
+        if (workspaceCreateDto.isEmpty())
+            throw new NotModifiedEntityException("Workspace", id as String, "Nothing was sent in the body.")
 
         if (workspaceCreateDto.name != null)
             workspace.name = workspaceCreateDto.name
@@ -95,11 +96,17 @@ class WorkspaceRestController {
         if (workspaceCreateDto.togglId != null)
             workspace.togglId = workspaceCreateDto.togglId
 
+        // Check if any change were made to the Workspace
+        if (workspace == unmodifiedWorkspace)
+            throw new NotModifiedEntityException("Workspace", id as String)
+
         return modelMapper.map(
                 workspaceService.save(workspace),
                 WorkspaceDto.class
         )
     }
+
+    // TODO: Add remove togglId
 
     @DeleteMapping("/{id}")
     WorkspaceDto deleteWorkspace(@PathVariable Long id) {

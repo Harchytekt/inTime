@@ -35,12 +35,12 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
 
     @ExceptionHandler(WrongRestCallException.class)
     final ResponseEntity<Object> handleWrongRestCallException(WrongRestCallException ex, WebRequest request) {
-        logger.error(ex.getMessage())
+        logger.error ex.getMessage()
         status = HttpStatus.BAD_REQUEST
 
         if (SOURCE_CANNOT_BE_NULL == ex.getMessage()) {
             message = "The chosen item doesn't exist!"
-            logger.error(message)
+            logger.error message
         } else {
             message = ex.getMessage()
         }
@@ -58,7 +58,7 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
             RunningTimeEntryNotFoundException.class,
             NoEntryFoundException.class])
     final ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
-        logger.error(ex.getMessage())
+        logger.error ex.getMessage()
         status = HttpStatus.NOT_FOUND
 
         message = ex.getMessage()
@@ -75,8 +75,23 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
             ExistingChildFoundException.class,
             RunningTimeEntryException.class])
     final ResponseEntity<Object> handleConflictException(Exception ex, WebRequest request) {
-        logger.error(ex.getMessage())
+        logger.error ex.getMessage()
         status = HttpStatus.CONFLICT
+
+        message = ex.getMessage()
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+                status.value(),
+                message,
+                request.getDescription(false)
+        )
+        return new ResponseEntity<>(exceptionResponse, status)
+    }
+
+    @ExceptionHandler(NotModifiedEntityException.class)
+    final ResponseEntity<Object> handleBadRequestException(Exception ex, WebRequest request) {
+        logger.error ex.getMessage()
+        status = HttpStatus.BAD_REQUEST
 
         message = ex.getMessage()
 

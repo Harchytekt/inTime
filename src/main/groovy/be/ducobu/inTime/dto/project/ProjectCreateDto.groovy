@@ -38,4 +38,8 @@ class ProjectCreateDto {
     void setClientName(String clientName) {
         this.clientName = clientName
     }
+
+    boolean isEmpty() {
+        return name == null && billable == null && clientName == null && togglId == null
+    }
 }

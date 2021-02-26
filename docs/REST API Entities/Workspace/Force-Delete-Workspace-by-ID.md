@@ -4,7 +4,7 @@
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
-FOrce delete a Workspace by ID from the server.
+Force delete a Workspace by ID from the server.
 
 **Auth required:** _No_  
 **Permissions required:** _None_  

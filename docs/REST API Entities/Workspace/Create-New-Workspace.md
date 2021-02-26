@@ -15,7 +15,7 @@ Create a new Workspace on the server.
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
 | togglId | Long | The ID of the corresponding Toggl Workspace | ❌ |
-| name | String | The name of the requested Workspace | ❌ |
+| name | String | The name of the requested Workspace | ✔️ |
 
 ## Response parameters
 

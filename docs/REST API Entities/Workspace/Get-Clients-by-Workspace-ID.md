@@ -54,7 +54,7 @@ curl "http://localhost:8080/workspace/1/clients
 #### No Workspace Found
 
 ```shell
-curl "http://localhost:8080/workspace/404/clienys
+curl "http://localhost:8080/workspace/404/clients
 ```
 
 **Code:** `404 NOT FOUND`

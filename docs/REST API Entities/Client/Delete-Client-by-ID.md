@@ -36,7 +36,8 @@ curl -X "DELETE" "http://localhost:8080/client/1
 {
   "id": 1,
   "togglId": null,
-  "name": "My First Client"
+  "name": "My First Client",
+  "workspaceName": "My First Workspace"
 }
 ```
 

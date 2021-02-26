@@ -30,12 +30,14 @@ curl "http://localhost:8080/client
   {
     "id": 1,
     "togglId": null,
-    "name": "My First Client"
+    "name": "My First Client",
+    "workspaceName": "My First Workspace"
   },
   {
     "id": 2,
     "togglId": null,
-    "name": "My Second Client"
+    "name": "My Second Client",
+    "workspaceName": "My First Workspace"
   }
 ]
 ```

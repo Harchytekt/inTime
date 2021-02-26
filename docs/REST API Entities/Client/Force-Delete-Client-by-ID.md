@@ -36,7 +36,8 @@ curl -X "DELETE" "http://localhost:8080/client/2/force
 {
   "id": 2,
   "togglId": null,
-  "name": "My Second Client"
+  "name": "My Second Client",
+  "workspaceName": "My First Workspace"
 }
 ```
 

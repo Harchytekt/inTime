@@ -18,11 +18,7 @@ Delete a Workspace by ID from the server.
 
 ## Response parameters
 
-| Name | Type | Description |
-|:--|:--|:--|
-| id | Long | The ID of the requested Workspace |
-| togglId | Long | The ID of the corresponding Toggl Workspace |
-| name | String | The name of the requested Workspace |
+For the description of the Workspaces, see [Get Workspace by ID](Get-Workspace-by-ID.md).
 
 ## Sample
 

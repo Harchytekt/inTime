@@ -1,4 +1,4 @@
-# Get Projects by Project ID
+# Get Time Entries by Project ID
 
 > Last modified: 26/02/2021 (v0.0.1)
 

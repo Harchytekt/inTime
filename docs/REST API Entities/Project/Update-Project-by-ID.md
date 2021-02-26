@@ -16,7 +16,7 @@ Update a Project by ID.
 |:--|:--|:--|:--:|
 | togglId | Long | The ID of the corresponding Toggl Project | ❌ |
 | name | String | The name of the requested Project | ❌ |
-| billable | boolean | The billability status of the Project | ❌ |
+| billable | Boolean | The billability status of the Project | ❌ |
 | clientName | String | The name of the linked Client | ❌ |
 
 > At least one of the four is needed.

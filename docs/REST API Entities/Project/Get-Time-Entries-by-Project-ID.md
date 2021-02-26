@@ -38,8 +38,8 @@ curl "http://localhost:8080/project/1/timeentries
     "id": 1,
     "togglId": null,
     "startDate": "2021-06-21T09:41:00",
-    "endDate": "2021-06-21T09:42:00",
-    "duration": 60,
+    "endDate": "2021-06-21T09:45:00",
+    "duration": 4,
     "description": "description",
     "running": false,
     "projectName": "My First Project"

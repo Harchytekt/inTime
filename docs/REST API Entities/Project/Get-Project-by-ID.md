@@ -20,10 +20,10 @@ Get a Project by ID from the server.
 
 | Name | Type | Description |
 |:--|:--|:--|
-| togglId | Long | The ID of the corresponding Toggl Project
-| name | String | The name of the requested Project
-| billable | boolean | The billability status of the Project
-| clientName | String | The name of the linked Client
+| togglId | Long | The ID of the corresponding Toggl Project |
+| name | String | The name of the requested Project |
+| billable | Boolean | The billability status of the Project |
+| clientName | String | The name of the linked Client |
 
 ## Sample
 

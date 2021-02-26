@@ -1,6 +1,6 @@
 # Workspace
 
-Back to the [menu](../README.md)
+Back to the [summary](../README.md)
 
 - [Get All Workspaces (`GET /workspace`) 🔗](Workspace/Get-All-Workspaces.md)
 - [Get Workspace by ID (`GET /workspace/{id}`) 🔗](Workspace/Get-Workspace-by-ID.md)

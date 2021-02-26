@@ -1,5 +1,5 @@
 # Time Entry
-Back to the [menu](../README.md)
+Back to the [summary](../README.md)
 
 ## Summary
 

@@ -15,7 +15,7 @@ Update a Client by ID.
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
 | togglId | Long | The ID of the corresponding Toggl Client | ❌ |
-| name | String | The name of the requested Client | ✔️ |
+| name | String | The name of the requested Client | ❌ |
 | workspaceName | String | The name of the linked Workspace | ❌ |
 
 > At least one of the three is needed.

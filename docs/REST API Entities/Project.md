@@ -1,6 +1,6 @@
 # Project
 
-Back to the [summary](../README.md)
+Back to the [Summary](../README.md)
 
 ## Summary
 

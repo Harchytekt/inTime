@@ -3,15 +3,15 @@ Back to the [Summary](../README.md)
 
 ## Summary
 
-- `GET`  `/time_entry` [🔗](#get-all-time-entries)
-- `GET`  `/time_entry/{id}` [🔗](#get-time-entry-by-id)
-- `GET`  `/time_entry/{id}/duration` [🔗](#get-duration)
-- `POST` `/time_entry/{id}` + body [🔗](#create-a-new-time-entry)
-- `PUT`  `/time_entry/{id}` + body [🔗](#update-time-entry)
-- `PUT`  `/time_entry/stop` [🔗](#stop-current-time-entry)
-- `PUT`  `/time_entry/restart` [🔗](#restart-last-time-entry)
-- `DELETE`  `/time_entry/{id}` [🔗](#delete-time-entry-by-id)
-- `DELETE`  `/time_entry/{id}/force` [🔗](#force-delete-time-entry-by-id)
+- [Get All Time Entries (`GET /time_entry`) 🔗](Time%20Entry/Get-All-Time-Entries.md)
+- [Get Time Entry by ID (`GET /time_entry/{id}`) 🔗](Time%20Entry/Get-Time-Entry-by-ID.md)
+- [Get Duration for a Time Entry by ID (`GET /time_entry/{id}/duration`) 🔗](Time%20Entry/Get-Duration-Time-Entry-by-ID.md)
+- [Create a New Time Entry (`POST /time_entry/{id}`) 🔗](Time%20Entry/Create-New-Time-Entry.md)
+- [Update Time Entry by ID (`PUT /time_entry/{id}`) 🔗](Time%20Entry/Update-Time-Entry-by-ID.md)
+- [Stop Current Time Entry (`PUT /time_entry/stop`) 🔗](Time%20Entry/Stop-Current-Time-Entry.md)
+- [Restart Last Time Entry (`PUT /time_entry/restart`) 🔗](Time%20Entry/Restart-Last-Time-Entry.md)
+- [Delete Time Entry by ID (`DELETE /time_entry/{id}`) 🔗](Time%20Entry/Delete-Time-Entry-by-ID.md)
+- [Force Delete Time Entry by ID (`DELETE /time_entry/{id}/force`) 🔗](Time%20Entry/Force-Delete-Time-Entry-by-ID.md)
 
 ## Get All Time Entries
 

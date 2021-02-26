@@ -1,6 +1,6 @@
 # Get Clients by Workspace ID
 
-> Last modified: 22/02/2021 (v0.0.1)
+> Last modified: 26/02/2021 (v0.0.1)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -18,7 +18,7 @@ Get a list of all Clients linked to the Workspace from the server.
 
 ## Response parameters
 
-For the description of the Clients, see [Get Client by ID](../Client/Get-Client-by-ID.md).
+For the description of the Client entity, see [Get Client by ID](../Client/Get-Client-by-ID.md).
 
 ## Sample
 

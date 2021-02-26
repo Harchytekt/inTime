@@ -1,6 +1,6 @@
 # Update Workspace by ID
 
-> Last modified: 24/02/2021 (v0.0.1)
+> Last modified: 26/02/2021 (v0.0.1)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -21,7 +21,7 @@ Update a Workspace by ID.
 
 ## Response parameters
 
-For the description of the Workspaces, see [Get Workspace by ID](Get-Workspace-by-ID.md).
+For the description of the Workspace entity, see [Get Workspace by ID](Get-Workspace-by-ID.md).
 
 ## Sample
 

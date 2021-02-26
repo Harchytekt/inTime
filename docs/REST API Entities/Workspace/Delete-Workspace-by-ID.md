@@ -18,7 +18,7 @@ Delete a Workspace by ID from the server.
 
 ## Response parameters
 
-For the description of the Workspaces, see [Get Workspace by ID](Get-Workspace-by-ID.md).
+For the description of the Workspace entity, see [Get Workspace by ID](Get-Workspace-by-ID.md).
 
 ## Sample
 

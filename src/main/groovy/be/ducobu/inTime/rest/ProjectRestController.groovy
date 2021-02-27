@@ -4,10 +4,7 @@ import be.ducobu.inTime.dto.project.ProjectCreateDto
 import be.ducobu.inTime.dto.project.ProjectDto
 import be.ducobu.inTime.dto.project.ProjectSaveDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
-import be.ducobu.inTime.exception.NotModifiedEntityException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.service.ClientService
@@ -67,12 +64,23 @@ class ProjectRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
-        Client client = clientService.findByName(projectCreateDto.clientName)
 
         String projectName = projectCreateDto.name
 
-        if (projectService.findByName(projectName) != null)
-            throw new DuplicateEntryException("Project", "name", projectName)
+        if (projectName == null)
+            throw new MissingNameException("Project")
+
+        if (projectCreateDto.clientName == null)
+            throw new MissingNameException("Project", "clientName")
+
+        try {
+            if (projectService.findByName(projectName) != null)
+                throw new DuplicateEntryException("Project", "name", projectName)
+        } catch (CustomEntityNotFoundException ignored) {
+            logger.info "No 'Project' found with this name, we can create it."
+        }
+
+        Client client = clientService.findByName(projectCreateDto.clientName)
 
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,

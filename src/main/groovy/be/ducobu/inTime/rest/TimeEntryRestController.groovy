@@ -1,11 +1,7 @@
 package be.ducobu.inTime.rest
 
-
 import be.ducobu.inTime.dto.timeEntry.*
-import be.ducobu.inTime.exception.NoEntryFoundException
-import be.ducobu.inTime.exception.NotModifiedEntityException
-import be.ducobu.inTime.exception.RunningTimeEntryException
-import be.ducobu.inTime.exception.RunningTimeEntryNotFoundException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.TimeEntry
 import be.ducobu.inTime.service.ProjectService
@@ -69,6 +65,9 @@ class TimeEntryRestController {
     @ResponseStatus(HttpStatus.CREATED)
     TimeEntryDto create(@RequestBody TimeEntryCreateDto timeEntryCreateDto) {
         LocalDateTime date = LocalDateTime.now()
+
+        if (timeEntryCreateDto.projectName == null)
+            throw new MissingNameException("TimeEntry", "projectName")
 
         try {
             Long stoppedTimeEntryId = this.stopTimeEntry().id

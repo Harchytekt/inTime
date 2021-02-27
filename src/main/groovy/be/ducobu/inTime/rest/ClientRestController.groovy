@@ -4,10 +4,7 @@ import be.ducobu.inTime.dto.client.ClientCreateDto
 import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.client.ClientSaveDto
 import be.ducobu.inTime.dto.project.ProjectDto
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
-import be.ducobu.inTime.exception.NotModifiedEntityException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.ClientService
@@ -67,12 +64,22 @@ class ClientRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ClientDto create(@RequestBody ClientCreateDto clientCreateDto) {
-        Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
-
         String clientName = clientCreateDto.name
 
-        if (clientService.findByName(clientName) != null)
-            throw new DuplicateEntryException("Client", "name", clientName)
+        if (clientName == null)
+            throw new MissingNameException("Client")
+
+        if (clientCreateDto.workspaceName == null)
+            throw new MissingNameException("Client", "workspaceName")
+
+        try {
+            if (clientService.findByName(clientName) != null)
+                throw new DuplicateEntryException("Client", "name", clientName)
+        } catch (CustomEntityNotFoundException ignored) {
+            logger.info "No 'Client' found with this name, we can create it."
+        }
+
+        Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
 
         Client createdClient = clientService.save(
                 modelMapper.map(

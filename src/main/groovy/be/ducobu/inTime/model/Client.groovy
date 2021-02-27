@@ -1,6 +1,7 @@
 package be.ducobu.inTime.model
 
 import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(
@@ -17,6 +18,7 @@ class Client {
     @Column(name = "toggl_id")
     private Long togglId
     @Column
+    @NotNull
     private String name
 
     @ManyToOne

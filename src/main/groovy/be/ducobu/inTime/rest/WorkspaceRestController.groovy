@@ -3,10 +3,7 @@ package be.ducobu.inTime.rest
 import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.workspace.WorkspaceCreateDto
 import be.ducobu.inTime.dto.workspace.WorkspaceDto
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
-import be.ducobu.inTime.exception.NotModifiedEntityException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.WorkspaceService
 import org.modelmapper.ModelMapper
@@ -62,11 +59,17 @@ class WorkspaceRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     WorkspaceDto create(@RequestBody WorkspaceCreateDto workspaceCreateDto) {
-
         String workspaceName = workspaceCreateDto.name
 
-        if (workspaceService.findByName(workspaceName) != null)
-            throw new DuplicateEntryException("Workspace", "name", workspaceName)
+        if (workspaceName == null)
+            throw new MissingNameException("Workspace")
+
+        try {
+            if (workspaceService.findByName(workspaceName) != null)
+                throw new DuplicateEntryException("Workspace", "name", workspaceName)
+        } catch (CustomEntityNotFoundException ignored) {
+            logger.info "No 'Workspace' found with this name, we can create it."
+        }
 
         Workspace createdWorkspace = workspaceService.save(
                 modelMapper.map(

@@ -121,6 +121,34 @@ class WorkspaceTest extends GroovyTestCase {
     }
 
     @Test
+    @Order(7)
+    void whenUpdateWorkspaceWithEmptyBody_thenReturnUpdatedWorkspace_withStatus400() throws Exception {
+
+        mvc.perform(put("/workspace/3")
+                .content('{}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'Workspace' with attribute '3' couldn't be updated! Nothing was sent in the body.")))
+                .andExpect(jsonPath('$.path', is("/workspace/3")))
+    }
+
+    @Test
+    @Order(8)
+    void whenUpdateWorkspaceWithNoChange_thenReturnUpdatedWorkspace_withStatus400() throws Exception {
+
+        mvc.perform(put("/workspace/3")
+                .content('{"name": "My Third Workspace"}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'Workspace' with attribute '3' couldn't be updated! Please check the changes you've made.")))
+                .andExpect(jsonPath('$.path', is("/workspace/3")))
+    }
+
+    @Test
     @Order(9)
     void whenDeleteTogglIdWorkspace_thenReturnUpdatedWorkspace_withStatus200() throws Exception {
 

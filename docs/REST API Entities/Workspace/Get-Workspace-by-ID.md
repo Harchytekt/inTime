@@ -58,7 +58,7 @@ curl "http://localhost:8080/workspace/404
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 404,
   "message": "No 'Workspace' with attribute '404' found!",
   "path": "/workspace/404"

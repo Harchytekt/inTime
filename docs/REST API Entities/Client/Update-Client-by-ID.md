@@ -67,7 +67,7 @@ curl -X "PUT" "http://localhost:8080/client/404" \
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 404,
   "message": "No 'Client' with attribute '404' found!",
   "path": "/client/404"
@@ -88,7 +88,7 @@ curl -X "PUT" "http://localhost:8080/client/1" \
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 400,
   "message": "The entity 'Client' with attribute '1' couldn't be updated! Nothing was sent in the body.",
   "path": "/client/1"
@@ -111,7 +111,7 @@ curl -X "PUT" "http://localhost:8080/client/1" \
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 400,
   "message": "The entity 'Client' with attribute '1' couldn't be updated! Please check the changes you've made.",
   "path": "/client/1"

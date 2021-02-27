@@ -55,7 +55,7 @@ curl -X "DELETE" "http://localhost:8080/client/404/force
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 404,
   "message": "No 'Client' with attribute '404' found!",
   "path": "/client/404/force"

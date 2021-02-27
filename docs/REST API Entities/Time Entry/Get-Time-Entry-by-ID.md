@@ -24,7 +24,7 @@ Get a Time Entry by ID from the server.
 | togglId | Long | The ID of the corresponding Toggl Time Entry |
 | startDate | DateTime | The start date and time of the Time Entry |
 | endDate | DateTime | The end date and time of the Time Entry |
-| duration | Long | The duration in milliseconds of the Time Entry |
+| duration | Long | The duration in seconds of the Time Entry |
 | description | String | The description of the Time Entry |
 | running | Boolean | The running state of the Time Entry |
 | projectName | String | The name of the linked Project |
@@ -58,7 +58,7 @@ curl "http://localhost:8080/time_entry/1
 
 ### Failure
 
-#### No Workspace Found
+#### No Time Entry Found
 
 ```shell
 curl "http://localhost:8080/time_entry/404
@@ -70,7 +70,7 @@ curl "http://localhost:8080/time_entry/404
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 404,
   "message": "No 'TimeEntry' with attribute '404' found!",
   "path": "/time_entry/404"

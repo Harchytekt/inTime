@@ -49,7 +49,7 @@ curl "http://localhost:8080/project/1/timeentries
     "togglId": null,
     "startDate": "2021-06-21T09:42:00",
     "endDate": null,
-    "duration": 71478,
+    "duration": 3666,
     "description": null,
     "running": true,
     "projectName": "My First Project"
@@ -71,7 +71,7 @@ curl "http://localhost:8080/project/404/timeentries
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 404,
   "message": "No 'Project' with attribute '404' found!",
   "path": "/project/404/timeentries"

@@ -49,7 +49,7 @@ curl -X "POST" "http://localhost:8080/workspace" \
 
 #### Conflict (duplicate entry)
 
-```shel
+```shell
 curl -X "POST" "http://localhost:8080/workspace" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
@@ -63,7 +63,7 @@ curl -X "POST" "http://localhost:8080/workspace" \
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 409,
   "message": "An entity 'Workspace' with 'name' 'My First Workspace' already exist!",
   "path": "/workspace/"

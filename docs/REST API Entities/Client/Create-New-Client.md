@@ -51,7 +51,7 @@ curl -X "POST" "http://localhost:8080/client" \
 
 #### Conflict (duplicate entry)
 
-```shel
+```shell
 curl -X "POST" "http://localhost:8080/client" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
@@ -65,7 +65,7 @@ curl -X "POST" "http://localhost:8080/client" \
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 409,
   "message": "An entity 'Client' with 'name' 'My First Client' already exist!",
   "path": "/client/"

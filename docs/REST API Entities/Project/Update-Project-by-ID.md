@@ -69,7 +69,7 @@ curl -X "PUT" "http://localhost:8080/project/404" \
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 404,
   "message": "No 'Project' with attribute '404' found!",
   "path": "/project/404"
@@ -90,7 +90,7 @@ curl -X "PUT" "http://localhost:8080/project/1" \
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 400,
   "message": "The entity 'Project' with attribute '1' couldn't be updated! Nothing was sent in the body.",
   "path": "/project/1"
@@ -113,7 +113,7 @@ curl -X "PUT" "http://localhost:8080/project/1" \
 
 ```json
 {
-  "timestamp": "2021-06-21T09:41:00.000+0000",
+  "timestamp": "2021-06-21T09:41:00.000",
   "status": 400,
   "message": "The entity 'Project' with attribute '1' couldn't be updated! Please check the changes you've made.",
   "path": "/project/1"

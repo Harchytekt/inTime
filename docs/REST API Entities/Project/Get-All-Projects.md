@@ -18,7 +18,7 @@ For the description of the Project entity, see [Get Project by ID](Get-Project-b
 ### Success
 
 ```shell
-curl "http://localhost:8080/project
+curl "http://localhost:8080/project"
 ```
 
 **Code:** `200 SUCCESS`
@@ -49,7 +49,7 @@ curl "http://localhost:8080/project
 #### No Project Found
 
 ```shell
-curl "http://localhost:8080/project
+curl "http://localhost:8080/project"
 ```
 
 **Code:** `404 NOT FOUND`

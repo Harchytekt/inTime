@@ -25,7 +25,7 @@ For the description of the Client entity, see [Get Client by ID](Get-Client-by-I
 ### Success
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/client/2/force
+curl -X "DELETE" "http://localhost:8080/client/2/force"
 ```
 
 **Code:** `200 SUCCESS`
@@ -46,7 +46,7 @@ curl -X "DELETE" "http://localhost:8080/client/2/force
 #### No Client Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/client/404/force
+curl -X "DELETE" "http://localhost:8080/client/404/force"
 ```
 
 **Code:** `404 NOT FOUND`

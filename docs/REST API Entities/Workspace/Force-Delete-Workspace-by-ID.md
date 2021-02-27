@@ -25,7 +25,7 @@ For the description of the Workspace entity, see [Get Workspace by ID](Get-Works
 ### Success
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/workspace/2/force
+curl -X "DELETE" "http://localhost:8080/workspace/2/force"
 ```
 
 **Code:** `200 SUCCESS`
@@ -45,7 +45,7 @@ curl -X "DELETE" "http://localhost:8080/workspace/2/force
 #### No Workspace Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/workspace/404/force
+curl -X "DELETE" "http://localhost:8080/workspace/404/force"
 ```
 
 **Code:** `404 NOT FOUND`

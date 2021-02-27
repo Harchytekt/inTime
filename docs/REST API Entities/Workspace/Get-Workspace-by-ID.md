@@ -29,7 +29,7 @@ Get a Workspace by ID from the server.
 ### Success
 
 ```shell
-curl "http://localhost:8080/workspace/1
+curl "http://localhost:8080/workspace/1"
 ```
 
 **Code:** `200 SUCCESS`
@@ -49,7 +49,7 @@ curl "http://localhost:8080/workspace/1
 #### No Workspace Found
 
 ```shell
-curl "http://localhost:8080/workspace/404
+curl "http://localhost:8080/workspace/404"
 ```
 
 **Code:** `404 NOT FOUND`

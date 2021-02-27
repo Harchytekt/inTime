@@ -30,7 +30,7 @@ Get a Client by ID from the server.
 ### Success
 
 ```shell
-curl "http://localhost:8080/client/1
+curl "http://localhost:8080/client/1"
 ```
 
 **Code:** `200 SUCCESS`
@@ -51,7 +51,7 @@ curl "http://localhost:8080/client/1
 #### No Client Found
 
 ```shell
-curl "http://localhost:8080/client/404
+curl "http://localhost:8080/client/404"
 ```
 
 **Code:** `404 NOT FOUND`

@@ -18,7 +18,7 @@ For the description of the Time Entry entity, see [Get Time Entry by ID](Get-Tim
 ### Success
 
 ```shell
-curl "http://localhost:8080/time_entry
+curl "http://localhost:8080/time_entry"
 ```
 
 **Code:** `200 SUCCESS`
@@ -55,7 +55,7 @@ curl "http://localhost:8080/time_entry
 #### No Time Entry Found
 
 ```shell
-curl "http://localhost:8080/time_entry
+curl "http://localhost:8080/time_entry"
 ```
 
 **Code:** `404 NOT FOUND`

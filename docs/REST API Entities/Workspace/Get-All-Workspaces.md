@@ -18,7 +18,7 @@ For the description of the Workspace entity, see [Get Workspace by ID](Get-Works
 ### Success
 
 ```shell
-curl "http://localhost:8080/workspace
+curl "http://localhost:8080/workspace"
 ```
 
 **Code:** `200 SUCCESS`
@@ -45,7 +45,7 @@ curl "http://localhost:8080/workspace
 #### No Workspace Found
 
 ```shell
-curl "http://localhost:8080/workspace
+curl "http://localhost:8080/workspace"
 ```
 
 **Code:** `404 NOT FOUND`

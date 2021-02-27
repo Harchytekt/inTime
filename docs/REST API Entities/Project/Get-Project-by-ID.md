@@ -30,7 +30,7 @@ Get a Project by ID from the server.
 ### Success
 
 ```shell
-curl "http://localhost:8080/project/1
+curl "http://localhost:8080/project/1"
 ```
 
 **Code:** `200 SUCCESS`
@@ -52,7 +52,7 @@ curl "http://localhost:8080/project/1
 #### No Project Found
 
 ```shell
-curl "http://localhost:8080/project/404
+curl "http://localhost:8080/project/404"
 ```
 
 **Code:** `404 NOT FOUND`

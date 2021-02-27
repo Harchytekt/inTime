@@ -25,7 +25,7 @@ For the description of the Time Entry entity, see [Get Time Entry by ID](Get-Tim
 ### Success
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/time_entry/2/force
+curl -X "DELETE" "http://localhost:8080/time_entry/2/force"
 ```
 
 **Code:** `200 SUCCESS`
@@ -50,7 +50,7 @@ curl -X "DELETE" "http://localhost:8080/time_entry/2/force
 #### No Time Entry Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/time_entry/404/force
+curl -X "DELETE" "http://localhost:8080/time_entry/404/force"
 ```
 
 **Code:** `404 NOT FOUND`

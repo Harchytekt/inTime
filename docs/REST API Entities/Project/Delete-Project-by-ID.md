@@ -25,7 +25,7 @@ For the description of the Project entity, see [Get Project by ID](Get-Project-b
 ### Success
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/project/1
+curl -X "DELETE" "http://localhost:8080/project/1"
 ```
 
 **Code:** `200 SUCCESS`
@@ -47,7 +47,7 @@ curl -X "DELETE" "http://localhost:8080/project/1
 #### No Project Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/project/404
+curl -X "DELETE" "http://localhost:8080/project/404"
 ```
 
 **Code:** `404 NOT FOUND`
@@ -66,7 +66,7 @@ curl -X "DELETE" "http://localhost:8080/project/404
 #### Existing Child Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/project/2
+curl -X "DELETE" "http://localhost:8080/project/2"
 ```
 
 **Code:** `409 CONFLICT`

@@ -25,7 +25,7 @@ For the description of the Project entity, see [Get Project by ID](Get-Project-b
 ### Success
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/project/2/force
+curl -X "DELETE" "http://localhost:8080/project/2/force"
 ```
 
 **Code:** `200 SUCCESS`
@@ -47,7 +47,7 @@ curl -X "DELETE" "http://localhost:8080/project/2/force
 #### No Project Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/project/404/force
+curl -X "DELETE" "http://localhost:8080/project/404/force"
 ```
 
 **Code:** `404 NOT FOUND`

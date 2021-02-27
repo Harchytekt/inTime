@@ -25,7 +25,7 @@ For the description of the Client entity, see [Get Client by ID](../Client/Get-C
 ### Success
 
 ```shell
-curl "http://localhost:8080/workspace/1/clients
+curl "http://localhost:8080/workspace/1/clients"
 ```
 
 **Code:** `200 SUCCESS`
@@ -54,7 +54,7 @@ curl "http://localhost:8080/workspace/1/clients
 #### No Workspace Found
 
 ```shell
-curl "http://localhost:8080/workspace/404/clients
+curl "http://localhost:8080/workspace/404/clients"
 ```
 
 **Code:** `404 NOT FOUND`

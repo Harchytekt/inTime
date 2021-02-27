@@ -25,7 +25,7 @@ For the description of the Client entity, see [Get Client by ID](Get-Client-by-I
 ### Success
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/client/1
+curl -X "DELETE" "http://localhost:8080/client/1"
 ```
 
 **Code:** `200 SUCCESS`
@@ -46,7 +46,7 @@ curl -X "DELETE" "http://localhost:8080/client/1
 #### No Client Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/client/404
+curl -X "DELETE" "http://localhost:8080/client/404"
 ```
 
 **Code:** `404 NOT FOUND`
@@ -65,7 +65,7 @@ curl -X "DELETE" "http://localhost:8080/client/404
 #### Existing Child Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/client/2
+curl -X "DELETE" "http://localhost:8080/client/2"
 ```
 
 **Code:** `409 CONFLICT`

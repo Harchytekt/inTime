@@ -18,7 +18,7 @@ For the description of the Client entity, see [Get Client by ID](Get-Client-by-I
 ### Success
 
 ```shell
-curl "http://localhost:8080/client
+curl "http://localhost:8080/client"
 ```
 
 **Code:** `200 SUCCESS`
@@ -47,7 +47,7 @@ curl "http://localhost:8080/client
 #### No Client Found
 
 ```shell
-curl "http://localhost:8080/client
+curl "http://localhost:8080/client"
 ```
 
 **Code:** `404 NOT FOUND`

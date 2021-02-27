@@ -25,7 +25,7 @@ For the description of the Project entity, see [Get Project by ID](../Projects/G
 ### Success
 
 ```shell
-curl "http://localhost:8080/client/1/projects
+curl "http://localhost:8080/client/1/projects"
 ```
 
 **Code:** `200 SUCCESS`
@@ -56,7 +56,7 @@ curl "http://localhost:8080/client/1/projects
 #### No Client Found
 
 ```shell
-curl "http://localhost:8080/client/404/projects
+curl "http://localhost:8080/client/404/projects"
 ```
 
 **Code:** `404 NOT FOUND`

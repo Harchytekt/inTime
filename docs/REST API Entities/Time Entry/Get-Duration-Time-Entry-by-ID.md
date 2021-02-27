@@ -29,7 +29,7 @@ Get the duration of a Time Entry by ID from the server.
 ### Success
 
 ```shell
-curl "http://localhost:8080/time_entry/1/duration
+curl "http://localhost:8080/time_entry/1/duration"
 ```
 
 **Code:** `200 SUCCESS`
@@ -47,7 +47,7 @@ curl "http://localhost:8080/time_entry/1/duration
 #### No Time Entry Found
 
 ```shell
-curl "http://localhost:8080/time_entry/404/duration
+curl "http://localhost:8080/time_entry/404/duration"
 ```
 
 **Code:** `404 NOT FOUND`

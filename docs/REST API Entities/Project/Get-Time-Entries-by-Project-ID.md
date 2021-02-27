@@ -25,7 +25,7 @@ For the description of the Time Entry entity, see [Get Time Entry by ID](../Time
 ### Success
 
 ```shell
-curl "http://localhost:8080/project/1/timeentries
+curl "http://localhost:8080/project/1/timeentries"
 ```
 
 **Code:** `200 SUCCESS`
@@ -62,7 +62,7 @@ curl "http://localhost:8080/project/1/timeentries
 #### No Project Found
 
 ```shell
-curl "http://localhost:8080/project/404/timeentries
+curl "http://localhost:8080/project/404/timeentries"
 ```
 
 **Code:** `404 NOT FOUND`

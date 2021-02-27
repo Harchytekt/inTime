@@ -25,7 +25,7 @@ For the description of the Workspace entity, see [Get Workspace by ID](Get-Works
 ### Success
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/workspace/1
+curl -X "DELETE" "http://localhost:8080/workspace/1"
 ```
 
 **Code:** `200 SUCCESS`
@@ -45,7 +45,7 @@ curl -X "DELETE" "http://localhost:8080/workspace/1
 #### No Workspace Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/workspace/404
+curl -X "DELETE" "http://localhost:8080/workspace/404"
 ```
 
 **Code:** `404 NOT FOUND`
@@ -64,7 +64,7 @@ curl -X "DELETE" "http://localhost:8080/workspace/404
 #### Existing Child Found
 
 ```shell
-curl -X "DELETE" "http://localhost:8080/workspace/2
+curl -X "DELETE" "http://localhost:8080/workspace/2"
 ```
 
 **Code:** `409 CONFLICT`

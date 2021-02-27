@@ -21,7 +21,8 @@ Update a Time Entry by ID.
 | projectName | String | The name of the linked Project | ❌ |
 
 > At least one of the five fields is needed.  
-> ⚠️ The Time Entry has to be stopped to have an endDate (this has to be changed).
+> ⚠️ The Time Entry has to be stopped to have an endDate (this will be changed).  
+> ⚠️ There is no check on the endDate for now (endDate < startDate)…
 
 ## Response parameters
 
@@ -124,3 +125,25 @@ curl -X "PUT" "http://localhost:8080/time_entry/1" \
   "path": "/time_entry/1"
 }
 ```
+
+#### Conflict when adding an endDate
+
+```shell
+curl -X "PUT" "http://localhost:8080/time_entry/2" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "endDate": "2021-06-21T10:52:21"
+}'
+```
+
+**Code:** `409 CONFLICT`
+
+**Content:**
+
+```json
+{
+  "timestamp": "2021-06-21T10:53:00",
+  "status": 409,
+  "message": "The 'TimeEntry' is still running!",
+  "path": "/time_entry/2"
+}

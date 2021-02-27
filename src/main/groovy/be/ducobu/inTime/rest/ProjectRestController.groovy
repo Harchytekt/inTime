@@ -131,6 +131,21 @@ class ProjectRestController {
         )
     }
 
+    @PutMapping("/{id}/togglid")
+    ProjectDto deleteProjectTogglID(@PathVariable Long id) {
+        Project project = projectService.findById(id)
+
+        if (project.togglId == null)
+            throw new TogglIdAlreadyNullException("Project", id)
+
+        project.togglId = null
+
+        return modelMapper.map(
+                project,
+                ProjectDto.class
+        )
+    }
+
     @DeleteMapping("/{id}")
     ProjectDto deleteProject(@PathVariable Long id) {
         Project project = projectService.findById(id)

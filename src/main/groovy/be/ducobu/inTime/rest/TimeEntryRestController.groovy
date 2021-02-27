@@ -154,6 +154,21 @@ class TimeEntryRestController {
         )
     }
 
+    @PutMapping("/{id}/togglid")
+    TimeEntryDto deleteTimeEntryTogglID(@PathVariable Long id) {
+        TimeEntry timeEntry = timeEntryService.findById(id)
+
+        if (timeEntry.togglId == null)
+            throw new TogglIdAlreadyNullException("TimeEntry", id)
+
+        timeEntry.togglId = null
+
+        return modelMapper.map(
+                timeEntry,
+                TimeEntryDto.class
+        )
+    }
+
     @DeleteMapping("/{id}")
     TimeEntryDto deleteTimeEntry(@PathVariable Long id) {
         TimeEntry timeEntry = timeEntryService.findById(id)

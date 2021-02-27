@@ -121,6 +121,21 @@ class ClientRestController {
         )
     }
 
+    @PutMapping("/{id}/togglid")
+    ClientDto deleteClientTogglID(@PathVariable Long id) {
+        Client client = clientService.findById(id)
+
+        if (client.togglId == null)
+            throw new TogglIdAlreadyNullException("Client", id)
+
+        client.togglId = null
+
+        return modelMapper.map(
+                client,
+                ClientDto.class
+        )
+    }
+
     @DeleteMapping("/{id}")
     ClientDto deleteClient(@PathVariable Long id) {
         Client client = clientService.findById(id)

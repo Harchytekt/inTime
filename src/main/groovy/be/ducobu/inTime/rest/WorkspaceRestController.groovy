@@ -108,7 +108,20 @@ class WorkspaceRestController {
         )
     }
 
-    // TODO: Add remove togglId
+    @PutMapping("/{id}/togglid")
+    WorkspaceDto deleteWorkspaceTogglID(@PathVariable Long id) {
+        Workspace workspace = workspaceService.findById(id)
+
+        if (workspace.togglId == null)
+            throw new TogglIdAlreadyNullException("Workspace", id)
+
+        workspace.togglId = null
+
+        return modelMapper.map(
+                workspace,
+                WorkspaceDto.class
+        )
+    }
 
     @DeleteMapping("/{id}")
     WorkspaceDto deleteWorkspace(@PathVariable Long id) {

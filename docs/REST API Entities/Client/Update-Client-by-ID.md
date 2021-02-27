@@ -18,7 +18,7 @@ Update a Client by ID.
 | name | String | The name of the requested Client | ❌ |
 | workspaceName | String | The name of the linked Workspace | ❌ |
 
-> At least one of the three is needed.
+> At least one of the three fields is needed.
 
 ## Response parameters
 

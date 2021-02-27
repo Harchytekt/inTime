@@ -19,7 +19,7 @@ Update a Project by ID.
 | billable | Boolean | The billability status of the Project | ❌ |
 | clientName | String | The name of the linked Client | ❌ |
 
-> At least one of the four is needed.
+> At least one of the four fields is needed.
 
 ## Response parameters
 

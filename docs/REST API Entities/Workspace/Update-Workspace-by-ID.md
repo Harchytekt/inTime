@@ -17,7 +17,7 @@ Update a Workspace by ID.
 | togglId | Long | The ID of the corresponding Toggl Workspace | ❌ |
 | name | String | The name of the requested Workspace | ❌ |
 
-> At least one of the two is needed.
+> At least one of the two fields is needed.
 
 ## Response parameters
 

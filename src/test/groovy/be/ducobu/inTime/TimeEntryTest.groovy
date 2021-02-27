@@ -54,13 +54,13 @@ class TimeEntryTest extends GroovyTestCase {
     @Order(2)
     void whenGetTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
 
-        mvc.perform(get("/time_entry/3")
+        mvc.perform(get("/time_entry/404")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.status', is(404)))
-                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '3' found!")))
-                .andExpect(jsonPath('$.path', is("/time_entry/3")))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '404' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/404")))
     }
 
     @Test

@@ -14,7 +14,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 import static org.hamcrest.Matchers.*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
@@ -42,23 +41,23 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My First Project")))
+                .andExpect(jsonPath('$.id', is(1)))
+                .andExpect(jsonPath('$.name', is("My First Project")))
                 .andExpect(jsonPath('$.billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My First Client")))
+                .andExpect(jsonPath('$.clientName', is("My First Client")))
     }
 
     @Test
     @Order(2)
     void whenGetProjectByWrongId_thenReturnException_withStatus404() throws Exception {
 
-        mvc.perform(get("/project/3")
+        mvc.perform(get("/project/404")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.status', is(404)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.message', is("No 'Project' with attribute '3' found!")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.path', is("/project/3")))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'Project' with attribute '404' found!")))
+                .andExpect(jsonPath('$.path', is("/project/404")))
     }
 
     @Test
@@ -76,10 +75,10 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My third Project")))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.name', is("My third Project")))
                 .andExpect(jsonPath('$.billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My Second Client")))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
     }
 
     @Test
@@ -91,18 +90,18 @@ class ProjectTest extends GroovyTestCase {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$', hasSize(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[0].id', is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[0].name', is("My First Project")))
+                .andExpect(jsonPath('$[0].id', is(1)))
+                .andExpect(jsonPath('$[0].name', is("My First Project")))
                 .andExpect(jsonPath('$[0].billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[0].clientName', is("My First Client")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[1].id', is(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[1].name', is("My Second Project")))
+                .andExpect(jsonPath('$[0].clientName', is("My First Client")))
+                .andExpect(jsonPath('$[1].id', is(2)))
+                .andExpect(jsonPath('$[1].name', is("My Second Project")))
                 .andExpect(jsonPath('$[1].billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[1].clientName', is("My First Client")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[2].id', is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[2].name', is("My third Project")))
+                .andExpect(jsonPath('$[1].clientName', is("My First Client")))
+                .andExpect(jsonPath('$[2].id', is(3)))
+                .andExpect(jsonPath('$[2].name', is("My third Project")))
                 .andExpect(jsonPath('$[2].billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[2].clientName', is("My Second Client")))
+                .andExpect(jsonPath('$[2].clientName', is("My Second Client")))
     }
 
     @Test
@@ -135,10 +134,10 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My Third Project")))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.name', is("My Third Project")))
                 .andExpect(jsonPath('$.billable', is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My Second Client")))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
     }
 
     @Test
@@ -149,10 +148,10 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My Third Project")))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.name', is("My Third Project")))
                 .andExpect(jsonPath('$.billable', is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My Second Client")))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
     }
 
     @Test
@@ -163,9 +162,9 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.status', is(409)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.message', is("One or more 'TimeEntry' still linked to this entity.")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.path', is("/project/1")))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("One or more 'TimeEntry' still linked to this entity.")))
+                .andExpect(jsonPath('$.path', is("/project/1")))
     }
 
     @Test
@@ -176,10 +175,10 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My First Project")))
+                .andExpect(jsonPath('$.id', is(1)))
+                .andExpect(jsonPath('$.name', is("My First Project")))
                 .andExpect(jsonPath('$.billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My First Client")))
+                .andExpect(jsonPath('$.clientName', is("My First Client")))
     }
 
     @Test
@@ -190,8 +189,8 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.status', is(404)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.message', is("No 'Project' with attribute '1' found!")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.path', is("/project/1/force")))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'Project' with attribute '1' found!")))
+                .andExpect(jsonPath('$.path', is("/project/1/force")))
     }
 }

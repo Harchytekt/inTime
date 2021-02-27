@@ -130,7 +130,7 @@ class TimeEntry {
 
         if (running != timeEntry.running) return false
         if (description != timeEntry.description) return false
-        if (duration != timeEntry.duration) return false
+        if (!running && duration != timeEntry.duration) return false
         if (endDate != timeEntry.endDate) return false
         if (id != timeEntry.id) return false
         if (project != timeEntry.project) return false

@@ -17,7 +17,7 @@ Create a new Project on the server.
 | togglId | Long | The ID of the corresponding Toggl Project | ❌ |
 | name | String | The name of the requested Project | ✔️ |
 | billable | Boolean | The billability status of the Project | ❌ |
-| clientName | String | The name of the linked Client | ❌ |
+| clientName | String | The name of the linked Client | ✔️ |
 
 ## Response parameters
 

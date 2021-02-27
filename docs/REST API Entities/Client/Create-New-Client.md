@@ -16,7 +16,7 @@ Create a new Client on the server.
 |:--|:--|:--|:--:|
 | togglId | Long | The ID of the corresponding Toggl Client | ❌ |
 | name | String | The name of the requested Client | ✔️ |
-| workspaceName | String | The name of the linked Workspace | ❌ |
+| workspaceName | String | The name of the linked Workspace | ✔️ |
 
 ## Response parameters
 

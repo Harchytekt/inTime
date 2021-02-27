@@ -1,6 +1,7 @@
 package be.ducobu.inTime.model
 
 import javax.persistence.*
+import javax.validation.constraints.NotNull
 import java.time.Duration
 import java.time.LocalDateTime
 
@@ -28,6 +29,7 @@ class TimeEntry {
 
     @ManyToOne
     @JoinColumn(name = "fk_project", nullable = false)
+    @NotNull
     private Project project
 
     TimeEntry() {}

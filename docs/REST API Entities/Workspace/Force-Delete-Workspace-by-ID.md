@@ -35,7 +35,7 @@ curl -X "DELETE" "http://localhost:8080/workspace/2/force"
 ```json
 {
   "id": 2,
-  "togglId": null,
+  "togglId": 2,
   "name": "My Second Workspace"
 }
 ```

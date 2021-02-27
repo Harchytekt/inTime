@@ -53,13 +53,6 @@ class ProjectRestController {
         )
     }
 
-    /*@GetMapping("/client/{clientId}")
-    List<ProjectDto> getByClientId(@PathVariable Long clientId) {
-        return modelMapper.map(projectService.findByClientId(clientId),
-                ProjectDto[].class
-        )
-    }*/
-
     @GetMapping("/{id}/timeentries")
     List<TimeEntryDto> getTimeEntriesById(@PathVariable Long id) {
         Project project = projectService.findById(id)
@@ -71,9 +64,14 @@ class ProjectRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
-        Client client = clientService.findByName(projectCreateDto.clientName)
 
         String projectName = projectCreateDto.name
+
+        if (projectName == null)
+            throw new MissingNameException("Project")
+
+        if (projectCreateDto.clientName == null)
+            throw new MissingNameException("Project", "clientName")
 
         try {
             if (projectService.findByName(projectName) != null)
@@ -81,6 +79,8 @@ class ProjectRestController {
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Project' found with this name, we can create it."
         }
+
+        Client client = clientService.findByName(projectCreateDto.clientName)
 
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,
@@ -127,6 +127,21 @@ class ProjectRestController {
 
         return modelMapper.map(
                 projectService.save(project),
+                ProjectDto.class
+        )
+    }
+
+    @PutMapping("/{id}/togglid")
+    ProjectDto deleteProjectTogglID(@PathVariable Long id) {
+        Project project = projectService.findById(id)
+
+        if (project.togglId == null)
+            throw new TogglIdAlreadyNullException("Project", id)
+
+        project.togglId = null
+
+        return modelMapper.map(
+                project,
                 ProjectDto.class
         )
     }

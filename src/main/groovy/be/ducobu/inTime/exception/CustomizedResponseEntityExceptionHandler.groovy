@@ -55,8 +55,8 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
     }
 
     @ExceptionHandler(value = [CustomEntityNotFoundException.class,
-            RunningTimeEntryNotFoundException.class,
-            NoEntryFoundException.class])
+            NoEntryFoundException.class,
+            RunningTimeEntryNotFoundException.class])
     final ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
         logger.error ex.getMessage()
         status = HttpStatus.NOT_FOUND
@@ -73,7 +73,9 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
 
     @ExceptionHandler([DuplicateEntryException.class,
             ExistingChildFoundException.class,
-            RunningTimeEntryException.class])
+            MissingNameException.class,
+            RunningTimeEntryException.class,
+            TogglIdAlreadyNullException.class])
     final ResponseEntity<Object> handleConflictException(Exception ex, WebRequest request) {
         logger.error ex.getMessage()
         status = HttpStatus.CONFLICT

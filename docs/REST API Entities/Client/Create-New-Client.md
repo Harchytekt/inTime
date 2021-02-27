@@ -16,7 +16,7 @@ Create a new Client on the server.
 |:--|:--|:--|:--:|
 | togglId | Long | The ID of the corresponding Toggl Client | ❌ |
 | name | String | The name of the requested Client | ✔️ |
-| workspaceName | String | The name of the linked Workspace | ❌ |
+| workspaceName | String | The name of the linked Workspace | ✔️ |
 
 ## Response parameters
 
@@ -68,6 +68,29 @@ curl -X "POST" "http://localhost:8080/client" \
   "timestamp": "2021-06-21T09:41:00.000",
   "status": 409,
   "message": "An entity 'Client' with 'name' 'My First Client' already exist!",
+  "path": "/client/"
+}
+```
+
+#### Missing required field
+
+```shell
+curl -X "POST" "http://localhost:8080/client" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "togglId": 1
+}'
+```
+
+**Code:** `409 CONFLICT`
+
+**Content:**
+
+```json
+{
+  "timestamp": "2021-06-21T09:41:00.000",
+  "status": 409,
+  "message": "Missing the field 'name' to create the entity 'Client'!",
   "path": "/client/"
 }
 ```

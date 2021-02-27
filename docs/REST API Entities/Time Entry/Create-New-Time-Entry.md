@@ -74,3 +74,26 @@ curl -X "POST" "http://localhost:8080/time_entry" \
   "path": "/time_entry/"
 }
 ```
+
+#### Missing required field
+
+```shell
+curl -X "POST" "http://localhost:8080/time_entry" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "description": "Really important description"
+}'
+```
+
+**Code:** `409 CONFLICT`
+
+**Content:**
+
+```json
+{
+  "timestamp": "2021-06-21T09:41:00.000",
+  "status": 409,
+  "message": "Missing the field 'projectName' to create the entity 'TimeEntry'!",
+  "path": "/time_entry/"
+}
+```

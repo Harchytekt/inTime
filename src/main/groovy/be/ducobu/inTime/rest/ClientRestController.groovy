@@ -64,9 +64,13 @@ class ClientRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ClientDto create(@RequestBody ClientCreateDto clientCreateDto) {
-        Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
-
         String clientName = clientCreateDto.name
+
+        if (clientName == null)
+            throw new MissingNameException("Client")
+
+        if (clientCreateDto.workspaceName == null)
+            throw new MissingNameException("Client", "workspaceName")
 
         try {
             if (clientService.findByName(clientName) != null)
@@ -74,6 +78,8 @@ class ClientRestController {
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Client' found with this name, we can create it."
         }
+
+        Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
 
         Client createdClient = clientService.save(
                 modelMapper.map(
@@ -111,6 +117,21 @@ class ClientRestController {
 
         return modelMapper.map(
                 clientService.save(client),
+                ClientDto.class
+        )
+    }
+
+    @PutMapping("/{id}/togglid")
+    ClientDto deleteClientTogglID(@PathVariable Long id) {
+        Client client = clientService.findById(id)
+
+        if (client.togglId == null)
+            throw new TogglIdAlreadyNullException("Client", id)
+
+        client.togglId = null
+
+        return modelMapper.map(
+                client,
                 ClientDto.class
         )
     }

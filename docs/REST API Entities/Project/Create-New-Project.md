@@ -17,7 +17,7 @@ Create a new Project on the server.
 | togglId | Long | The ID of the corresponding Toggl Project | ❌ |
 | name | String | The name of the requested Project | ✔️ |
 | billable | Boolean | The billability status of the Project | ❌ |
-| clientName | String | The name of the linked Client | ❌ |
+| clientName | String | The name of the linked Client | ✔️ |
 
 ## Response parameters
 
@@ -70,6 +70,29 @@ curl -X "POST" "http://localhost:8080/project" \
   "timestamp": "2021-06-21T09:41:00.000",
   "status": 409,
   "message": "An entity 'Project' with 'name' 'My First Project' already exist!",
+  "path": "/project/"
+}
+```
+
+#### Missing required field
+
+```shell
+curl -X "POST" "http://localhost:8080/project" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "togglId": 1
+}'
+```
+
+**Code:** `409 CONFLICT`
+
+**Content:**
+
+```json
+{
+  "timestamp": "2021-06-21T09:41:00.000",
+  "status": 409,
+  "message": "Missing the field 'name' to create the entity 'Project'!",
   "path": "/project/"
 }
 ```

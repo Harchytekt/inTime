@@ -34,7 +34,7 @@ curl "http://localhost:8080/workspace"
   },
   {
     "id": 2,
-    "togglId": null,
+    "togglId": 2,
     "name": "My Second Workspace"
   }
 ]

@@ -29,7 +29,7 @@ curl -X "PUT" "http://localhost:8080/time_entry/stop"
 ```json
 {
   "id": 2,
-  "togglId": null,
+  "togglId": 2,
   "startDate": "2021-06-21T09:42:00",
   "endDate": "2021-06-21T10:52:21",
   "duration": 3666,

@@ -36,7 +36,7 @@ curl "http://localhost:8080/project"
   },
   {
     "id": 2,
-    "togglId": null,
+    "togglId": 2,
     "name": "My Second Project",
     "billable": false,
     "clientName": "My First Client"

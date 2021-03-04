@@ -14,7 +14,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 import static org.hamcrest.Matchers.*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
@@ -42,23 +41,23 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My First Project")))
+                .andExpect(jsonPath('$.id', is(1)))
+                .andExpect(jsonPath('$.name', is("My First Project")))
                 .andExpect(jsonPath('$.billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My First Client")))
+                .andExpect(jsonPath('$.clientName', is("My First Client")))
     }
 
     @Test
     @Order(2)
     void whenGetProjectByWrongId_thenReturnException_withStatus404() throws Exception {
 
-        mvc.perform(get("/project/3")
+        mvc.perform(get("/project/404")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.status', is(404)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.message', is("No 'Project' with attribute '3' found!")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.path', is("/project/3")))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'Project' with attribute '404' found!")))
+                .andExpect(jsonPath('$.path', is("/project/404")))
     }
 
     @Test
@@ -76,10 +75,10 @@ class ProjectTest extends GroovyTestCase {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My third Project")))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.name', is("My third Project")))
                 .andExpect(jsonPath('$.billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My Second Client")))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
     }
 
     @Test
@@ -91,18 +90,18 @@ class ProjectTest extends GroovyTestCase {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$', hasSize(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[0].id', is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[0].name', is("My First Project")))
+                .andExpect(jsonPath('$[0].id', is(1)))
+                .andExpect(jsonPath('$[0].name', is("My First Project")))
                 .andExpect(jsonPath('$[0].billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[0].clientName', is("My First Client")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[1].id', is(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[1].name', is("My Second Project")))
+                .andExpect(jsonPath('$[0].clientName', is("My First Client")))
+                .andExpect(jsonPath('$[1].id', is(2)))
+                .andExpect(jsonPath('$[1].name', is("My Second Project")))
                 .andExpect(jsonPath('$[1].billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[1].clientName', is("My First Client")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[2].id', is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[2].name', is("My third Project")))
+                .andExpect(jsonPath('$[1].clientName', is("My First Client")))
+                .andExpect(jsonPath('$[2].id', is(3)))
+                .andExpect(jsonPath('$[2].name', is("My third Project")))
                 .andExpect(jsonPath('$[2].billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$[2].clientName', is("My Second Client")))
+                .andExpect(jsonPath('$[2].clientName', is("My Second Client")))
     }
 
     @Test
@@ -131,67 +130,124 @@ class ProjectTest extends GroovyTestCase {
     void whenUpdateProject_thenReturnUpdatedProject_withStatus200() throws Exception {
 
         mvc.perform(put("/project/3")
-                .content('{"name": "My Third Project", "billable": true}')
+                .content('{"name": "My Third Project", "billable": true, "togglId": 3}')
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My Third Project")))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.togglId', is(3)))
+                .andExpect(jsonPath('$.name', is("My Third Project")))
                 .andExpect(jsonPath('$.billable', is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My Second Client")))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
     }
 
     @Test
     @Order(7)
+    void whenUpdateProjectWithEmptyBody_thenReturnException_withStatus400() throws Exception {
+
+        mvc.perform(put("/project/3")
+                .content('{}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'Project' with attribute '3' couldn't be updated! Nothing was sent in the body.")))
+                .andExpect(jsonPath('$.path', is("/project/3")))
+    }
+
+    @Test
+    @Order(8)
+    void whenUpdateProjectWithNoChange_thenReturnException_withStatus400() throws Exception {
+
+        mvc.perform(put("/project/3")
+                .content('{"name": "My Third Project"}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'Project' with attribute '3' couldn't be updated! Please check the changes you've made.")))
+                .andExpect(jsonPath('$.path', is("/project/3")))
+    }
+
+    @Test
+    @Order(9)
+    void whenDeleteTogglIdProject_thenReturnUpdatedProject_withStatus200() throws Exception {
+
+        mvc.perform(put("/project/3/togglid")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
+                .andExpect(jsonPath('$.name', is("My Third Project")))
+                .andExpect(jsonPath('$.billable', is(true)))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
+    }
+
+    @Test
+    @Order(10)
+    void whenDeleteAlreadyNullTogglIdProject_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(put("/project/1/togglid")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("There is no Toggl ID linked to the entity 'Project' with id '1'!")))
+                .andExpect(jsonPath('$.path', is("/project/1/togglid")))
+    }
+
+    @Test
+    @Order(11)
     void whenDeleteProjectById_thenReturnDeletedProject_withStatus200() throws Exception {
 
         mvc.perform(delete("/project/3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My Third Project")))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.name', is("My Third Project")))
                 .andExpect(jsonPath('$.billable', is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My Second Client")))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
     }
 
     @Test
-    @Order(8)
+    @Order(12)
     void whenDeleteProjectWithChildrenById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/project/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.status', is(409)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.message', is("One or more 'TimeEntry' still linked to this entity.")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.path', is("/project/1")))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("One or more 'TimeEntry' still linked to this entity.")))
+                .andExpect(jsonPath('$.path', is("/project/1")))
     }
 
     @Test
-    @Order(9)
+    @Order(13)
     void whenForceDeleteProjectWithChildrenById_thenReturnDeletedProject_withStatus200() throws Exception {
 
         mvc.perform(delete("/project/1/force")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.id', is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.name', is("My First Project")))
+                .andExpect(jsonPath('$.id', is(1)))
+                .andExpect(jsonPath('$.name', is("My First Project")))
                 .andExpect(jsonPath('$.billable', is(false)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.clientName', is("My First Client")))
+                .andExpect(jsonPath('$.clientName', is("My First Client")))
     }
 
     @Test
-    @Order(10)
+    @Order(14)
     void whenForceDeleteProjectByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/project/1/force")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.status', is(404)))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.message', is("No 'Project' with attribute '1' found!")))
-                .andExpect(MockMvcResultMatchers.jsonPath('$.path', is("/project/1/force")))
+                .andExpect(jsonPath('$.status', is(404)))
+                .andExpect(jsonPath('$.message', is("No 'Project' with attribute '1' found!")))
+                .andExpect(jsonPath('$.path', is("/project/1/force")))
     }
 }

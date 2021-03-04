@@ -122,7 +122,7 @@ class WorkspaceTest extends GroovyTestCase {
 
     @Test
     @Order(7)
-    void whenUpdateWorkspaceWithEmptyBody_thenReturnUpdatedWorkspace_withStatus400() throws Exception {
+    void whenUpdateWorkspaceWithEmptyBody_thenReturnException_withStatus400() throws Exception {
 
         mvc.perform(put("/workspace/3")
                 .content('{}')
@@ -136,7 +136,7 @@ class WorkspaceTest extends GroovyTestCase {
 
     @Test
     @Order(8)
-    void whenUpdateWorkspaceWithNoChange_thenReturnUpdatedWorkspace_withStatus400() throws Exception {
+    void whenUpdateWorkspaceWithNoChange_thenReturnException_withStatus400() throws Exception {
 
         mvc.perform(put("/workspace/3")
                 .content('{"name": "My Third Workspace"}')
@@ -163,6 +163,19 @@ class WorkspaceTest extends GroovyTestCase {
 
     @Test
     @Order(10)
+    void whenDeleteAlreadyNullTogglIdWorkspace_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(put("/workspace/1/togglid")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("There is no Toggl ID linked to the entity 'Workspace' with id '1'!")))
+                .andExpect(jsonPath('$.path', is("/workspace/1/togglid")))
+    }
+
+    @Test
+    @Order(11)
     void whenDeleteWorkspaceById_thenReturnDeletedWorkspace_withStatus200() throws Exception {
 
         mvc.perform(delete("/workspace/3")
@@ -174,7 +187,7 @@ class WorkspaceTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     void whenDeleteWorkspaceWithChildrenById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/workspace/1")
@@ -187,7 +200,7 @@ class WorkspaceTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(12)
+    @Order(13)
     void whenForceDeleteWorkspaceWithChildrenById_thenReturnDeletedWorkspace_withStatus200() throws Exception {
 
         mvc.perform(delete("/workspace/1/force")
@@ -199,7 +212,7 @@ class WorkspaceTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(13)
+    @Order(14)
     void whenForceDeleteWorkspaceByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/workspace/1/force")

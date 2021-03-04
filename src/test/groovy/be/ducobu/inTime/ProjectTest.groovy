@@ -130,11 +130,12 @@ class ProjectTest extends GroovyTestCase {
     void whenUpdateProject_thenReturnUpdatedProject_withStatus200() throws Exception {
 
         mvc.perform(put("/project/3")
-                .content('{"name": "My Third Project", "billable": true}')
+                .content('{"name": "My Third Project", "billable": true, "togglId": 3}')
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.togglId', is(3)))
                 .andExpect(jsonPath('$.name', is("My Third Project")))
                 .andExpect(jsonPath('$.billable', is(true)))
                 .andExpect(jsonPath('$.clientName', is("My Second Client")))
@@ -142,6 +143,62 @@ class ProjectTest extends GroovyTestCase {
 
     @Test
     @Order(7)
+    void whenUpdateProjectWithEmptyBody_thenReturnException_withStatus400() throws Exception {
+
+        mvc.perform(put("/project/3")
+                .content('{}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'Project' with attribute '3' couldn't be updated! Nothing was sent in the body.")))
+                .andExpect(jsonPath('$.path', is("/project/3")))
+    }
+
+    @Test
+    @Order(8)
+    void whenUpdateProjectWithNoChange_thenReturnException_withStatus400() throws Exception {
+
+        mvc.perform(put("/project/3")
+                .content('{"name": "My Third Project"}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'Project' with attribute '3' couldn't be updated! Please check the changes you've made.")))
+                .andExpect(jsonPath('$.path', is("/project/3")))
+    }
+
+    @Test
+    @Order(9)
+    void whenDeleteTogglIdProject_thenReturnUpdatedProject_withStatus200() throws Exception {
+
+        mvc.perform(put("/project/3/togglid")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
+                .andExpect(jsonPath('$.name', is("My Third Project")))
+                .andExpect(jsonPath('$.billable', is(true)))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
+    }
+
+    @Test
+    @Order(10)
+    void whenDeleteAlreadyNullTogglIdProject_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(put("/project/1/togglid")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("There is no Toggl ID linked to the entity 'Project' with id '1'!")))
+                .andExpect(jsonPath('$.path', is("/project/1/togglid")))
+    }
+
+    @Test
+    @Order(11)
     void whenDeleteProjectById_thenReturnDeletedProject_withStatus200() throws Exception {
 
         mvc.perform(delete("/project/3")
@@ -155,7 +212,7 @@ class ProjectTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(8)
+    @Order(12)
     void whenDeleteProjectWithChildrenById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/project/1")
@@ -168,7 +225,7 @@ class ProjectTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(9)
+    @Order(13)
     void whenForceDeleteProjectWithChildrenById_thenReturnDeletedProject_withStatus200() throws Exception {
 
         mvc.perform(delete("/project/1/force")
@@ -182,7 +239,7 @@ class ProjectTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(10)
+    @Order(14)
     void whenForceDeleteProjectByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/project/1/force")

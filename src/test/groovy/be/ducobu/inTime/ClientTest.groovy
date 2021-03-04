@@ -15,8 +15,7 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 
-import static org.hamcrest.Matchers.hasSize
-import static org.hamcrest.Matchers.is
+import static org.hamcrest.Matchers.*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -124,17 +123,73 @@ class ClientTest extends GroovyTestCase {
     void whenUpdateClient_thenReturnUpdatedClient_withStatus200() throws Exception {
 
         mvc.perform(put("/client/3")
-                .content('{"name": "My Third Client"}')
+                .content('{"name": "My Third Client", "togglId": 3}')
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.togglId', is(3)))
                 .andExpect(jsonPath('$.name', is("My Third Client")))
                 .andExpect(jsonPath('$.workspaceName', is("My Second Workspace")))
     }
 
     @Test
     @Order(7)
+    void whenUpdateClientWithEmptyBody_thenReturnException_withStatus400() throws Exception {
+
+        mvc.perform(put("/client/3")
+                .content('{}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'Client' with attribute '3' couldn't be updated! Nothing was sent in the body.")))
+                .andExpect(jsonPath('$.path', is("/client/3")))
+    }
+
+    @Test
+    @Order(8)
+    void whenUpdateClientWithNoChange_thenReturnException_withStatus400() throws Exception {
+
+        mvc.perform(put("/client/3")
+                .content('{"name": "My Third Client"}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'Client' with attribute '3' couldn't be updated! Please check the changes you've made.")))
+                .andExpect(jsonPath('$.path', is("/client/3")))
+    }
+
+    @Test
+    @Order(9)
+    void whenDeleteTogglIdClient_thenReturnUpdatedClient_withStatus200() throws Exception {
+
+        mvc.perform(put("/client/3/togglid")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(3)))
+                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
+                .andExpect(jsonPath('$.name', is("My Third Client")))
+                .andExpect(jsonPath('$.workspaceName', is("My Second Workspace")))
+    }
+
+    @Test
+    @Order(10)
+    void whenDeleteAlreadyNullTogglIdClient_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(put("/client/1/togglid")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("There is no Toggl ID linked to the entity 'Client' with id '1'!")))
+                .andExpect(jsonPath('$.path', is("/client/1/togglid")))
+    }
+
+    @Test
+    @Order(11)
     void whenDeleteClientById_thenReturnDeletedClient_withStatus200() throws Exception {
 
         mvc.perform(delete("/client/3")
@@ -147,7 +202,7 @@ class ClientTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(8)
+    @Order(12)
     void whenDeleteClientWithChildrenById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/client/1")
@@ -160,7 +215,7 @@ class ClientTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(9)
+    @Order(13)
     void whenForceDeleteClientWithChildrenById_thenReturnDeletedClient_withStatus200() throws Exception {
 
         mvc.perform(delete("/client/1/force")
@@ -173,7 +228,7 @@ class ClientTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(10)
+    @Order(14)
     void whenForceDeleteClientByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/client/1/force")

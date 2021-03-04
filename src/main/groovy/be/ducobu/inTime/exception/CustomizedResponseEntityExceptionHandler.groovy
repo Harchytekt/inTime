@@ -72,6 +72,7 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
     }
 
     @ExceptionHandler([DuplicateEntryException.class,
+            EndDateExceededException.class,
             ExistingChildFoundException.class,
             MissingNameException.class,
             RunningTimeEntryException.class,

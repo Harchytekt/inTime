@@ -1,6 +1,6 @@
 # Update Time Entry by ID
 
-> Last modified: 27/02/2021 (v0.0.1)
+> Last modified: 04/03/2021 (v0.0.2)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -126,7 +126,7 @@ curl -X "PUT" "http://localhost:8080/time_entry/1" \
 }
 ```
 
-#### Conflict when adding an endDate
+#### Conflict when adding an endDate on a running Time Entry
 
 ```shell
 curl -X "PUT" "http://localhost:8080/time_entry/2" \
@@ -147,3 +147,27 @@ curl -X "PUT" "http://localhost:8080/time_entry/2" \
   "message": "The 'TimeEntry' is still running!",
   "path": "/time_entry/2"
 }
+```
+
+#### Conflict on endDate <= startDate
+
+```shell
+curl -X "PUT" "http://localhost:8080/time_entry/2" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "endDate": "2021-06-01T00:00:42"
+}'
+```
+
+**Code:** `409 CONFLICT`
+
+**Content:**
+
+```json
+{
+  "timestamp": "2021-06-21T10:53:00",
+  "status": 409,
+  "message": "The end date should be after the start date: '2021-06-21T09:41:00' > '2021-06-01T00:00:42'!",
+  "path": "/time_entry/2"
+}
+```

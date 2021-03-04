@@ -231,7 +231,7 @@ class TimeEntryTest extends GroovyTestCase {
 
     @Test
     @Order(13)
-    void whenUpdateProjectWithNoChange_thenReturnException_withStatus400() throws Exception {
+    void whenUpdateTimeEntryWithNoChange_thenReturnException_withStatus400() throws Exception {
 
         mvc.perform(put("/time_entry/3")
                 .content('{"description": "Test with update"}')
@@ -245,6 +245,20 @@ class TimeEntryTest extends GroovyTestCase {
 
     @Test
     @Order(14)
+    void whenUpdateTimeEntryWithIncorrectEndDate_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(put("/time_entry/1")
+                .content('{"endDate": "2020-01-01T00:00:42"}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("The end date should be after the start date: '2021-01-01T14:28:42' > '2020-01-01T00:00:42'!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/1")))
+    }
+
+    @Test
+    @Order(15)
     void whenDeleteTogglIdProject_thenReturnUpdatedProject_withStatus200() throws Exception {
 
         mvc.perform(put("/time_entry/3/togglid")
@@ -259,7 +273,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(15)
+    @Order(16)
     void whenDeleteAlreadyNullTogglIdProject_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(put("/time_entry/1/togglid")
@@ -272,7 +286,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(16)
+    @Order(17)
     void whenDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(delete("/time_entry/1")
@@ -287,7 +301,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(17)
+    @Order(18)
     void whenDeleteRunningTimeEntryById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/time_entry/3")
@@ -300,7 +314,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(18)
+    @Order(19)
     void whenForceDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(delete("/time_entry/3/force")
@@ -316,7 +330,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(19)
+    @Order(20)
     void whenForceDeleteTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/time_entry/3/force")

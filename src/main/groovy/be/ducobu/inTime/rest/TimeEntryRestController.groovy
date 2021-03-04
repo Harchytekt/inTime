@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
+import java.time.Duration
 import java.time.LocalDateTime
 
 @RestController
@@ -105,7 +106,11 @@ class TimeEntryRestController {
             timeEntry.startDate = timeEntryUpdateDto.startDate
 
         if (timeEntryUpdateDto.endDate != null && !timeEntry.running) {
-            timeEntry.updateEndDate(timeEntryUpdateDto.endDate)
+            if (Duration.between(timeEntry.startDate, timeEntryUpdateDto.endDate).getSeconds() > 0) {
+                timeEntry.updateEndDate(timeEntryUpdateDto.endDate)
+            } else {
+                throw new EndDateExceededException(timeEntry.startDate, timeEntryUpdateDto.endDate)
+            }
         } else if (timeEntryUpdateDto.endDate != null && timeEntry.running) {
             throw new RunningTimeEntryException("The 'TimeEntry' is still running!")
         }

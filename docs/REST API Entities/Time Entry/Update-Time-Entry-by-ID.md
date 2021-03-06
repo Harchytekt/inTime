@@ -1,6 +1,6 @@
 # Update Time Entry by ID
 
-> Last modified: 04/03/2021 (v0.0.2)
+> Last modified: 06/03/2021 (v0.0.2)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -20,9 +20,7 @@ Update a Time Entry by ID.
 | description | String | The description of the Time Entry | ❌ |
 | projectName | String | The name of the linked Project | ❌ |
 
-> At least one of the five fields is needed.  
-> ⚠️ The Time Entry has to be stopped to have an endDate (this will be changed).  
-> ⚠️ There is no check on the endDate for now (endDate < startDate)…
+> At least one of the five fields is needed.
 
 ## Response parameters
 
@@ -123,29 +121,6 @@ curl -X "PUT" "http://localhost:8080/time_entry/1" \
   "status": 400,
   "message": "The entity 'TimeEntry' with attribute '1' couldn't be updated! Please check the changes you've made.",
   "path": "/time_entry/1"
-}
-```
-
-#### Conflict when adding an endDate on a running Time Entry
-
-```shell
-curl -X "PUT" "http://localhost:8080/time_entry/2" \
-     -H 'Content-Type: application/json; charset=utf-8' \
-     -d $'{
-  "endDate": "2021-06-21T10:52:21"
-}'
-```
-
-**Code:** `409 CONFLICT`
-
-**Content:**
-
-```json
-{
-  "timestamp": "2021-06-21T10:53:00",
-  "status": 409,
-  "message": "The 'TimeEntry' is still running!",
-  "path": "/time_entry/2"
 }
 ```
 

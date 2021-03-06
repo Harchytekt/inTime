@@ -150,14 +150,13 @@ class TimeEntry {
     }
 
     void stop() {
-        this.endDate = LocalDateTime.now()
-        this.duration = calculateDuration()
-        this.running = false
+        updateEndDate(LocalDateTime.now())
     }
 
     void updateEndDate(LocalDateTime endDate) {
         this.endDate = endDate
         this.duration = calculateDuration()
+        this.running = false
     }
 
     void restart() {

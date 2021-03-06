@@ -105,14 +105,12 @@ class TimeEntryRestController {
         if (timeEntryUpdateDto.startDate != null)
             timeEntry.startDate = timeEntryUpdateDto.startDate
 
-        if (timeEntryUpdateDto.endDate != null && !timeEntry.running) {
+        if (timeEntryUpdateDto.endDate != null) {
             if (Duration.between(timeEntry.startDate, timeEntryUpdateDto.endDate).getSeconds() > 0) {
                 timeEntry.updateEndDate(timeEntryUpdateDto.endDate)
             } else {
                 throw new EndDateExceededException(timeEntry.startDate, timeEntryUpdateDto.endDate)
             }
-        } else if (timeEntryUpdateDto.endDate != null && timeEntry.running) {
-            throw new RunningTimeEntryException("The 'TimeEntry' is still running!")
         }
 
         if (timeEntryUpdateDto.description != null)

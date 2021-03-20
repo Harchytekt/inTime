@@ -223,4 +223,64 @@ class WorkspaceTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.message', is("No 'Workspace' with attribute '1' found!")))
                 .andExpect(jsonPath('$.path', is("/workspace/1/force")))
     }
+
+    @Test
+    @Order(15)
+    void whenCreateWorkspaceWithTogglId_thenReturnWorkspace_withStatus201() throws Exception {
+
+        // when
+        Workspace workspace = new Workspace()
+
+        workspace.name = "My Fourth Workspace"
+        workspace.togglId = 42
+
+        mvc.perform(post("/workspace/")
+                .content(workspace.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(4)))
+                .andExpect(jsonPath('$.name', is("My Fourth Workspace")))
+                .andExpect(jsonPath('$.togglId', is(42)))
+    }
+
+    @Test
+    @Order(16)
+    void whenCreateWorkspaceWithNullTogglId_thenReturnWorkspace_withStatus201() throws Exception {
+
+        // when
+        Workspace workspace = new Workspace()
+
+        workspace.name = "My Fifth Workspace"
+        workspace.togglId = null // or 0 (it's the same)
+
+        mvc.perform(post("/workspace/")
+                .content(workspace.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(5)))
+                .andExpect(jsonPath('$.name', is("My Fifth Workspace")))
+                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
+    }
+
+    @Test
+    @Order(17)
+    void whenCreateWorkspaceWithExistingTogglId_thenReturnException_withStatus409() throws Exception {
+
+        // when
+        Workspace workspace = new Workspace()
+
+        workspace.name = "My Sixth Workspace"
+        workspace.togglId = 42
+
+        mvc.perform(post("/workspace/")
+                .content(workspace.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("An entity 'Workspace' with 'togglId' '42' already exist!")))
+                .andExpect(jsonPath('$.path', is("/workspace/")))
+    }
 }

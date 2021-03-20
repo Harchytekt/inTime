@@ -85,7 +85,7 @@ class Client {
     }
 
     String toJson() {
-        return "{\"name\": \"$name\", \"workspaceName\": \"${workspace.name}\"}"
+        return "{\"name\": \"$name\", \"togglId\": \"$togglId\", \"workspaceName\": \"${workspace.name}\"}"
     }
 
     boolean equals(o) {

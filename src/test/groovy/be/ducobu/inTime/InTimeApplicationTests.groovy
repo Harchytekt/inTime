@@ -1,13 +1,15 @@
 package be.ducobu.inTime
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import junit.framework.Test
 
-@SpringBootTest
 class InTimeApplicationTests {
 
-	@Test
-	void contextLoads() {
+	static Test suite() {
+		def allTests = new GroovyTestSuite()
+
+		allTests.addTestSuite(WorkspaceTest.class)
+
+		return allTests
 	}
 
 }

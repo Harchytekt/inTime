@@ -239,4 +239,69 @@ class ClientTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.message', is("No 'Client' with attribute '1' found!")))
                 .andExpect(jsonPath('$.path', is("/client/1/force")))
     }
+
+    @Test
+    @Order(15)
+    void whenCreateClientWithTogglId_thenReturnClient_withStatus201() throws Exception {
+
+        // when
+        Client client = new Client()
+
+        client.workspace = workspaceService.findById(2)
+        client.name = "My Fourth Client"
+        client.togglId = 42
+
+        mvc.perform(post("/client/")
+                .content(client.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(4)))
+                .andExpect(jsonPath('$.name', is("My Fourth Client")))
+                .andExpect(jsonPath('$.togglId', is(42)))
+                .andExpect(jsonPath('$.workspaceName', is("My Second Workspace")))
+    }
+
+    @Test
+    @Order(16)
+    void whenCreateClientWithNullTogglId_thenReturnClient_withStatus201() throws Exception {
+
+        // when
+        Client client = new Client()
+
+        client.workspace = workspaceService.findById(2)
+        client.name = "My Fifth Client"
+        client.togglId = null // or 0 (it's the same)
+
+        mvc.perform(post("/client/")
+                .content(client.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(5)))
+                .andExpect(jsonPath('$.name', is("My Fifth Client")))
+                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
+                .andExpect(jsonPath('$.workspaceName', is("My Second Workspace")))
+    }
+
+    @Test
+    @Order(17)
+    void whenCreateClientWithExistingTogglId_thenReturnException_withStatus409() throws Exception {
+
+        // when
+        Client client = new Client()
+
+        client.workspace = workspaceService.findById(2)
+        client.name = "My Sixth Client"
+        client.togglId = 42
+
+        mvc.perform(post("/client/")
+                .content(client.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("An entity 'Client' with 'togglId' '42' already exist!")))
+                .andExpect(jsonPath('$.path', is("/client/")))
+    }
 }

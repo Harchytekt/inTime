@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS workspaces (
 	toggl_id INT,
 	name VARCHAR(50) NOT NULL,
 	PRIMARY KEY (id),
-	UNIQUE (name)
+	UNIQUE (name, toggl_id)
 );
 
 CREATE TABLE IF NOT EXISTS clients (
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS clients (
 	fk_workspace INT NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (fk_workspace) REFERENCES workspaces(id),
-	UNIQUE (name)
+	UNIQUE (name, toggl_id)
 );
 
 CREATE TABLE IF NOT EXISTS projects (
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS projects (
 	fk_client INT NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (fk_client) REFERENCES clients(id),
-	UNIQUE (name)
+	UNIQUE (name, toggl_id)
 );
 
 CREATE TABLE IF NOT EXISTS time_entries (
@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS time_entries (
 	running BOOLEAN NOT NULL DEFAULT TRUE,
 	fk_project INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (fk_project) REFERENCES projects(id)
+	FOREIGN KEY (fk_project) REFERENCES projects(id),
+	UNIQUE (toggl_id)
 );
 
 -- Data Insertion

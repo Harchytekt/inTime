@@ -72,7 +72,7 @@ class Workspace {
     }
 
     String toJson() {
-        return "{\"name\": \"$name\"}"
+        return "{\"name\": \"$name\", \"togglId\": \"$togglId\"}"
     }
 
     boolean equals(o) {

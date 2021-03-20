@@ -341,4 +341,81 @@ class TimeEntryTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '3' found!")))
                 .andExpect(jsonPath('$.path', is("/time_entry/3/force")))
     }
+
+    @Test
+    @Order(21)
+    void whenCreateTimeEntryWithTogglId_thenReturnTimeEntry_withStatus201() throws Exception {
+
+        // when
+        TimeEntry timeEntry = new TimeEntry()
+        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
+
+        timeEntry.project = projectService.findById(2)
+        timeEntry.togglId = 42
+        timeEntry.description = "Test"
+        timeEntry.startDate = dateTime
+
+        mvc.perform(post("/time_entry/")
+                .content(timeEntry.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(4)))
+                .andExpect(jsonPath('$.togglId', is(42)))
+                .andExpect(jsonPath('$.description', is("Test")))
+                .andExpect(jsonPath('$.running', is(true)))
+                .andExpect(jsonPath('$.startDate', notNullValue()))
+                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.projectName', is("My Second Project")))
+    }
+
+    @Test
+    @Order(22)
+    void whenCreateTimeEntryWithNullTogglId_thenReturnTimeEntry_withStatus201() throws Exception {
+
+        // when
+        TimeEntry timeEntry = new TimeEntry()
+        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
+
+        timeEntry.project = projectService.findById(2)
+        timeEntry.togglId = null // or 0 (it's the same)
+        timeEntry.description = "Test"
+        timeEntry.startDate = dateTime
+
+        mvc.perform(post("/time_entry/")
+                .content(timeEntry.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(5)))
+                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
+                .andExpect(jsonPath('$.description', is("Test")))
+                .andExpect(jsonPath('$.running', is(true)))
+                .andExpect(jsonPath('$.startDate', notNullValue()))
+                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
+                .andExpect(jsonPath('$.projectName', is("My Second Project")))
+    }
+
+    @Test
+    @Order(23)
+    void whenCreateTimeEntryWithExistingTogglId_thenReturnException_withStatus409() throws Exception {
+
+        // when
+        TimeEntry timeEntry = new TimeEntry()
+        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
+
+        timeEntry.project = projectService.findById(2)
+        timeEntry.togglId = 42
+        timeEntry.description = "Test"
+        timeEntry.startDate = dateTime
+
+        mvc.perform(post("/time_entry/")
+                .content(timeEntry.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("An entity 'TimeEntry' with 'togglId' '42' already exist!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/")))
+    }
 }

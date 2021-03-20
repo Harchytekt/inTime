@@ -64,8 +64,8 @@ class ProjectRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
-
         String projectName = projectCreateDto.name
+        Long projectTogglId = projectCreateDto.togglId
 
         if (projectName == null)
             throw new MissingNameException("Project")
@@ -78,6 +78,13 @@ class ProjectRestController {
                 throw new DuplicateEntryException("Project", "name", projectName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Project' found with this name, we can create it."
+        }
+
+        try {
+            if (projectService.findByTogglId(projectTogglId) != null)
+                throw new DuplicateEntryException("Project", "togglId", projectTogglId as String)
+        } catch (CustomEntityNotFoundException ignored) {
+            logger.info "No 'Project' found with this togglId, we can create it."
         }
 
         Client client = clientService.findByName(projectCreateDto.clientName)

@@ -124,7 +124,7 @@ class TimeEntry {
     }
 
     String toJson() {
-        return "{\"projectName\": \"${project.name}\", \"description\": \"$description\"}"
+        return "{\"togglId\": \"$togglId\", \"projectName\": \"${project.name}\", \"description\": \"$description\"}"
     }
 
     boolean equals(o) {

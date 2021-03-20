@@ -66,9 +66,10 @@ class TimeEntryRestController {
     @ResponseStatus(HttpStatus.CREATED)
     TimeEntryDto create(@RequestBody TimeEntryCreateDto timeEntryCreateDto) {
         LocalDateTime date = LocalDateTime.now()
-        Long timeEntryTogglId = timeEntryCreateDto.togglId
+        Long timeEntryTogglId = timeEntryCreateDto.togglId == 0 ? null : timeEntryCreateDto.togglId
+        String projectName = timeEntryCreateDto.projectName
 
-        if (timeEntryCreateDto.projectName == null)
+        if (projectName == null)
             throw new MissingNameException("TimeEntry", "projectName")
 
         try {
@@ -79,16 +80,17 @@ class TimeEntryRestController {
         }
 
         try {
-            if (timeEntryService.findByTogglId(timeEntryTogglId) != null)
+            if (timeEntryTogglId != null && timeEntryService.findByTogglId(timeEntryTogglId) != null)
                 throw new DuplicateEntryException("TimeEntry", "togglId", timeEntryTogglId as String)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'TimeEntry' found with this togglId, we can create it."
         }
 
-        Project project = projectService.findByName(timeEntryCreateDto.projectName)
+        Project project = projectService.findByName(projectName)
+
         TimeEntry createdTimeEntry = timeEntryService.save(
                 modelMapper.map(
-                        new TimeEntrySaveDto(project, date, timeEntryCreateDto.description),
+                        new TimeEntrySaveDto(project, date, timeEntryTogglId, timeEntryCreateDto.description),
                         TimeEntry.class
                 )
         )
@@ -107,7 +109,7 @@ class TimeEntryRestController {
         if (timeEntryUpdateDto.isEmpty())
             throw new NotModifiedEntityException("TimeEntry", id as String, "Nothing was sent in the body.")
 
-        if (timeEntryUpdateDto.togglId != null)
+        if (timeEntryUpdateDto.togglId != null && timeEntryUpdateDto.togglId != 0)
             timeEntry.togglId = timeEntryUpdateDto.togglId
 
         if (timeEntryUpdateDto.startDate != null)

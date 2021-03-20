@@ -32,7 +32,7 @@ class ProjectService {
                 .orElseThrow({ -> new CustomEntityNotFoundException("Project", name) })
     }
 
-    Project findByToggleId(Long togglId) {
+    Project findByTogglId(Long togglId) {
         return projectRepository.findByTogglId(togglId)
                 .orElseThrow({ -> new CustomEntityNotFoundException("Project", togglId as String) })
     }

@@ -65,12 +65,13 @@ class ProjectRestController {
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
         String projectName = projectCreateDto.name
-        Long projectTogglId = projectCreateDto.togglId
+        Long projectTogglId = projectCreateDto.togglId == 0 ? null : projectCreateDto.togglId
+        String clientName =projectCreateDto.clientName
 
         if (projectName == null)
             throw new MissingNameException("Project")
 
-        if (projectCreateDto.clientName == null)
+        if (clientName == null)
             throw new MissingNameException("Project", "clientName")
 
         try {
@@ -81,17 +82,18 @@ class ProjectRestController {
         }
 
         try {
-            if (projectService.findByTogglId(projectTogglId) != null)
+            if (projectTogglId != null && projectService.findByTogglId(projectTogglId) != null)
                 throw new DuplicateEntryException("Project", "togglId", projectTogglId as String)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Project' found with this togglId, we can create it."
         }
 
-        Client client = clientService.findByName(projectCreateDto.clientName)
+        Client client = clientService.findByName(clientName)
 
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,
                 new Boolean(projectCreateDto.billable),
+                projectTogglId,
                 client
         )
 
@@ -122,7 +124,7 @@ class ProjectRestController {
         if (projectCreateDto.billable != null)
             project.billable = projectCreateDto.billable
 
-        if (projectCreateDto.togglId != null)
+        if (projectCreateDto.togglId != null && projectCreateDto.togglId != 0)
             project.togglId = projectCreateDto.togglId
 
         if (projectCreateDto.clientName != null)

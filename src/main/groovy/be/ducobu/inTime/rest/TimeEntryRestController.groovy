@@ -66,6 +66,7 @@ class TimeEntryRestController {
     @ResponseStatus(HttpStatus.CREATED)
     TimeEntryDto create(@RequestBody TimeEntryCreateDto timeEntryCreateDto) {
         LocalDateTime date = LocalDateTime.now()
+        Long timeEntryTogglId = timeEntryCreateDto.togglId
 
         if (timeEntryCreateDto.projectName == null)
             throw new MissingNameException("TimeEntry", "projectName")
@@ -75,6 +76,13 @@ class TimeEntryRestController {
             date = timeEntryService.findById(stoppedTimeEntryId).endDate
         } catch (RunningTimeEntryNotFoundException ignored) {
             logger.info "No running 'TimeEntry' found, we don't have to stop it then."
+        }
+
+        try {
+            if (timeEntryService.findByTogglId(timeEntryTogglId) != null)
+                throw new DuplicateEntryException("TimeEntry", "togglId", timeEntryTogglId as String)
+        } catch (CustomEntityNotFoundException ignored) {
+            logger.info "No 'TimeEntry' found with this togglId, we can create it."
         }
 
         Project project = projectService.findByName(timeEntryCreateDto.projectName)

@@ -4,6 +4,7 @@ class TimeEntryCreateDto {
 
     private String description
     private String projectName
+    private Long togglId
 
     String getDescription() {
         return description
@@ -19,5 +20,13 @@ class TimeEntryCreateDto {
 
     void setProjectName(String projectName) {
         this.projectName = projectName
+    }
+
+    Long getTogglId() {
+        return togglId
+    }
+
+    void setTogglId(Long togglId) {
+        this.togglId = togglId
     }
 }

@@ -6,7 +6,10 @@ import java.time.Duration
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "time_entries")
+@Table(
+        name = "time_entries",
+        uniqueConstraints = @UniqueConstraint(columnNames = "toggl_id")
+)
 class TimeEntry {
 
     @Id

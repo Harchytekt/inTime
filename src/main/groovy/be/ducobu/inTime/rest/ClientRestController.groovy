@@ -65,6 +65,7 @@ class ClientRestController {
     @ResponseStatus(HttpStatus.CREATED)
     ClientDto create(@RequestBody ClientCreateDto clientCreateDto) {
         String clientName = clientCreateDto.name
+        Long clientTogglId = clientCreateDto.togglId
 
         if (clientName == null)
             throw new MissingNameException("Client")
@@ -77,6 +78,13 @@ class ClientRestController {
                 throw new DuplicateEntryException("Client", "name", clientName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Client' found with this name, we can create it."
+        }
+
+        try {
+            if (clientService.findByTogglId(clientTogglId) != null)
+                throw new DuplicateEntryException("Client", "togglId", clientTogglId as String)
+        } catch (CustomEntityNotFoundException ignored) {
+            logger.info "No 'Client' found with this togglId, we can create it."
         }
 
         Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)

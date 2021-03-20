@@ -1,6 +1,5 @@
 package be.ducobu.inTime
 
-
 import be.ducobu.inTime.model.TimeEntry
 import be.ducobu.inTime.service.ProjectService
 import org.junit.jupiter.api.MethodOrderer

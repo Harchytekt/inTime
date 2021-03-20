@@ -65,11 +65,13 @@ class ClientRestController {
     @ResponseStatus(HttpStatus.CREATED)
     ClientDto create(@RequestBody ClientCreateDto clientCreateDto) {
         String clientName = clientCreateDto.name
+        Long clientTogglId = clientCreateDto.togglId == 0 ? null : clientCreateDto.togglId
+        String workspaceName = clientCreateDto.workspaceName
 
         if (clientName == null)
             throw new MissingNameException("Client")
 
-        if (clientCreateDto.workspaceName == null)
+        if (workspaceName == null)
             throw new MissingNameException("Client", "workspaceName")
 
         try {
@@ -79,11 +81,18 @@ class ClientRestController {
             logger.info "No 'Client' found with this name, we can create it."
         }
 
-        Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
+        try {
+            if (clientTogglId != null && clientService.findByTogglId(clientTogglId) != null)
+                throw new DuplicateEntryException("Client", "togglId", clientTogglId as String)
+        } catch (CustomEntityNotFoundException ignored) {
+            logger.info "No 'Client' found with this togglId, we can create it."
+        }
+
+        Workspace workspace = workspaceService.findByName(workspaceName)
 
         Client createdClient = clientService.save(
                 modelMapper.map(
-                        new ClientSaveDto(clientName, workspace),
+                        new ClientSaveDto(clientName, clientTogglId, workspace),
                         Client.class
                 )
         )
@@ -105,7 +114,7 @@ class ClientRestController {
         if (clientCreateDto.name != null)
             client.name = clientCreateDto.name
 
-        if (clientCreateDto.togglId != null)
+        if (clientCreateDto.togglId != null && clientCreateDto.togglId != 0)
             client.togglId = clientCreateDto.togglId
 
         if (clientCreateDto.workspaceName != null)

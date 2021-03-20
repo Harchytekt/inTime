@@ -7,11 +7,13 @@ class ProjectSaveDto {
     private Long id
     private String name
     private boolean billable
+    private Long togglId
     private Client client
 
-    ProjectSaveDto(String name, boolean billable, Client client) {
+    ProjectSaveDto(String name, boolean billable, Long togglId, Client client) {
         this.name = name
         this.billable = billable
+        this.togglId = togglId
         this.client = client
     }
 
@@ -37,6 +39,14 @@ class ProjectSaveDto {
 
     void setBillable(boolean billable) {
         this.billable = billable
+    }
+
+    Long getTogglId() {
+        return togglId
+    }
+
+    void setTogglId(Long togglId) {
+        this.togglId = togglId
     }
 
     Client getClient() {

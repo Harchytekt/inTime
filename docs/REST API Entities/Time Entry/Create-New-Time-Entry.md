@@ -15,6 +15,7 @@ Create a new Tme Entry on the server.
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
 | description | String | The description of the Time Entry | ❌ |
+| togglId | Long | The ID of the corresponding Toggl Time Entry | ❌ |
 | projectName | String | The name of the linked Project | ✔️ |
 
 ## Response parameters

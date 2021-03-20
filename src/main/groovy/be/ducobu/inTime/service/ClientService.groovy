@@ -2,7 +2,6 @@ package be.ducobu.inTime.service
 
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
 import be.ducobu.inTime.model.Client
-import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.repository.ClientRepository
 import org.springframework.stereotype.Service
 
@@ -31,6 +30,11 @@ class ClientService {
     Client findByName(String name) {
         return clientRepository.findByName(name)
                 .orElseThrow({ -> new CustomEntityNotFoundException("Client", name) })
+    }
+
+    Client findByTogglId(Long togglId) {
+        return clientRepository.findByTogglId(togglId)
+                .orElseThrow({ -> new CustomEntityNotFoundException("Client", togglId as String) })
     }
 
     void deleteById(Long id) {

@@ -6,10 +6,12 @@ class ClientSaveDto {
 
     private Long id
     private String name
+    private Long togglId
     private Workspace workspace
 
-    ClientSaveDto(String name, Workspace workspace) {
+    ClientSaveDto(String name, Long togglId, Workspace workspace) {
         this.name = name
+        this.togglId = togglId
         this.workspace = workspace
     }
 
@@ -27,6 +29,14 @@ class ClientSaveDto {
 
     void setName(String name) {
         this.name = name
+    }
+
+    Long getTogglId() {
+        return togglId
+    }
+
+    void setTogglId(Long togglId) {
+        this.togglId = togglId
     }
 
     Workspace getWorkspace() {

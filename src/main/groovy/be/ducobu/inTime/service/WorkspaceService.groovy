@@ -1,7 +1,6 @@
 package be.ducobu.inTime.service
 
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.repository.WorkspaceRepository
 import org.springframework.stereotype.Service
@@ -31,6 +30,11 @@ class WorkspaceService {
     Workspace findByName(String name) {
         return workspaceRepository.findByName(name)
                 .orElseThrow({ -> new CustomEntityNotFoundException("Workspace", name) })
+    }
+
+    Workspace findByTogglId(Long togglId) {
+        return workspaceRepository.findByTogglId(togglId)
+                .orElseThrow({ -> new CustomEntityNotFoundException("Workspace", togglId as String) })
     }
 
     void deleteById(Long id) {

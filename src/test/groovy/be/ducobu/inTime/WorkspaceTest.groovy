@@ -271,7 +271,7 @@ class WorkspaceTest extends GroovyTestCase {
         // when
         Workspace workspace = new Workspace()
 
-        workspace.name = "My Fourth Workspace"
+        workspace.name = "My Sixth Workspace"
         workspace.togglId = 42
 
         mvc.perform(post("/workspace/")
@@ -280,7 +280,7 @@ class WorkspaceTest extends GroovyTestCase {
                 .andExpect(status().isConflict())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.status', is(409)))
-                .andExpect(jsonPath('$.message', is("An entity 'Workspace' with 'name' 'My Fourth Workspace' already exist!")))
+                .andExpect(jsonPath('$.message', is("An entity 'Workspace' with 'togglId' '42' already exist!")))
                 .andExpect(jsonPath('$.path', is("/workspace/")))
     }
 }

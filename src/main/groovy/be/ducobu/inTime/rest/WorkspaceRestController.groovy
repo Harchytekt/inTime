@@ -60,6 +60,7 @@ class WorkspaceRestController {
     @ResponseStatus(HttpStatus.CREATED)
     WorkspaceDto create(@RequestBody WorkspaceCreateDto workspaceCreateDto) {
         String workspaceName = workspaceCreateDto.name
+        Long workspaceTogglId = workspaceCreateDto.togglId
 
         if (workspaceName == null)
             throw new MissingNameException("Workspace")
@@ -69,6 +70,13 @@ class WorkspaceRestController {
                 throw new DuplicateEntryException("Workspace", "name", workspaceName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Workspace' found with this name, we can create it."
+        }
+
+        try {
+            if (workspaceService.findByTogglId(workspaceTogglId) != null)
+                throw new DuplicateEntryException("Workspace", "togglId", workspaceTogglId as String)
+        } catch (CustomEntityNotFoundException ignored) {
+            logger.info "No 'Workspace' found with this togglId, we can create it."
         }
 
         Workspace createdWorkspace = workspaceService.save(

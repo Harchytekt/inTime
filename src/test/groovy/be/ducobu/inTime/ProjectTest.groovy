@@ -1,5 +1,6 @@
 package be.ducobu.inTime
 
+
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.service.ClientService
 import org.junit.jupiter.api.MethodOrderer
@@ -249,5 +250,72 @@ class ProjectTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.status', is(404)))
                 .andExpect(jsonPath('$.message', is("No 'Project' with attribute '1' found!")))
                 .andExpect(jsonPath('$.path', is("/project/1/force")))
+    }
+
+    @Test
+    @Order(15)
+    void whenCreateProjectWithTogglId_thenReturnProject_withStatus201() throws Exception {
+
+        // when
+        Project project = new Project()
+
+        project.client = clientService.findById(2)
+        project.name = "My Fourth Project"
+        project.togglId = 42
+
+        mvc.perform(post("/project/")
+                .content(project.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(4)))
+                .andExpect(jsonPath('$.name', is("My Fourth Project")))
+                .andExpect(jsonPath('$.billable', is(false)))
+                .andExpect(jsonPath('$.togglId', is(42)))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
+    }
+
+    @Test
+    @Order(16)
+    void whenCreateProjectWithNullTogglId_thenReturnProject_withStatus201() throws Exception {
+
+        // when
+        Project project = new Project()
+
+        project.client = clientService.findById(2)
+        project.name = "My Fifth Project"
+        project.togglId = null // or 0 (it's the same)
+
+        mvc.perform(post("/project/")
+                .content(project.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.id', is(5)))
+                .andExpect(jsonPath('$.name', is("My Fifth Project")))
+                .andExpect(jsonPath('$.billable', is(false)))
+                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
+                .andExpect(jsonPath('$.clientName', is("My Second Client")))
+    }
+
+    @Test
+    @Order(17)
+    void whenCreateProjectWithExistingTogglId_thenReturnException_withStatus409() throws Exception {
+
+        // when
+        Project project = new Project()
+
+        project.client = clientService.findById(2)
+        project.name = "My Sixth Project"
+        project.togglId = 42
+
+        mvc.perform(post("/project/")
+                .content(project.toJson())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("An entity 'Project' with 'togglId' '42' already exist!")))
+                .andExpect(jsonPath('$.path', is("/project/")))
     }
 }

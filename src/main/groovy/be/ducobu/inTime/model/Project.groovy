@@ -96,7 +96,7 @@ class Project {
     }
 
     String toJson() {
-        return "{\"name\": \"$name\", \"clientName\": \"${client.name}\"}"
+        return "{\"name\": \"$name\", \"togglId\": \"$togglId\", \"clientName\": \"${client.name}\"}"
     }
 
     boolean equals(o) {

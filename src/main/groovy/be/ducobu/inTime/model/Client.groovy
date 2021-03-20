@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(
         name = "clients",
-        uniqueConstraints = @UniqueConstraint(columnNames = "name")
+        uniqueConstraints = @UniqueConstraint(columnNames = ["name", "toggl_id"])
 )
 class Client {
 

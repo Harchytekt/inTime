@@ -1,6 +1,7 @@
 package be.ducobu.inTime.dto.timeEntry
 
 import be.ducobu.inTime.model.Project
+
 import java.time.LocalDateTime
 
 class TimeEntrySaveDto {
@@ -8,13 +9,11 @@ class TimeEntrySaveDto {
     private Long id
     private Project project
     private LocalDateTime startDate
-    private Long togglId
     private String description
 
-    TimeEntrySaveDto(Project project, LocalDateTime startDate, Long togglId, String description) {
+    TimeEntrySaveDto(Project project, LocalDateTime startDate, String description) {
         this.project = project
         this.startDate = startDate
-        this.togglId = togglId
         this.description = description
     }
 
@@ -40,14 +39,6 @@ class TimeEntrySaveDto {
 
     void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
     }
 
     String getDescription() {

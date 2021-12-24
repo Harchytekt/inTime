@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface TimeEntryRepository extends JpaRepository<TimeEntry, Long> {
 
-    Optional<TimeEntry> findByTogglId(Long togglId)
-
     TimeEntry findByRunningTrue()
 
     List<TimeEntry> findAllByOrderByIdDesc()

@@ -66,7 +66,6 @@ class TimeEntryRestController {
     @ResponseStatus(HttpStatus.CREATED)
     TimeEntryDto create(@RequestBody TimeEntryCreateDto timeEntryCreateDto) {
         LocalDateTime date = LocalDateTime.now()
-        Long timeEntryTogglId = timeEntryCreateDto.togglId == 0 ? null : timeEntryCreateDto.togglId
         String projectName = timeEntryCreateDto.projectName
 
         if (projectName == null)
@@ -79,18 +78,11 @@ class TimeEntryRestController {
             logger.info "No running 'TimeEntry' found, we don't have to stop it then."
         }
 
-        try {
-            if (timeEntryTogglId != null && timeEntryService.findByTogglId(timeEntryTogglId) != null)
-                throw new DuplicateEntryException("TimeEntry", "togglId", timeEntryTogglId as String)
-        } catch (CustomEntityNotFoundException ignored) {
-            logger.info "No 'TimeEntry' found with this togglId, we can create it."
-        }
-
         Project project = projectService.findByName(projectName)
 
         TimeEntry createdTimeEntry = timeEntryService.save(
                 modelMapper.map(
-                        new TimeEntrySaveDto(project, date, timeEntryTogglId, timeEntryCreateDto.description),
+                        new TimeEntrySaveDto(project, date, timeEntryCreateDto.description),
                         TimeEntry.class
                 )
         )
@@ -108,9 +100,6 @@ class TimeEntryRestController {
 
         if (timeEntryUpdateDto.isEmpty())
             throw new NotModifiedEntityException("TimeEntry", id as String, "Nothing was sent in the body.")
-
-        if (timeEntryUpdateDto.togglId != null && timeEntryUpdateDto.togglId != 0)
-            timeEntry.togglId = timeEntryUpdateDto.togglId
 
         if (timeEntryUpdateDto.startDate != null)
             timeEntry.startDate = timeEntryUpdateDto.startDate
@@ -163,21 +152,6 @@ class TimeEntryRestController {
 
         return modelMapper.map(
                 timeEntryService.save(timeEntry),
-                TimeEntryDto.class
-        )
-    }
-
-    @PutMapping("/{id}/togglid")
-    TimeEntryDto deleteTimeEntryTogglID(@PathVariable Long id) {
-        TimeEntry timeEntry = timeEntryService.findById(id)
-
-        if (timeEntry.togglId == null)
-            throw new TogglIdAlreadyNullException("TimeEntry", id)
-
-        timeEntry.togglId = null
-
-        return modelMapper.map(
-                timeEntry,
                 TimeEntryDto.class
         )
     }

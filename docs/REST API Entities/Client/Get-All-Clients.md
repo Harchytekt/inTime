@@ -1,5 +1,6 @@
 # Get All Clients
-> Last modified: 26/02/2021 (v0.0.1)
+
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Client](../Client.md) | to [Summary](../../README.md)
 
@@ -29,15 +30,13 @@ curl "http://localhost:8080/client"
 [
   {
     "id": 1,
-    "togglId": null,
     "name": "My First Client",
-    "workspaceName": "My First Workspace"
+    "workspaceId": 1
   },
   {
     "id": 2,
-    "togglId": 2,
     "name": "My Second Client",
-    "workspaceName": "My First Workspace"
+    "workspaceId": 1
   }
 ]
 ```

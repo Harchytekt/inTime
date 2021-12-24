@@ -1,6 +1,6 @@
 # Update Project by ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Project](../Project.md) | to [Summary](../../README.md)
 
@@ -14,12 +14,11 @@ Update a Project by ID.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| togglId | Long | The ID of the corresponding Toggl Project | ❌ |
 | name | String | The name of the requested Project | ❌ |
-| billable | Boolean | The billability status of the Project | ❌ |
-| clientName | String | The name of the linked Client | ❌ |
+| workspaceId | long | The ID of the linked Workspace | ❌ |
+| clientId | long | The ID of the linked Client | ❌ |
 
-> At least one of the four fields is needed.
+> At least one of the three fields is needed.
 
 ## Response parameters
 
@@ -33,7 +32,7 @@ For the description of the Project entity, see [Get Project by ID](Get-Project-b
 curl -X "PUT" "http://localhost:8080/project/1" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "clientId": 2
 }'
 ```
 
@@ -44,10 +43,9 @@ curl -X "PUT" "http://localhost:8080/project/1" \
 ```json
 {
   "id": 1,
-  "togglId": 1,
   "name": "My First Project",
-  "billable": false,
-  "clientName": "My First Client"
+  "workspaceId": 1,
+  "clientId": 2
 }
 ```
 
@@ -59,7 +57,7 @@ curl -X "PUT" "http://localhost:8080/project/1" \
 curl -X "PUT" "http://localhost:8080/project/404" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "clientId": 2
 }'
 ```
 

@@ -1,6 +1,6 @@
 # Get Client by ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Client](../Client.md) | to [Summary](../../README.md)
 
@@ -14,7 +14,7 @@ Force delete a Client by ID from the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| id | Long | The ID of the requested Client | ✔️ |
+| id | long | The ID of the requested Client | ✔️ |
 
 ## Response parameters
 
@@ -35,9 +35,8 @@ curl -X "DELETE" "http://localhost:8080/client/2/force"
 ```json
 {
   "id": 2,
-  "togglId": 2,
   "name": "My Second Client",
-  "workspaceName": "My First Workspace"
+  "workspaceId": 1
 }
 ```
 

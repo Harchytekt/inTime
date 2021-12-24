@@ -1,6 +1,6 @@
 # Get Time Entry by ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -14,20 +14,21 @@ Get a Time Entry by ID from the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| id | Long | The ID of the requested Time Entry | ✔️ |
+| id | long | The ID of the requested Time Entry | ✔️ |
 
 ## Response parameters
 
 | Name | Type | Description |
 |:--|:--|:--|
-| id | Long | The ID of the requested Time Entry |
-| togglId | Long | The ID of the corresponding Toggl Time Entry |
-| startDate | DateTime | The start date and time of the Time Entry |
-| endDate | DateTime | The end date and time of the Time Entry |
-| duration | Long | The duration in seconds of the Time Entry |
-| description | String | The description of the Time Entry |
-| running | Boolean | The running state of the Time Entry |
-| projectName | String | The name of the linked Project |
+| id | long | The ID of the requested Time Entry |
+| workspaceId | long | The ID of the linked Workspace |
+| clientId | long | The ID of the linked Client |
+| projectId | long | The ID of the linked Project |
+| startDate | dateTime | The start date and time of the Time Entry |
+| endDate | dateTime | The end date and time of the Time Entry |
+| duration | long | The duration in seconds of the Time Entry |
+| description | string | The description of the Time Entry |
+| running | boolean | The running state of the Time Entry |
 
 > The duration is calculated at call when the Time Entry is running.
 
@@ -46,13 +47,14 @@ curl "http://localhost:8080/time_entry/1"
 ```json
 {
   "id": 1,
-  "togglId": null,
   "startDate": "2021-06-21T09:41:00",
   "endDate": "2021-06-21T09:45:00",
   "duration": 4,
   "description": "description",
   "running": false,
-  "projectName": "My First Project"
+  "workspaceId": 1,
+  "clientId": 1,
+  "projectId": 1
 }
 ```
 

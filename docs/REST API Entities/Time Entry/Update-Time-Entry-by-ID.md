@@ -1,6 +1,6 @@
 # Update Time Entry by ID
 
-> Last modified: 06/03/2021 (v0.0.2)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -14,13 +14,16 @@ Update a Time Entry by ID.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| togglId | Long | The ID of the corresponding Toggl Time Entry | ❌ |
-| startDate | DateTime | The start date and time of the Time Entry | ❌ |
-| endDate | DateTime | The end date and time of the Time Entry | ❌ |
-| description | String | The description of the Time Entry | ❌ |
-| projectName | String | The name of the linked Project | ❌ |
+| description | string | The description of the Time Entry | ❌ |
+| workspaceId | long | The ID of the linked Workspace | ❌ |
+| clientId | long | The ID of the linked Client | ❌ |
+| projectId | long | The ID of the linked Project | ❌ |
+| startDate | dateTime | The start date and time of the Time Entry | ❌ |
+| endDate | dateTime | The end date and time of the Time Entry | ❌ |
 
-> At least one of the five fields is needed.
+> At least one of the six fields is needed.
+> Changing the Workspace will change the Client and Project (`null` by default).
+> Changing the Client will change the Workspace and will set the Project to `null` (_unless the Project isn't linked to any Client, and the Workspace is compatible with it_).
 
 ## Response parameters
 
@@ -34,7 +37,7 @@ For the description of the Time Entry entity, see [Get Time Entry by ID](Get-Tim
 curl -X "PUT" "http://localhost:8080/time_entry/1" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "workspaceId": 2
 }'
 ```
 
@@ -45,13 +48,14 @@ curl -X "PUT" "http://localhost:8080/time_entry/1" \
 ```json
 {
   "id": 1,
-  "togglId": 1,
   "startDate": "2021-06-21T09:41:00",
   "endDate": "2021-06-21T09:45:00",
   "duration": 4,
   "description": "description",
   "running": false,
-  "projectName": "My First Project"
+  "workspaceId": 2,
+  "clientId": null,
+  "projectId": null
 }
 ```
 
@@ -63,7 +67,7 @@ curl -X "PUT" "http://localhost:8080/time_entry/1" \
 curl -X "PUT" "http://localhost:8080/time_entry/404" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "workspaceId": 2
 }'
 ```
 
@@ -107,7 +111,7 @@ curl -X "PUT" "http://localhost:8080/time_entry/1" \
 curl -X "PUT" "http://localhost:8080/time_entry/1" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "projectName": "My First Project"
+  "description": "description",
 }'
 ```
 

@@ -14,7 +14,7 @@ Get a list of all Projects linked to the Client from the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| id | Long | The ID of the Client | ✔️ |
+| id | long | The ID of the Client | ✔️ |
 
 ## Response parameters
 

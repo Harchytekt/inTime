@@ -1,5 +1,6 @@
 # Get All Projects
-> Last modified: 26/02/2021 (v0.0.1)
+
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Project](../Project.md) | to [Summary](../../README.md)
 
@@ -29,17 +30,15 @@ curl "http://localhost:8080/project"
 [
   {
     "id": 1,
-    "togglId": null,
     "name": "My First Project",
-    "billable": false,
-    "clientName": "My First Client"
+    "workspaceId": 1,
+    "clientId": 1
   },
   {
     "id": 2,
-    "togglId": 2,
     "name": "My Second Project",
-    "billable": false,
-    "clientName": "My First Client"
+    "workspaceId": 1,
+    "clientId": null
   }
 ]
 ```

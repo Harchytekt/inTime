@@ -1,6 +1,6 @@
 # Create a New Client
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Client](../Client.md) | to [Summary](../../README.md)
 
@@ -14,9 +14,8 @@ Create a new Client on the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| togglId | Long | The ID of the corresponding Toggl Client | ❌ |
-| name | String | The name of the requested Client | ✔️ |
-| workspaceName | String | The name of the linked Workspace | ✔️ |
+| name | string | The name of the requested Client | ✔️ |
+| workspaceId | long | The ID of the linked Workspace | ✔️ |
 
 ## Response parameters
 
@@ -41,9 +40,8 @@ curl -X "POST" "http://localhost:8080/client" \
 ```json
 {
   "id": 3,
-  "togglId": null,
   "name": "My Third Client",
-  "workspaceName": null
+  "workspaceId": null
 }
 ```
 
@@ -78,7 +76,7 @@ curl -X "POST" "http://localhost:8080/client" \
 curl -X "POST" "http://localhost:8080/client" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "workspaceId": 1
 }'
 ```
 

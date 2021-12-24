@@ -1,5 +1,5 @@
 # Get All Workspaces
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -29,12 +29,10 @@ curl "http://localhost:8080/workspace"
 [
   {
     "id": 1,
-    "togglId": null,
     "name": "My First Workspace"
   },
   {
     "id": 2,
-    "togglId": 2,
     "name": "My Second Workspace"
   }
 ]

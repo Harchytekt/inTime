@@ -1,6 +1,6 @@
 # Get Clients by Workspace ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -36,13 +36,11 @@ curl "http://localhost:8080/workspace/1/clients"
 [
   {
     "id": 1,
-    "togglId": null,
     "name": "My First Client",
     "workspaceName": "Workspace name"
   },
   {
     "id": 2,
-    "togglId": 2,
     "name": "My Second Client",
     "workspaceName": "Workspace name"
   }

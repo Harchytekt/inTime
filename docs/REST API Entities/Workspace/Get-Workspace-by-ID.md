@@ -1,6 +1,6 @@
 # Get Workspace by ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -21,7 +21,6 @@ Get a Workspace by ID from the server.
 | Name | Type | Description |
 |:--|:--|:--|
 | id | Long | The ID of the requested Workspace |
-| togglId | Long | The ID of the corresponding Toggl Workspace |
 | name | String | The name of the requested Workspace |
 
 ## Sample
@@ -39,7 +38,6 @@ curl "http://localhost:8080/workspace/1"
 ```json
 {
   "id": 1,
-  "togglId": null,
   "name": "My First Workspace"
 }
 ```

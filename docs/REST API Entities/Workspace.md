@@ -2,6 +2,9 @@
 
 Back to the [Summary](../README.md)
 
+> A _Workspace_ is a group of projects.  
+> You might have a workspace named 'Work' and a second 'Home'.
+
 - [Get All Workspaces (`GET /workspace`) 🔗](Workspace/Get-All-Workspaces.md)
 - [Get Workspace by ID (`GET /workspace/{id}`) 🔗](Workspace/Get-Workspace-by-ID.md)
 - [Get Clients by Workspace ID (`GET /workspace/{id}/clients`) 🔗](Workspace/Get-Clients-by-Workspace-ID.md)

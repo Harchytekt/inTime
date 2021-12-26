@@ -15,7 +15,8 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 
-import static org.hamcrest.Matchers.*
+import static org.hamcrest.Matchers.hasSize
+import static org.hamcrest.Matchers.is
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -110,11 +111,9 @@ class ClientTest extends GroovyTestCase {
                 .andExpect(jsonPath('$', hasSize(2)))
                 .andExpect(jsonPath('$[0].id', is(1)))
                 .andExpect(jsonPath('$[0].name', is("My First Project")))
-                .andExpect(jsonPath('$[0].billable', is(false)))
                 .andExpect(jsonPath('$[0].clientName', is("My First Client")))
                 .andExpect(jsonPath('$[1].id', is(2)))
                 .andExpect(jsonPath('$[1].name', is("My Second Project")))
-                .andExpect(jsonPath('$[1].billable', is(false)))
                 .andExpect(jsonPath('$[1].clientName', is("My First Client")))
     }
 
@@ -123,12 +122,11 @@ class ClientTest extends GroovyTestCase {
     void whenUpdateClient_thenReturnUpdatedClient_withStatus200() throws Exception {
 
         mvc.perform(put("/client/3")
-                .content('{"name": "My Third Client", "togglId": 3}')
+                .content('{"name": "My Third Client"}')
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.id', is(3)))
-                .andExpect(jsonPath('$.togglId', is(3)))
                 .andExpect(jsonPath('$.name', is("My Third Client")))
                 .andExpect(jsonPath('$.workspaceName', is("My Second Workspace")))
     }
@@ -163,33 +161,6 @@ class ClientTest extends GroovyTestCase {
 
     @Test
     @Order(9)
-    void whenDeleteTogglIdClient_thenReturnUpdatedClient_withStatus200() throws Exception {
-
-        mvc.perform(put("/client/3/togglid")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(3)))
-                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
-                .andExpect(jsonPath('$.name', is("My Third Client")))
-                .andExpect(jsonPath('$.workspaceName', is("My Second Workspace")))
-    }
-
-    @Test
-    @Order(10)
-    void whenDeleteAlreadyNullTogglIdClient_thenReturnException_withStatus409() throws Exception {
-
-        mvc.perform(put("/client/1/togglid")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.status', is(409)))
-                .andExpect(jsonPath('$.message', is("There is no Toggl ID linked to the entity 'Client' with id '1'!")))
-                .andExpect(jsonPath('$.path', is("/client/1/togglid")))
-    }
-
-    @Test
-    @Order(11)
     void whenDeleteClientById_thenReturnDeletedClient_withStatus200() throws Exception {
 
         mvc.perform(delete("/client/3")
@@ -202,7 +173,7 @@ class ClientTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(12)
+    @Order(10)
     void whenDeleteClientWithChildrenById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/client/1")
@@ -215,7 +186,7 @@ class ClientTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(13)
+    @Order(11)
     void whenForceDeleteClientWithChildrenById_thenReturnDeletedClient_withStatus200() throws Exception {
 
         mvc.perform(delete("/client/1/force")
@@ -228,7 +199,7 @@ class ClientTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(14)
+    @Order(12)
     void whenForceDeleteClientByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/client/1/force")
@@ -238,70 +209,5 @@ class ClientTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.status', is(404)))
                 .andExpect(jsonPath('$.message', is("No 'Client' with attribute '1' found!")))
                 .andExpect(jsonPath('$.path', is("/client/1/force")))
-    }
-
-    @Test
-    @Order(15)
-    void whenCreateClientWithTogglId_thenReturnClient_withStatus201() throws Exception {
-
-        // when
-        Client client = new Client()
-
-        client.workspace = workspaceService.findById(2)
-        client.name = "My Fourth Client"
-        client.togglId = 42
-
-        mvc.perform(post("/client/")
-                .content(client.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(4)))
-                .andExpect(jsonPath('$.name', is("My Fourth Client")))
-                .andExpect(jsonPath('$.togglId', is(42)))
-                .andExpect(jsonPath('$.workspaceName', is("My Second Workspace")))
-    }
-
-    @Test
-    @Order(16)
-    void whenCreateClientWithNullTogglId_thenReturnClient_withStatus201() throws Exception {
-
-        // when
-        Client client = new Client()
-
-        client.workspace = workspaceService.findById(2)
-        client.name = "My Fifth Client"
-        client.togglId = null // or 0 (it's the same)
-
-        mvc.perform(post("/client/")
-                .content(client.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(5)))
-                .andExpect(jsonPath('$.name', is("My Fifth Client")))
-                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
-                .andExpect(jsonPath('$.workspaceName', is("My Second Workspace")))
-    }
-
-    @Test
-    @Order(17)
-    void whenCreateClientWithExistingTogglId_thenReturnException_withStatus409() throws Exception {
-
-        // when
-        Client client = new Client()
-
-        client.workspace = workspaceService.findById(2)
-        client.name = "My Sixth Client"
-        client.togglId = 42
-
-        mvc.perform(post("/client/")
-                .content(client.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.status', is(409)))
-                .andExpect(jsonPath('$.message', is("An entity 'Client' with 'togglId' '42' already exist!")))
-                .andExpect(jsonPath('$.path', is("/client/")))
     }
 }

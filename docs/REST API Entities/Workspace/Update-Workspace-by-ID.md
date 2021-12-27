@@ -1,6 +1,6 @@
 # Update Workspace by ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -14,7 +14,6 @@ Update a Workspace by ID.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| togglId | Long | The ID of the corresponding Toggl Workspace | ❌ |
 | name | String | The name of the requested Workspace | ❌ |
 
 > At least one of the two fields is needed.
@@ -31,7 +30,7 @@ For the description of the Workspace entity, see [Get Workspace by ID](Get-Works
 curl -X "PUT" "http://localhost:8080/workspace/1" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "name": "My Workspace"
 }'
 ```
 
@@ -42,8 +41,7 @@ curl -X "PUT" "http://localhost:8080/workspace/1" \
 ```json
 {
   "id": 1,
-  "togglId": 1,
-  "name": "My First Workspace"
+  "name": "My Workspace"
 }
 ```
 
@@ -55,7 +53,7 @@ curl -X "PUT" "http://localhost:8080/workspace/1" \
 curl -X "PUT" "http://localhost:8080/workspace/404" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "name": "My Workspace"
 }'
 ```
 
@@ -99,7 +97,7 @@ curl -X "PUT" "http://localhost:8080/workspace/1" \
 curl -X "PUT" "http://localhost:8080/workspace/1" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "name": "My First Workspace"
+  "name": "My Workspace"
 }'
 ```
 

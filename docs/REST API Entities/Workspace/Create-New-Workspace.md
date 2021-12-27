@@ -1,6 +1,6 @@
 # Create a New Workspace
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -14,7 +14,6 @@ Create a new Workspace on the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| togglId | Long | The ID of the corresponding Toggl Workspace | ❌ |
 | name | String | The name of the requested Workspace | ✔️ |
 
 ## Response parameters
@@ -40,7 +39,6 @@ curl -X "POST" "http://localhost:8080/workspace" \
 ```json
 {
   "id": 3,
-  "togglId": null,
   "name": "My Third Workspace"
 }
 ```
@@ -75,9 +73,7 @@ curl -X "POST" "http://localhost:8080/workspace" \
 ```shell
 curl -X "POST" "http://localhost:8080/workspace" \
      -H 'Content-Type: application/json; charset=utf-8' \
-     -d $'{
-  "togglId": 1
-}'
+     -d $'{}'
 ```
 
 **Code:** `409 CONFLICT`

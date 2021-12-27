@@ -1,6 +1,6 @@
 # Restart Last Time Entry
 
-> Last modified: 27/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -29,13 +29,14 @@ curl -X "PUT" "http://localhost:8080/time_entry/restart"
 ```json
 {
   "id": 2,
-  "togglId": 2,
   "startDate": "2021-06-21T09:42:00",
   "endDate": null,
   "duration": 3742,
   "description": null,
   "running": true,
-  "projectName": "My First Project"
+  "workspaceId": 1,
+  "clientId": 1,
+  "projectId": 1
 }
 ```
 

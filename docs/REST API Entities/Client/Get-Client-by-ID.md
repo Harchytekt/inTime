@@ -1,6 +1,6 @@
 # Get Client by ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Client](../Client.md) | to [Summary](../../README.md)
 
@@ -14,16 +14,15 @@ Get a Client by ID from the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| id | Long | The ID of the requested Client | ✔️ |
+| id | long | The ID of the requested Client | ✔️ |
 
 ## Response parameters
 
 | Name | Type | Description |
 |:--|:--|:--|
-| id | Long | The ID of the requested Client |
-| togglId | Long | The ID of the corresponding Toggl Client |
-| name | String | The name of the requested Client |
-| workspaceName | String | The name of the linked Workspace |
+| id | long | The ID of the requested Client |
+| name | string | The name of the requested Client |
+| workspaceId | long | The ID of the linked Workspace |
 
 ## Sample
 
@@ -40,9 +39,8 @@ curl "http://localhost:8080/client/1"
 ```json
 {
   "id": 1,
-  "togglId": null,
   "name": "My First Client",
-  "workspaceName": "My First Workspace"
+  "workspaceId": 1
 }
 ```
 

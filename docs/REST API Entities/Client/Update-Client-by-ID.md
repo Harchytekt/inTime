@@ -1,6 +1,6 @@
 # Update Client by ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Client](../Client.md) | to [Summary](../../README.md)
 
@@ -14,9 +14,8 @@ Update a Client by ID.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| togglId | Long | The ID of the corresponding Toggl Client | ❌ |
 | name | String | The name of the requested Client | ❌ |
-| workspaceName | String | The name of the linked Workspace | ❌ |
+| workspaceId | long | The ID of the linked Workspace | ❌ |
 
 > At least one of the three fields is needed.
 
@@ -32,7 +31,7 @@ For the description of the Client entity, see [Get Client by ID](Get-Client-by-I
 curl -X "PUT" "http://localhost:8080/client/1" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "workspaceId": 2
 }'
 ```
 
@@ -43,9 +42,8 @@ curl -X "PUT" "http://localhost:8080/client/1" \
 ```json
 {
   "id": 1,
-  "togglId": 1,
   "name": "My First Client",
-  "workspaceName": "My First Workspace"
+  "workspaceId": 2
 }
 ```
 
@@ -57,7 +55,7 @@ curl -X "PUT" "http://localhost:8080/client/1" \
 curl -X "PUT" "http://localhost:8080/client/404" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "workspaceId": 1
 }'
 ```
 

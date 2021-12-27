@@ -1,10 +1,10 @@
-# Create a New Tme Entry
+# Create a New Time Entry
 
-> Last modified: 27/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
-Back to [Tme Entry](../Time%20Entry.md) | to [Summary](../../README.md)
+Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
-Create a new Tme Entry on the server.
+Create a new Time Entry on the server.
 
 **Auth required:** _No_  
 **Permissions required:** _None_  
@@ -14,13 +14,18 @@ Create a new Tme Entry on the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| description | String | The description of the Time Entry | ❌ |
-| togglId | Long | The ID of the corresponding Toggl Time Entry | ❌ |
-| projectName | String | The name of the linked Project | ✔️ |
+| description | string | The description of the Time Entry | ❌ |
+| workspaceId | long | The ID of the linked Workspace | ✔️ |
+| clientId | long | The ID of the linked Client | ✔️ |
+| projectId | long | The ID of the linked Project | ✔️ |
+| startDate | dateTime | The start date and time of the Time Entry | ❌ |
+| endDate | dateTime | The end date and time of the Time Entry | ❌ |
+
+> The workspace ID will be required if there is no `client` or `project` defined.
 
 ## Response parameters
 
-For the description of the Tme Entry entity, see [Get Tme Entry by ID](Get-Time-Entry-by-ID.md).
+For the description of the Time Entry entity, see [Get Time Entry by ID](Get-Time-Entry-by-ID.md).
 
 ## Sample
 
@@ -30,7 +35,7 @@ For the description of the Tme Entry entity, see [Get Tme Entry by ID](Get-Time-
 curl -X "POST" "http://localhost:8080/time_entry" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "projectName": "My First Project"
+  "projectId": 1
 }'
 ```
 
@@ -41,13 +46,14 @@ curl -X "POST" "http://localhost:8080/time_entry" \
 ```json
 {
   "id": 3,
-  "togglId": null,
   "startDate": "2021-06-21T10:52:21",
   "endDate": null,
   "duration": 0,
   "description": null,
   "running": true,
-  "projectName": "My First Project"
+  "workspaceId": 1,
+  "clientId": 1,
+  "projectId": 1
 }
 ```
 
@@ -94,7 +100,7 @@ curl -X "POST" "http://localhost:8080/time_entry" \
 {
   "timestamp": "2021-06-21T09:41:00.000",
   "status": 409,
-  "message": "Missing the field 'projectName' to create the entity 'TimeEntry'!",
+  "message": "Missing the field 'workspaceId' to create the entity 'TimeEntry'!",
   "path": "/time_entry/"
 }
 ```

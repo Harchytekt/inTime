@@ -1,6 +1,6 @@
 # Create a New Project
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Project](../Project.md) | to [Summary](../../README.md)
 
@@ -14,16 +14,15 @@ Create a new Project on the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| togglId | Long | The ID of the corresponding Toggl Project | ❌ |
-| name | String | The name of the requested Project | ✔️ |
-| billable | Boolean | The billability status of the Project | ❌ |
-| clientName | String | The name of the linked Client | ✔️ |
+| name | string | The name of the requested Project | ✔️ |
+| workspaceId | long | The ID of the linked Workspace | ✔️ |
+| clientId | long | The ID of the linked Client | ❌ |
 
 ## Response parameters
 
 For the description of the Project entity, see [Get Project by ID](Get-Project-by-ID.md).
 
-## Sample
+## Samples
 
 ### Success
 
@@ -31,7 +30,8 @@ For the description of the Project entity, see [Get Project by ID](Get-Project-b
 curl -X "POST" "http://localhost:8080/cprojectlient" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "name": "My Third Project"
+  "name": "My Third Project",
+  "workspaceId": 1
 }'
 ```
 
@@ -42,10 +42,9 @@ curl -X "POST" "http://localhost:8080/cprojectlient" \
 ```json
 {
   "id": 3,
-  "togglId": null,
   "name": "My Third Project",
-  "billable": false,
-  "clientName": null
+  "workspaceId": 1,
+  "clientId": null
 }
 ```
 
@@ -80,7 +79,7 @@ curl -X "POST" "http://localhost:8080/project" \
 curl -X "POST" "http://localhost:8080/project" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "togglId": 1
+  "workspaceId": 1
 }'
 ```
 

@@ -1,6 +1,6 @@
 # Get Project by ID
 
-> Last modified: 26/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Project](../Project.md) | to [Summary](../../README.md)
 
@@ -14,16 +14,15 @@ Get a Project by ID from the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| id | Long | The ID of the requested Project | ✔️ |
+| id | long | The ID of the requested Project | ✔️ |
 
 ## Response parameters
 
 | Name | Type | Description |
 |:--|:--|:--|
-| togglId | Long | The ID of the corresponding Toggl Project |
-| name | String | The name of the requested Project |
-| billable | Boolean | The billability status of the Project |
-| clientName | String | The name of the linked Client |
+| name | string | The name of the requested Project |
+| workspaceId | long | The ID of the linked Workspace |
+| clientId | long | The ID of the linked Client |
 
 ## Sample
 
@@ -40,10 +39,9 @@ curl "http://localhost:8080/project/1"
 ```json
 {
   "id": 1,
-  "togglId": null,
   "name": "My First Project",
-  "billable": false,
-  "clientName": "My First Client"
+  "workspaceId": 1,
+  "clientId": 1
 }
 ```
 

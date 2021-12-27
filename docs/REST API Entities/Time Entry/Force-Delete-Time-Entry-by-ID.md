@@ -1,6 +1,6 @@
 # Get Time Entry by ID
 
-> Last modified: 27/02/2021 (v0.0.1)
+> Last modified: 24/12/2021 (v0.0.4)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -14,7 +14,7 @@ Force delete a Time Entry by ID from the server.
 
 | Name | Type | Description | Required |
 |:--|:--|:--|:--:|
-| id | Long | The ID of the requested Time Entry | ✔️ |
+| id | long | The ID of the requested Time Entry | ✔️ |
 
 ## Response parameters
 
@@ -35,13 +35,14 @@ curl -X "DELETE" "http://localhost:8080/time_entry/2/force"
 ```json
 {
   "id": 2,
-  "togglId": 2,
   "startDate": "2021-06-21T09:42:00",
   "endDate": null,
   "duration": 3666,
   "description": null,
   "running": true,
-  "projectName": "My First Project"
+  "workspaceId": 1,
+  "clientId": 1,
+  "projectId": 1
 }
 ```
 

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(
         name = "clients",
-        uniqueConstraints = @UniqueConstraint(columnNames = ["name", "toggl_id"])
+        uniqueConstraints = @UniqueConstraint(columnNames = "name")
 )
 class Client {
 
@@ -15,8 +15,6 @@ class Client {
     @Column
     private Long id
 
-    @Column(name = "toggl_id")
-    private Long togglId
     @Column
     @NotNull
     private String name
@@ -39,7 +37,6 @@ class Client {
     Client(Client clientToCopy) {
         this.id = clientToCopy.id
         this.name = clientToCopy.name
-        this.togglId = clientToCopy.togglId
         this.workspace = clientToCopy.workspace
         this.projects = clientToCopy.projects
     }
@@ -50,14 +47,6 @@ class Client {
 
     void setId(Long id) {
         this.id = id
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
     }
 
     String getName() {
@@ -85,7 +74,7 @@ class Client {
     }
 
     String toJson() {
-        return "{\"name\": \"$name\", \"togglId\": \"$togglId\", \"workspaceName\": \"${workspace.name}\"}"
+        return "{\"name\": \"$name\", \"workspaceName\": \"${workspace.name}\"}"
     }
 
     boolean equals(o) {
@@ -97,7 +86,6 @@ class Client {
         if (id != client.id) return false
         if (name != client.name) return false
         if (projects != client.projects) return false
-        if (togglId != client.togglId) return false
         if (workspace != client.workspace) return false
 
         return true

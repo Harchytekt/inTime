@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
 
 import java.time.LocalDateTime
 
-@JsonPropertyOrder(["id", "togglId", "startDate", "endDate", "duration", "description", "running", "projectName"])
+@JsonPropertyOrder(["id", "startDate", "endDate", "duration", "description", "running", "projectName"])
 class TimeEntryDto {
 
     private Long id
-    private Long togglId
     private LocalDateTime startDate
     private LocalDateTime endDate
     private Integer duration
@@ -22,14 +21,6 @@ class TimeEntryDto {
 
     void setId(Long id) {
         this.id = id
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
     }
 
     LocalDateTime getStartDate() {

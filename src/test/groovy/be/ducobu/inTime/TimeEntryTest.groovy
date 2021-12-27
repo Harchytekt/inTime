@@ -15,8 +15,6 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 
-import java.time.LocalDateTime
-
 import static org.hamcrest.Matchers.*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -27,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(
         locations = "classpath:application.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TimeEntryTest extends GroovyTestCase {
+class TimeEntryTest {
 
     @Autowired
     private MockMvc mvc
@@ -94,11 +92,9 @@ class TimeEntryTest extends GroovyTestCase {
 
         // when
         TimeEntry timeEntry = new TimeEntry()
-        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
 
         timeEntry.project = projectService.findById(2)
         timeEntry.description = "Test"
-        timeEntry.startDate = dateTime
 
         mvc.perform(post("/time_entry/")
                 .content(timeEntry.toJson())
@@ -202,12 +198,11 @@ class TimeEntryTest extends GroovyTestCase {
     void whenUpdateTimeEntry_thenReturnUpdatedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(put("/time_entry/3")
-                .content('{"description": "Test with update", "projectName": "My First Project", "togglId": 3}')
+                .content('{"description": "Test with update", "projectName": "My First Project"}')
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.id', is(3)))
-                .andExpect(jsonPath('$.togglId', is(3)))
                 .andExpect(jsonPath('$.description', is("Test with update")))
                 .andExpect(jsonPath('$.running', is(true)))
                 .andExpect(jsonPath('$.startDate', notNullValue()))
@@ -259,34 +254,6 @@ class TimeEntryTest extends GroovyTestCase {
 
     @Test
     @Order(15)
-    void whenDeleteTogglIdProject_thenReturnUpdatedProject_withStatus200() throws Exception {
-
-        mvc.perform(put("/time_entry/3/togglid")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(3)))
-                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
-                .andExpect(jsonPath('$.description', is("Test with update")))
-                .andExpect(jsonPath('$.running', is(true)))
-                .andExpect(jsonPath('$.projectName', is("My First Project")))
-    }
-
-    @Test
-    @Order(16)
-    void whenDeleteAlreadyNullTogglIdProject_thenReturnException_withStatus409() throws Exception {
-
-        mvc.perform(put("/time_entry/1/togglid")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.status', is(409)))
-                .andExpect(jsonPath('$.message', is("There is no Toggl ID linked to the entity 'TimeEntry' with id '1'!")))
-                .andExpect(jsonPath('$.path', is("/time_entry/1/togglid")))
-    }
-
-    @Test
-    @Order(17)
     void whenDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(delete("/time_entry/1")
@@ -301,7 +268,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(18)
+    @Order(16)
     void whenDeleteRunningTimeEntryById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/time_entry/3")
@@ -314,7 +281,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(19)
+    @Order(17)
     void whenForceDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(delete("/time_entry/3/force")
@@ -330,7 +297,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(20)
+    @Order(18)
     void whenForceDeleteTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/time_entry/3/force")
@@ -340,82 +307,5 @@ class TimeEntryTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.status', is(404)))
                 .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '3' found!")))
                 .andExpect(jsonPath('$.path', is("/time_entry/3/force")))
-    }
-
-    @Test
-    @Order(21)
-    void whenCreateTimeEntryWithTogglId_thenReturnTimeEntry_withStatus201() throws Exception {
-
-        // when
-        TimeEntry timeEntry = new TimeEntry()
-        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
-
-        timeEntry.project = projectService.findById(2)
-        timeEntry.togglId = 42
-        timeEntry.description = "Test"
-        timeEntry.startDate = dateTime
-
-        mvc.perform(post("/time_entry/")
-                .content(timeEntry.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(4)))
-                .andExpect(jsonPath('$.togglId', is(42)))
-                .andExpect(jsonPath('$.description', is("Test")))
-                .andExpect(jsonPath('$.running', is(true)))
-                .andExpect(jsonPath('$.startDate', notNullValue()))
-                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
-                .andExpect(jsonPath('$.projectName', is("My Second Project")))
-    }
-
-    @Test
-    @Order(22)
-    void whenCreateTimeEntryWithNullTogglId_thenReturnTimeEntry_withStatus201() throws Exception {
-
-        // when
-        TimeEntry timeEntry = new TimeEntry()
-        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
-
-        timeEntry.project = projectService.findById(2)
-        timeEntry.togglId = null // or 0 (it's the same)
-        timeEntry.description = "Test"
-        timeEntry.startDate = dateTime
-
-        mvc.perform(post("/time_entry/")
-                .content(timeEntry.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(5)))
-                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
-                .andExpect(jsonPath('$.description', is("Test")))
-                .andExpect(jsonPath('$.running', is(true)))
-                .andExpect(jsonPath('$.startDate', notNullValue()))
-                .andExpect(jsonPath('$.endDate', emptyOrNullString()))
-                .andExpect(jsonPath('$.projectName', is("My Second Project")))
-    }
-
-    @Test
-    @Order(23)
-    void whenCreateTimeEntryWithExistingTogglId_thenReturnException_withStatus409() throws Exception {
-
-        // when
-        TimeEntry timeEntry = new TimeEntry()
-        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
-
-        timeEntry.project = projectService.findById(2)
-        timeEntry.togglId = 42
-        timeEntry.description = "Test"
-        timeEntry.startDate = dateTime
-
-        mvc.perform(post("/time_entry/")
-                .content(timeEntry.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.status', is(409)))
-                .andExpect(jsonPath('$.message', is("An entity 'TimeEntry' with 'togglId' '42' already exist!")))
-                .andExpect(jsonPath('$.path', is("/time_entry/")))
     }
 }

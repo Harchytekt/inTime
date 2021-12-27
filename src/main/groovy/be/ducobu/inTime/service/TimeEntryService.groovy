@@ -27,11 +27,6 @@ class TimeEntryService {
                 .orElseThrow({ -> new CustomEntityNotFoundException("TimeEntry", id as String) })
     }
 
-    TimeEntry findByTogglId(Long togglId) {
-        return timeEntryRepository.findByTogglId(togglId)
-                .orElseThrow({ -> new CustomEntityNotFoundException("TimeEntry", togglId as String) })
-    }
-
     TimeEntry findRunningTimeEntry() {
         return timeEntryRepository.findByRunningTrue()
     }

@@ -14,7 +14,8 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 
-import static org.hamcrest.Matchers.*
+import static org.hamcrest.Matchers.hasSize
+import static org.hamcrest.Matchers.is
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(
         locations = "classpath:application.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class WorkspaceTest extends GroovyTestCase {
+class WorkspaceTest {
 
     @Autowired
     private MockMvc mvc
@@ -111,12 +112,11 @@ class WorkspaceTest extends GroovyTestCase {
     void whenUpdateWorkspace_thenReturnUpdatedWorkspace_withStatus200() throws Exception {
 
         mvc.perform(put("/workspace/3")
-                .content('{"name": "My Third Workspace", "togglId": 3}')
+                .content('{"name": "My Third Workspace"}')
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.id', is(3)))
-                .andExpect(jsonPath('$.togglId', is(3)))
                 .andExpect(jsonPath('$.name', is("My Third Workspace")))
     }
 
@@ -150,32 +150,6 @@ class WorkspaceTest extends GroovyTestCase {
 
     @Test
     @Order(9)
-    void whenDeleteTogglIdWorkspace_thenReturnUpdatedWorkspace_withStatus200() throws Exception {
-
-        mvc.perform(put("/workspace/3/togglid")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(3)))
-                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
-                .andExpect(jsonPath('$.name', is("My Third Workspace")))
-    }
-
-    @Test
-    @Order(10)
-    void whenDeleteAlreadyNullTogglIdWorkspace_thenReturnException_withStatus409() throws Exception {
-
-        mvc.perform(put("/workspace/1/togglid")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.status', is(409)))
-                .andExpect(jsonPath('$.message', is("There is no Toggl ID linked to the entity 'Workspace' with id '1'!")))
-                .andExpect(jsonPath('$.path', is("/workspace/1/togglid")))
-    }
-
-    @Test
-    @Order(11)
     void whenDeleteWorkspaceById_thenReturnDeletedWorkspace_withStatus200() throws Exception {
 
         mvc.perform(delete("/workspace/3")
@@ -187,7 +161,7 @@ class WorkspaceTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(12)
+    @Order(10)
     void whenDeleteWorkspaceWithChildrenById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/workspace/1")
@@ -200,7 +174,7 @@ class WorkspaceTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(13)
+    @Order(11)
     void whenForceDeleteWorkspaceWithChildrenById_thenReturnDeletedWorkspace_withStatus200() throws Exception {
 
         mvc.perform(delete("/workspace/1/force")
@@ -212,7 +186,7 @@ class WorkspaceTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(14)
+    @Order(12)
     void whenForceDeleteWorkspaceByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/workspace/1/force")
@@ -222,65 +196,5 @@ class WorkspaceTest extends GroovyTestCase {
                 .andExpect(jsonPath('$.status', is(404)))
                 .andExpect(jsonPath('$.message', is("No 'Workspace' with attribute '1' found!")))
                 .andExpect(jsonPath('$.path', is("/workspace/1/force")))
-    }
-
-    @Test
-    @Order(15)
-    void whenCreateWorkspaceWithTogglId_thenReturnWorkspace_withStatus201() throws Exception {
-
-        // when
-        Workspace workspace = new Workspace()
-
-        workspace.name = "My Fourth Workspace"
-        workspace.togglId = 42
-
-        mvc.perform(post("/workspace/")
-                .content(workspace.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(4)))
-                .andExpect(jsonPath('$.name', is("My Fourth Workspace")))
-                .andExpect(jsonPath('$.togglId', is(42)))
-    }
-
-    @Test
-    @Order(16)
-    void whenCreateWorkspaceWithNullTogglId_thenReturnWorkspace_withStatus201() throws Exception {
-
-        // when
-        Workspace workspace = new Workspace()
-
-        workspace.name = "My Fifth Workspace"
-        workspace.togglId = null // or 0 (it's the same)
-
-        mvc.perform(post("/workspace/")
-                .content(workspace.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.id', is(5)))
-                .andExpect(jsonPath('$.name', is("My Fifth Workspace")))
-                .andExpect(jsonPath('$.togglId', emptyOrNullString()))
-    }
-
-    @Test
-    @Order(17)
-    void whenCreateWorkspaceWithExistingTogglId_thenReturnException_withStatus409() throws Exception {
-
-        // when
-        Workspace workspace = new Workspace()
-
-        workspace.name = "My Sixth Workspace"
-        workspace.togglId = 42
-
-        mvc.perform(post("/workspace/")
-                .content(workspace.toJson())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath('$.status', is(409)))
-                .andExpect(jsonPath('$.message', is("An entity 'Workspace' with 'togglId' '42' already exist!")))
-                .andExpect(jsonPath('$.path', is("/workspace/")))
     }
 }

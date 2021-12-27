@@ -60,9 +60,6 @@ class WorkspaceRestController {
     @ResponseStatus(HttpStatus.CREATED)
     WorkspaceDto create(@RequestBody WorkspaceCreateDto workspaceCreateDto) {
         String workspaceName = workspaceCreateDto.name
-        if (workspaceCreateDto.togglId == 0) workspaceCreateDto.togglId = null
-        Long workspaceTogglId = workspaceCreateDto.togglId
-
         if (workspaceName == null)
             throw new MissingNameException("Workspace")
 
@@ -71,13 +68,6 @@ class WorkspaceRestController {
                 throw new DuplicateEntryException("Workspace", "name", workspaceName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Workspace' found with this name, we can create it."
-        }
-
-        try {
-            if (workspaceTogglId != null && workspaceService.findByTogglId(workspaceTogglId) != null)
-                throw new DuplicateEntryException("Workspace", "togglId", workspaceTogglId as String)
-        } catch (CustomEntityNotFoundException ignored) {
-            logger.info "No 'Workspace' found with this togglId, we can create it."
         }
 
         Workspace createdWorkspace = workspaceService.save(
@@ -104,30 +94,12 @@ class WorkspaceRestController {
         if (workspaceCreateDto.name != null)
             workspace.name = workspaceCreateDto.name
 
-        if (workspaceCreateDto.togglId != null && workspaceCreateDto.togglId != 0)
-            workspace.togglId = workspaceCreateDto.togglId
-
         // Check if any change were made to the Workspace
         if (workspace == unmodifiedWorkspace)
             throw new NotModifiedEntityException("Workspace", id as String)
 
         return modelMapper.map(
                 workspaceService.save(workspace),
-                WorkspaceDto.class
-        )
-    }
-
-    @PutMapping("/{id}/togglid")
-    WorkspaceDto deleteWorkspaceTogglID(@PathVariable Long id) {
-        Workspace workspace = workspaceService.findById(id)
-
-        if (workspace.togglId == null)
-            throw new TogglIdAlreadyNullException("Workspace", id)
-
-        workspace.togglId = null
-
-        return modelMapper.map(
-                workspace,
                 WorkspaceDto.class
         )
     }

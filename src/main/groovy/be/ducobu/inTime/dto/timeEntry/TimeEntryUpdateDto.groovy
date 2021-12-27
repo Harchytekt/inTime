@@ -4,17 +4,8 @@ import java.time.LocalDateTime
 
 class TimeEntryUpdateDto extends TimeEntryCreateDto {
 
-    private Long togglId
     private LocalDateTime startDate
     private LocalDateTime endDate
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
-    }
 
     LocalDateTime getStartDate() {
         return startDate
@@ -33,6 +24,6 @@ class TimeEntryUpdateDto extends TimeEntryCreateDto {
     }
 
     boolean isEmpty() {
-        return description == null && projectName == null && startDate == null && endDate == null && togglId == null
+        return description == null && projectName == null && startDate == null && endDate == null
     }
 }

@@ -75,8 +75,7 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
             EndDateExceededException.class,
             ExistingChildFoundException.class,
             MissingNameException.class,
-            RunningTimeEntryException.class,
-            TogglIdAlreadyNullException.class])
+            RunningTimeEntryException.class])
     final ResponseEntity<Object> handleConflictException(Exception ex, WebRequest request) {
         logger.error ex.getMessage()
         status = HttpStatus.CONFLICT

@@ -9,6 +9,4 @@ interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Optional<Project> findByName(String name)
 
-    Optional<Project> findByTogglId(Long togglId)
-
 }

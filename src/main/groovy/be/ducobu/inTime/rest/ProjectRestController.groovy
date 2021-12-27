@@ -65,8 +65,7 @@ class ProjectRestController {
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
         String projectName = projectCreateDto.name
-        Long projectTogglId = projectCreateDto.togglId == 0 ? null : projectCreateDto.togglId
-        String clientName =projectCreateDto.clientName
+        String clientName = projectCreateDto.clientName
 
         if (projectName == null)
             throw new MissingNameException("Project")
@@ -81,19 +80,10 @@ class ProjectRestController {
             logger.info "No 'Project' found with this name, we can create it."
         }
 
-        try {
-            if (projectTogglId != null && projectService.findByTogglId(projectTogglId) != null)
-                throw new DuplicateEntryException("Project", "togglId", projectTogglId as String)
-        } catch (CustomEntityNotFoundException ignored) {
-            logger.info "No 'Project' found with this togglId, we can create it."
-        }
-
         Client client = clientService.findByName(clientName)
 
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,
-                new Boolean(projectCreateDto.billable),
-                projectTogglId,
                 client
         )
 
@@ -121,12 +111,6 @@ class ProjectRestController {
         if (projectCreateDto.name != null)
             project.name = projectCreateDto.name
 
-        if (projectCreateDto.billable != null)
-            project.billable = projectCreateDto.billable
-
-        if (projectCreateDto.togglId != null && projectCreateDto.togglId != 0)
-            project.togglId = projectCreateDto.togglId
-
         if (projectCreateDto.clientName != null)
             project.client = clientService.findByName(projectCreateDto.clientName)
 
@@ -136,21 +120,6 @@ class ProjectRestController {
 
         return modelMapper.map(
                 projectService.save(project),
-                ProjectDto.class
-        )
-    }
-
-    @PutMapping("/{id}/togglid")
-    ProjectDto deleteProjectTogglID(@PathVariable Long id) {
-        Project project = projectService.findById(id)
-
-        if (project.togglId == null)
-            throw new TogglIdAlreadyNullException("Project", id)
-
-        project.togglId = null
-
-        return modelMapper.map(
-                project,
                 ProjectDto.class
         )
     }

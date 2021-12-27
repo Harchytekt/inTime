@@ -3,7 +3,6 @@ package be.ducobu.inTime.dto.client
 class ClientDto {
 
     private Long id
-    private Long togglId
     private String name
     private String workspaceName
 
@@ -13,14 +12,6 @@ class ClientDto {
 
     void setId(Long id) {
         this.id = id
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
     }
 
     String getName() {

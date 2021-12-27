@@ -32,11 +32,6 @@ class WorkspaceService {
                 .orElseThrow({ -> new CustomEntityNotFoundException("Workspace", name) })
     }
 
-    Workspace findByTogglId(Long togglId) {
-        return workspaceRepository.findByTogglId(togglId)
-                .orElseThrow({ -> new CustomEntityNotFoundException("Workspace", togglId as String) })
-    }
-
     void deleteById(Long id) {
         workspaceRepository.deleteById(id)
     }

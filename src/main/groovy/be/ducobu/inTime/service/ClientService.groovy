@@ -32,11 +32,6 @@ class ClientService {
                 .orElseThrow({ -> new CustomEntityNotFoundException("Client", name) })
     }
 
-    Client findByTogglId(Long togglId) {
-        return clientRepository.findByTogglId(togglId)
-                .orElseThrow({ -> new CustomEntityNotFoundException("Client", togglId as String) })
-    }
-
     void deleteById(Long id) {
         clientRepository.deleteById(id)
     }

@@ -6,10 +6,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 
 @Entity
-@Table(
-        name = "time_entries",
-        uniqueConstraints = @UniqueConstraint(columnNames = "toggl_id")
-)
+@Table(name = "time_entries")
 class TimeEntry {
 
     @Id
@@ -17,8 +14,6 @@ class TimeEntry {
     @Column
     private Long id
 
-    @Column(name = "toggl_id")
-    private Long togglId
     @Column(name = "start_date")
     private LocalDateTime startDate = LocalDateTime.now()
     @Column(name = "end_date")
@@ -39,7 +34,6 @@ class TimeEntry {
 
     TimeEntry(TimeEntry timeEntryToCopy) {
         this.id = timeEntryToCopy.id
-        this.togglId = timeEntryToCopy.togglId
         this.startDate = timeEntryToCopy.startDate
         this.endDate = timeEntryToCopy.endDate
         this.duration = timeEntryToCopy.duration
@@ -54,14 +48,6 @@ class TimeEntry {
 
     void setId(Long id) {
         this.id = id
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
     }
 
     LocalDateTime getStartDate() {
@@ -124,7 +110,7 @@ class TimeEntry {
     }
 
     String toJson() {
-        return "{\"togglId\": \"$togglId\", \"projectName\": \"${project.name}\", \"description\": \"$description\"}"
+        return "{\"projectName\": \"${project.name}\", \"description\": \"$description\"}"
     }
 
     boolean equals(o) {
@@ -140,7 +126,6 @@ class TimeEntry {
         if (id != timeEntry.id) return false
         if (project != timeEntry.project) return false
         if (startDate != timeEntry.startDate) return false
-        if (togglId != timeEntry.togglId) return false
 
         return true
     }

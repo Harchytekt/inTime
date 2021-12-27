@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(
         locations = "classpath:application.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProjectTest extends GroovyTestCase {
+class ProjectTest {
 
     @Autowired
     private MockMvc mvc

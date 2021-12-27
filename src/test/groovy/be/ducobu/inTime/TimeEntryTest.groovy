@@ -15,8 +15,6 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 
-import java.time.LocalDateTime
-
 import static org.hamcrest.Matchers.*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -27,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(
         locations = "classpath:application.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TimeEntryTest extends GroovyTestCase {
+class TimeEntryTest {
 
     @Autowired
     private MockMvc mvc
@@ -94,11 +92,9 @@ class TimeEntryTest extends GroovyTestCase {
 
         // when
         TimeEntry timeEntry = new TimeEntry()
-        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
 
         timeEntry.project = projectService.findById(2)
         timeEntry.description = "Test"
-        timeEntry.startDate = dateTime
 
         mvc.perform(post("/time_entry/")
                 .content(timeEntry.toJson())

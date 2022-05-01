@@ -25,7 +25,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.codehaus.groovy:groovy'
     implementation 'org.modelmapper:modelmapper:3.1.0'
-    compileOnly 'org.modelmapper:modelmapper:2.4.5'
+    compileOnly 'org.modelmapper:modelmapper:3.1.0'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'

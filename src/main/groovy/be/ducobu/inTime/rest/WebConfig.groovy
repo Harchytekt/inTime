@@ -11,7 +11,7 @@ class WebConfig implements WebMvcConfigurer {
 
     @Override
     void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**")
     }
     // CORS enabled: https://www.baeldung.com/spring-cors
 }

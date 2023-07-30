@@ -1,6 +1,15 @@
 # inTime
 It is a Time Tracking project to practice the development of a Spring app with Groovy.
 
+## Docker
+It is possible to run the app in Docker.
+
+To do that, you'll have to compile the project to a `.jar` (`gradlew :bootJar`).  
+It'll be located in `build/libs` and it's name will be like `inTime-0.0.5.jar`.
+
+To launch the containers - Spring Boot JDK8 and MySQL 8 (_empty DB_) - execute `docker-compose up -d`.  
+To stop them, run `docker-compose down`.
+
 ## Doc
 - [Workspace](docs/REST%20API%20Entities/Workspace.md)
 	- [Create a New Workspace (`POST /workspace/{id}`) 🔗](docs/REST%20API%20Entities/Workspace/Create-New-Workspace.md)

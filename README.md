@@ -10,6 +10,12 @@ It'll be located in `build/libs` and it's name will be like `inTime-0.0.5.jar`.
 To launch the containers - Spring Boot JDK8 and MySQL 8 (_empty DB_) - execute `docker-compose up -d`.  
 To stop them, run `docker-compose down`.
 
+> ℹ️ In order to keep the default `application.properties` for a "normal" execution, we can use Spring Boot Profiles.  
+> It means that if we want a profile named `docker`, we have to define a `application-docker.properties` file 
+> (_all properties from the default `application.properties` will be used, except the ones defined in the 'docker' one_).  
+> Then, we have to use the following option when building the image: `-Dspring.profiles.active=docker`.  
+> In this case, we can add it to the last line of the `Dockerfile`: `ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "/app.jar"]`.
+
 ## Doc
 - [Workspace](docs/REST%20API%20Entities/Workspace.md)
 	- [Create a New Workspace (`POST /workspace/{id}`) 🔗](docs/REST%20API%20Entities/Workspace/Create-New-Workspace.md)

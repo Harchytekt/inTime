@@ -128,7 +128,7 @@ class ProjectRestController {
     ProjectDto deleteProject(@PathVariable Long id) {
         Project project = projectService.findById(id)
 
-        if (!project.getTimeEntries().isEmpty())
+        if (project.hasTimeEntries())
             throw new ExistingChildFoundException("TimeEntry")
 
         projectService.deleteById(id)

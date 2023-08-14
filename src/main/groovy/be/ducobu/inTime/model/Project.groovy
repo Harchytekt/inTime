@@ -73,6 +73,10 @@ class Project {
         this.timeEntries = timeEntries
     }
 
+    boolean hasTimeEntries() {
+        return !this.timeEntries.isEmpty()
+    }
+
     String toJson() {
         return "{\"name\": \"$name\", \"clientName\": \"${client.name}\"}"
     }

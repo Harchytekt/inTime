@@ -123,7 +123,7 @@ class ClientRestController {
     ClientDto deleteClient(@PathVariable Long id) {
         Client client = clientService.findById(id)
 
-        if (!client.getProjects().isEmpty())
+        if (client.hasProjects())
             throw new ExistingChildFoundException("Project")
 
         clientService.deleteById(id)

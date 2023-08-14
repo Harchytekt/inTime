@@ -108,7 +108,7 @@ class WorkspaceRestController {
     WorkspaceDto deleteWorkspace(@PathVariable Long id) {
         Workspace workspace = workspaceService.findById(id)
 
-        if (!workspace.getClients().isEmpty())
+        if (workspace.hasClients())
             throw new ExistingChildFoundException("Client")
 
         workspaceService.deleteById(id)

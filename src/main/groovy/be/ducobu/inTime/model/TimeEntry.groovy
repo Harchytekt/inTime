@@ -84,7 +84,7 @@ class TimeEntry {
         this.description = description
     }
 
-    boolean getRunning() {
+    boolean isRunning() {
         return running
     }
 
@@ -98,6 +98,10 @@ class TimeEntry {
 
     void setProject(Project project) {
         this.project = project
+    }
+
+    boolean isGivenEndDateAfterStartDate(LocalDateTime givenEndDate) {
+        return Duration.between(this.startDate, givenEndDate).getSeconds() > 0
     }
 
     @Override
@@ -119,7 +123,7 @@ class TimeEntry {
 
         TimeEntry timeEntry = (TimeEntry) o
 
-        if (running != timeEntry.running) return false
+        if (running != timeEntry.isRunning()) return false
         if (description != timeEntry.description) return false
         if (!running && duration != timeEntry.duration) return false
         if (endDate != timeEntry.endDate) return false

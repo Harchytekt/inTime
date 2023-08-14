@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
-import java.time.Duration
 import java.time.LocalDateTime
 
 @RestController
@@ -104,9 +103,8 @@ class TimeEntryRestController {
         if (null != timeEntryUpdateDto.startDate)
             timeEntry.startDate = timeEntryUpdateDto.startDate
 
-        if (timeEntryUpdateDto.endDate != null) {
-            if (Duration.between(timeEntry.startDate, timeEntryUpdateDto.endDate).getSeconds() > 0) {
         if (null != timeEntryUpdateDto.endDate) {
+            if (timeEntry.isGivenEndDateAfterStartDate(timeEntryUpdateDto.endDate)) {
                 timeEntry.updateEndDate(timeEntryUpdateDto.endDate)
             } else {
                 throw new EndDateExceededException(timeEntry.startDate, timeEntryUpdateDto.endDate)

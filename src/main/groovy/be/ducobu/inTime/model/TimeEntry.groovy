@@ -62,18 +62,10 @@ class TimeEntry {
         return endDate
     }
 
-    void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate
-    }
-
     Long getDuration() {
         if (duration == null)
             return calculateDuration(false)
         return duration
-    }
-
-    void setDuration(Long duration) {
-        this.duration = duration
     }
 
     String getDescription() {
@@ -86,10 +78,6 @@ class TimeEntry {
 
     boolean isRunning() {
         return running
-    }
-
-    void setRunning(boolean running) {
-        this.running = running
     }
 
     Project getProject() {

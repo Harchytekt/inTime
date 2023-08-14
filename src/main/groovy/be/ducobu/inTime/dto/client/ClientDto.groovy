@@ -4,7 +4,7 @@ class ClientDto {
 
     private Long id
     private String name
-    private String workspaceName
+    private Long workspaceId
 
     Long getId() {
         return id
@@ -22,11 +22,11 @@ class ClientDto {
         this.name = name
     }
 
-    String getWorkspaceName() {
-        return workspaceName
+    Long getWorkspaceId() {
+        return workspaceId
     }
 
-    void setWorkspaceName(String workspaceName) {
-        this.workspaceName = workspaceName
+    void setWorkspaceId(Long workspaceId) {
+        this.workspaceId = workspaceId
     }
 }

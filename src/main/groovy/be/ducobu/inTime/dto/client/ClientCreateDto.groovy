@@ -3,6 +3,7 @@ package be.ducobu.inTime.dto.client
 class ClientCreateDto {
 
     private String name
+    private Long workspaceId
     private String workspaceName
 
     String getName() {
@@ -11,6 +12,14 @@ class ClientCreateDto {
 
     void setName(String name) {
         this.name = name
+    }
+
+    Long getWorkspaceId() {
+        return workspaceId
+    }
+
+    void setWorkspaceId(Long workspaceId) {
+        this.workspaceId = workspaceId
     }
 
     String getWorkspaceName() {

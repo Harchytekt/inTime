@@ -117,10 +117,10 @@ class TimeEntryRestController {
         if (null != timeEntryUpdateDto.description)
             timeEntry.description = timeEntryUpdateDto.description
 
-        if (null == timeEntryUpdateDto.projectName) {
-            timeEntry.project = projectService.findById(timeEntryUpdateDto.projectId)
-        } else {
+        if (null == timeEntryUpdateDto.projectId) {
             timeEntry.project = projectService.findByName(timeEntryUpdateDto.projectName)
+        } else {
+            timeEntry.project = projectService.findById(timeEntryUpdateDto.projectId)
         }
 
         // Check if any change were made to the Workspace

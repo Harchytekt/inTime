@@ -114,8 +114,11 @@ class ProjectRestController {
         if (null != projectCreateDto.name)
             project.name = projectCreateDto.name
 
-        if (null != projectCreateDto.clientName)
+        if (null == projectCreateDto.clientId) {
             project.client = clientService.findByName(projectCreateDto.clientName)
+        } else {
+            project.client = clientService.findById(projectCreateDto.clientId)
+        }
 
         // Check if any change were made to the Project
         if (project == unmodifiedProject)

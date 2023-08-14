@@ -12,9 +12,9 @@ Update a Workspace by ID.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| name | String | The name of the requested Workspace | ❌ |
+| Name | Type   | Description                         | Required |
+|:-----|:-------|:------------------------------------|:--------:|
+| name | String | The name of the requested Workspace |    ❌     |
 
 > At least one of the two fields is needed.
 

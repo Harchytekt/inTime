@@ -12,15 +12,15 @@ Get a Workspace by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | Long | The ID of the requested Workspace | ✔️ |
+| Name | Type | Description                       | Required |
+|:-----|:-----|:----------------------------------|:--------:|
+| id   | Long | The ID of the requested Workspace |    ✔️    |
 
 ## Response parameters
 
-| Name | Type | Description |
-|:--|:--|:--|
-| id | Long | The ID of the requested Workspace |
+| Name | Type   | Description                         |
+|:-----|:-------|:------------------------------------|
+| id   | Long   | The ID of the requested Workspace   |
 | name | String | The name of the requested Workspace |
 
 ## Sample

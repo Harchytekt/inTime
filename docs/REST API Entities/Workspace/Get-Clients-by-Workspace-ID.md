@@ -12,9 +12,9 @@ Get a list of all Clients linked to the Workspace from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | Long | The ID of the Workspace | ✔️ |
+| Name | Type | Description             | Required |
+|:-----|:-----|:------------------------|:--------:|
+| id   | Long | The ID of the Workspace |    ✔️    |
 
 ## Response parameters
 
@@ -37,12 +37,12 @@ curl "http://localhost:8080/workspace/1/clients"
   {
     "id": 1,
     "name": "My First Client",
-    "workspaceName": "Workspace name"
+    "workspaceId": 1
   },
   {
     "id": 2,
     "name": "My Second Client",
-    "workspaceName": "Workspace name"
+    "workspaceId": 1
   }
 ]
 ```

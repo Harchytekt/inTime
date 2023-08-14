@@ -12,9 +12,9 @@ Create a new Workspace on the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| name | String | The name of the requested Workspace | ✔️ |
+| Name | Type   | Description                         | Required |
+|:-----|:-------|:------------------------------------|:--------:|
+| name | String | The name of the Workspace to create |    ✔️    |
 
 ## Response parameters
 

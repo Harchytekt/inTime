@@ -12,12 +12,13 @@ Update a Client by ID.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| name | String | The name of the requested Client | ❌ |
-| workspaceId | long | The ID of the linked Workspace | ❌ |
+| Name          | Type   | Description                      | Required |
+|:--------------|:-------|:---------------------------------|:--------:|
+| name          | string | The name of the requested Client |    ❌     |
+| workspaceId   | long   | The ID of the linked Workspace   |    ❌     |
+| workspaceName | string | The name of the linked Workspace |    ❌     |
 
-> At least one of the three fields is needed.
+> At least one of those fields is required.
 
 ## Response parameters
 

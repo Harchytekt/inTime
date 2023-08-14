@@ -12,9 +12,9 @@ Force delete a Client by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Client | ✔️ |
+| Name | Type | Description                    | Required |
+|:-----|:-----|:-------------------------------|:--------:|
+| id   | long | The ID of the requested Client |    ✔️    |
 
 ## Response parameters
 

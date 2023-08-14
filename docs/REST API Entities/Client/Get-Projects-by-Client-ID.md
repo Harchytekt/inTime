@@ -12,9 +12,9 @@ Get a list of all Projects linked to the Client from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the Client | ✔️ |
+| Name | Type | Description          | Required |
+|:-----|:-----|:---------------------|:--------:|
+| id   | long | The ID of the Client |    ✔️    |
 
 ## Response parameters
 
@@ -36,17 +36,13 @@ curl "http://localhost:8080/client/1/projects"
 [
   {
     "id": 1,
-    "togglId": null,
     "name": "My First Project",
-    "billable": false,
-    "clientName": "My First Client"
+    "clientId": 1
   },
   {
     "id": 2,
-    "togglId": null,
     "name": "My Second Project",
-    "billable": false,
-    "clientName": "My First Client"
+    "clientId": 1
   }
 ]
 ```

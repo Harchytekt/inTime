@@ -14,7 +14,7 @@ Force delete a Workspace by ID from the server.
 
 | Name | Type | Description                       | Required |
 |:-----|:-----|:----------------------------------|:--------:|
-| id   | Long | The ID of the requested Workspace |    ✔️    |
+| id   | long | The ID of the requested Workspace |    ✔️    |
 
 ## Response parameters
 

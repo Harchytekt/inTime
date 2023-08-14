@@ -14,7 +14,7 @@ Update a Workspace by ID.
 
 | Name | Type   | Description                         | Required |
 |:-----|:-------|:------------------------------------|:--------:|
-| name | String | The name of the requested Workspace |    ❌     |
+| name | string | The name of the requested Workspace |    ❌     |
 
 > At least one of the two fields is needed.
 

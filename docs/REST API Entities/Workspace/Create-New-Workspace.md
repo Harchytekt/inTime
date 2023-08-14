@@ -14,7 +14,7 @@ Create a new Workspace on the server.
 
 | Name | Type   | Description                         | Required |
 |:-----|:-------|:------------------------------------|:--------:|
-| name | String | The name of the Workspace to create |    ✔️    |
+| name | string | The name of the Workspace to create |    ✔️    |
 
 ## Response parameters
 

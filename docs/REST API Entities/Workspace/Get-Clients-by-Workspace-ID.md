@@ -14,7 +14,7 @@ Get a list of all Clients linked to the Workspace from the server.
 
 | Name | Type | Description             | Required |
 |:-----|:-----|:------------------------|:--------:|
-| id   | Long | The ID of the Workspace |    ✔️    |
+| id   | long | The ID of the Workspace |    ✔️    |
 
 ## Response parameters
 

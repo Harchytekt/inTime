@@ -14,7 +14,7 @@ Get a list of all Projects linked to the Project from the server.
 
 | Name | Type | Description           | Required |
 |:-----|:-----|:----------------------|:--------:|
-| id   | Long | The ID of the Project |    ✔️    |
+| id   | long | The ID of the Project |    ✔️    |
 
 ## Response parameters
 

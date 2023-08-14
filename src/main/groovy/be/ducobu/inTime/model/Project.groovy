@@ -69,10 +69,6 @@ class Project {
         return timeEntries
     }
 
-    void setTimeEntries(List<TimeEntry> timeEntries) {
-        this.timeEntries = timeEntries
-    }
-
     boolean hasTimeEntries() {
         return !this.timeEntries.isEmpty()
     }

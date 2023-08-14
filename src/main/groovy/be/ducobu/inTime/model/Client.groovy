@@ -69,10 +69,6 @@ class Client {
         return projects
     }
 
-    void setProjects(Set<Project> projects) {
-        this.projects = projects
-    }
-
     boolean hasProjects() {
         return !this.projects.isEmpty()
     }

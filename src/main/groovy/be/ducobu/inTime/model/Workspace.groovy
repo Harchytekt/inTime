@@ -56,10 +56,6 @@ class Workspace {
         return clients
     }
 
-    void setClients(Set<Client> clients) {
-        this.clients = clients
-    }
-
     boolean hasClients() {
         return !this.clients.isEmpty()
     }

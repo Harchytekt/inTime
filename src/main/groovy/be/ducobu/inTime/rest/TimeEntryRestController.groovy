@@ -65,10 +65,11 @@ class TimeEntryRestController {
     @ResponseStatus(HttpStatus.CREATED)
     TimeEntryDto create(@RequestBody TimeEntryCreateDto timeEntryCreateDto) {
         LocalDateTime date = LocalDateTime.now()
+        Long projectId = timeEntryCreateDto.projectId
         String projectName = timeEntryCreateDto.projectName
 
-        if (null == projectName)
-            throw new MissingNameException("TimeEntry", "projectName")
+        if (null == projectName && null == projectId)
+            throw new MissingParentReferenceException("TimeEntry", "Project")
 
         try {
             Long stoppedTimeEntryId = this.stopTimeEntry().id
@@ -77,7 +78,9 @@ class TimeEntryRestController {
             logger.info "No running 'TimeEntry' found, we don't have to stop it then."
         }
 
-        Project project = projectService.findByName(projectName)
+        Project project = null == projectId ?
+                projectService.findByName(projectName) :
+                projectService.findById(projectId)
 
         TimeEntry createdTimeEntry = timeEntryService.save(
                 modelMapper.map(
@@ -114,8 +117,11 @@ class TimeEntryRestController {
         if (null != timeEntryUpdateDto.description)
             timeEntry.description = timeEntryUpdateDto.description
 
-        if (null != timeEntryUpdateDto.projectName)
+        if (null == timeEntryUpdateDto.projectName) {
+            timeEntry.project = projectService.findById(timeEntryUpdateDto.projectId)
+        } else {
             timeEntry.project = projectService.findByName(timeEntryUpdateDto.projectName)
+        }
 
         // Check if any change were made to the Workspace
         if (timeEntry == unmodifiedTimeEntry)

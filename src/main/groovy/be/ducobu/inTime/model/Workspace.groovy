@@ -60,6 +60,10 @@ class Workspace {
         this.clients = clients
     }
 
+    boolean hasClients() {
+        return !this.clients.isEmpty()
+    }
+
     String toJson() {
         return "{\"name\": \"$name\"}"
     }

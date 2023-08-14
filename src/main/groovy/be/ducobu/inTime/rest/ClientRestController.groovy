@@ -67,14 +67,14 @@ class ClientRestController {
         String clientName = clientCreateDto.name
         String workspaceName = clientCreateDto.workspaceName
 
-        if (clientName == null)
+        if (null == clientName)
             throw new MissingNameException("Client")
 
-        if (workspaceName == null)
+        if (null == workspaceName)
             throw new MissingNameException("Client", "workspaceName")
 
         try {
-            if (clientService.findByName(clientName) != null)
+            if (null != clientService.findByName(clientName))
                 throw new DuplicateEntryException("Client", "name", clientName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Client' found with this name, we can create it."
@@ -103,10 +103,10 @@ class ClientRestController {
         if (clientCreateDto.isEmpty())
             throw new NotModifiedEntityException("Client", id as String, "Nothing was sent in the body.")
 
-        if (clientCreateDto.name != null)
+        if (null != clientCreateDto.name)
             client.name = clientCreateDto.name
 
-        if (clientCreateDto.workspaceName != null)
+        if (null != clientCreateDto.workspaceName)
             client.workspace = workspaceService.findByName(clientCreateDto.workspaceName)
 
         // Check if any change were made to the Client
@@ -123,7 +123,7 @@ class ClientRestController {
     ClientDto deleteClient(@PathVariable Long id) {
         Client client = clientService.findById(id)
 
-        if (!client.getProjects().isEmpty())
+        if (client.hasProjects())
             throw new ExistingChildFoundException("Project")
 
         clientService.deleteById(id)

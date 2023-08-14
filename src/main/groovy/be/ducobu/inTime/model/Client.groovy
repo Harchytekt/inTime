@@ -73,6 +73,10 @@ class Client {
         this.projects = projects
     }
 
+    boolean hasProjects() {
+        return !this.projects.isEmpty()
+    }
+
     String toJson() {
         return "{\"name\": \"$name\", \"workspaceName\": \"${workspace.name}\"}"
     }

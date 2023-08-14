@@ -60,11 +60,11 @@ class WorkspaceRestController {
     @ResponseStatus(HttpStatus.CREATED)
     WorkspaceDto create(@RequestBody WorkspaceCreateDto workspaceCreateDto) {
         String workspaceName = workspaceCreateDto.name
-        if (workspaceName == null)
+        if (null == workspaceName)
             throw new MissingNameException("Workspace")
 
         try {
-            if (workspaceService.findByName(workspaceName) != null)
+            if (null != workspaceService.findByName(workspaceName))
                 throw new DuplicateEntryException("Workspace", "name", workspaceName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Workspace' found with this name, we can create it."
@@ -91,7 +91,7 @@ class WorkspaceRestController {
         if (workspaceCreateDto.isEmpty())
             throw new NotModifiedEntityException("Workspace", id as String, "Nothing was sent in the body.")
 
-        if (workspaceCreateDto.name != null)
+        if (null != workspaceCreateDto.name)
             workspace.name = workspaceCreateDto.name
 
         // Check if any change were made to the Workspace
@@ -108,7 +108,7 @@ class WorkspaceRestController {
     WorkspaceDto deleteWorkspace(@PathVariable Long id) {
         Workspace workspace = workspaceService.findById(id)
 
-        if (!workspace.getClients().isEmpty())
+        if (workspace.hasClients())
             throw new ExistingChildFoundException("Client")
 
         workspaceService.deleteById(id)

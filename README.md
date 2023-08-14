@@ -1,7 +1,7 @@
 # inTime
 It is a Time Tracking project to practice the development of a Spring app with Groovy.
 
-## Docker
+## Docker 🐳
 It is possible to run the app in Docker.
 
 To do that, you'll have to compile the project to a `.jar` (`gradlew :bootJar`).  

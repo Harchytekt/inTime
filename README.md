@@ -1,4 +1,4 @@
-# inTime
+# inTime ⏲️
 It is a Time Tracking project to practice the development of a Spring app with Groovy.
 
 ## Docker 🐳

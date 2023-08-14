@@ -18,7 +18,7 @@ Get a list of all Projects linked to the Client from the server.
 
 ## Response parameters
 
-For the description of the Project entity, see [Get Project by ID](../Projects/Get-Project-by-ID.md).
+For the description of the Project entity, see [Get Project by ID](../Project/Get-Project-by-ID.md).
 
 ## Sample
 

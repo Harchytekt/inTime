@@ -1,7 +1,6 @@
 package be.ducobu.inTime.service
 
 import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.TimeEntry
 import be.ducobu.inTime.repository.TimeEntryRepository
 import org.springframework.stereotype.Service

@@ -2,18 +2,9 @@ package be.ducobu.inTime.dto.project
 
 class ProjectCreateDto {
 
-    private Long togglId
     private String name
-    private Boolean billable
+    private Long clientId
     private String clientName
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
-    }
 
     String getName() {
         return name
@@ -23,19 +14,23 @@ class ProjectCreateDto {
         this.name = name
     }
 
-    Boolean getBillable() {
-        return billable
-    }
-
-    void setBillable(Boolean billable) {
-        this.billable = billable
-    }
-
     String getClientName() {
         return clientName
     }
 
+    Long getClientId() {
+        return clientId
+    }
+
+    void setClientId(Long clientId) {
+        this.clientId = clientId
+    }
+
     void setClientName(String clientName) {
         this.clientName = clientName
+    }
+
+    boolean isEmpty() {
+        return name == null && clientName == null
     }
 }

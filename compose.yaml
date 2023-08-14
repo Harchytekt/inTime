@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  spring_api_service:
+    build: .
+    image: spring-image
+    restart: always
+    ports:
+      - "9090:8080"
+    networks:
+      - spring-mysql-net
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - "3307:3306"
+    networks:
+      - spring-mysql-net
+    environment:
+      MYSQL_DATABASE: in_time_dv
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: test
+networks:
+  spring-mysql-net:
+    driver: bridge

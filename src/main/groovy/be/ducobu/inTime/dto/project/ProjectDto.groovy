@@ -3,10 +3,8 @@ package be.ducobu.inTime.dto.project
 class ProjectDto {
 
     private Long id
-    private Long togglId
     private String name
-    private boolean billable
-    private String clientName
+    private Long clientId
 
     Long getId() {
         return id
@@ -14,14 +12,6 @@ class ProjectDto {
 
     void setId(Long id) {
         this.id = id
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
     }
 
     String getName() {
@@ -32,19 +22,11 @@ class ProjectDto {
         this.name = name
     }
 
-    boolean getBillable() {
-        return billable
+    Long getClientId() {
+        return clientId
     }
 
-    void setBillable(boolean billable) {
-        this.billable = billable
-    }
-
-    String getClientName() {
-        return clientName
-    }
-
-    void setClientName(String clientName) {
-        this.clientName = clientName
+    void setClientId(Long clientId) {
+        this.clientId = clientId
     }
 }

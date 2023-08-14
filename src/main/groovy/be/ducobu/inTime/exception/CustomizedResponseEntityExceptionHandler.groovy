@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 
+import java.sql.Timestamp
+
 @ControllerAdvice
 class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -25,7 +27,7 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         message = "A technical problem has occurred!"
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(
-                new Date(),
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
@@ -35,18 +37,18 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
 
     @ExceptionHandler(WrongRestCallException.class)
     final ResponseEntity<Object> handleWrongRestCallException(WrongRestCallException ex, WebRequest request) {
-        logger.error(ex.getMessage())
+        logger.error ex.getMessage()
         status = HttpStatus.BAD_REQUEST
 
         if (SOURCE_CANNOT_BE_NULL == ex.getMessage()) {
             message = "The chosen item doesn't exist!"
-            logger.error(message)
+            logger.error message
         } else {
             message = ex.getMessage()
         }
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(
-                new Date(),
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
@@ -55,15 +57,16 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
     }
 
     @ExceptionHandler(value = [CustomEntityNotFoundException.class,
-            RunningTimeEntryNotFoundException.class,
-            NoEntryFoundException.class])
+            NoEntryFoundException.class,
+            RunningTimeEntryNotFoundException.class])
     final ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
-        logger.error(ex.getMessage())
+        logger.error ex.getMessage()
         status = HttpStatus.NOT_FOUND
 
         message = ex.getMessage()
 
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
@@ -72,15 +75,19 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
     }
 
     @ExceptionHandler([DuplicateEntryException.class,
+            EndDateExceededException.class,
             ExistingChildFoundException.class,
+            MissingNameException.class,
+            MissingParentReferenceException.class,
             RunningTimeEntryException.class])
     final ResponseEntity<Object> handleConflictException(Exception ex, WebRequest request) {
-        logger.error(ex.getMessage())
+        logger.error ex.getMessage()
         status = HttpStatus.CONFLICT
 
         message = ex.getMessage()
 
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
@@ -88,5 +95,20 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         return new ResponseEntity<>(exceptionResponse, status)
     }
 
+    @ExceptionHandler(NotModifiedEntityException.class)
+    final ResponseEntity<Object> handleBadRequestException(Exception ex, WebRequest request) {
+        logger.error ex.getMessage()
+        status = HttpStatus.BAD_REQUEST
+
+        message = ex.getMessage()
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
+                status.value(),
+                message,
+                request.getDescription(false)
+        )
+        return new ResponseEntity<>(exceptionResponse, status)
+    }
 
 }

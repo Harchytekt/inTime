@@ -1,6 +1,7 @@
 package be.ducobu.inTime.model
 
 import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(
@@ -14,9 +15,8 @@ class Client {
     @Column
     private Long id
 
-    @Column(name = "toggl_id")
-    private Long togglId
     @Column
+    @NotNull
     private String name
 
     @ManyToOne
@@ -34,20 +34,19 @@ class Client {
         this.name = name
     }
 
+    Client(Client clientToCopy) {
+        this.id = clientToCopy.id
+        this.name = clientToCopy.name
+        this.workspace = clientToCopy.workspace
+        this.projects = clientToCopy.projects
+    }
+
     Long getId() {
         return id
     }
 
     void setId(Long id) {
         this.id = id
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
     }
 
     String getName() {
@@ -70,11 +69,25 @@ class Client {
         return projects
     }
 
-    void setProjects(Set<Project> projects) {
-        this.projects = projects
+    boolean hasProjects() {
+        return !this.projects.isEmpty()
     }
 
     String toJson() {
         return "{\"name\": \"$name\", \"workspaceName\": \"${workspace.name}\"}"
+    }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
+
+        Client client = (Client) o
+
+        if (id != client.id) return false
+        if (name != client.name) return false
+        if (projects != client.projects) return false
+        if (workspace != client.workspace) return false
+
+        return true
     }
 }

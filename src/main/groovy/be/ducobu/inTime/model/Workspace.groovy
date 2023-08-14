@@ -1,6 +1,7 @@
 package be.ducobu.inTime.model
 
 import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(
@@ -14,9 +15,8 @@ class Workspace {
     @Column
     private Long id
 
-    @Column(name = "toggl_id")
-    private Long togglId
     @Column
+    @NotNull
     private String name
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "workspace", cascade = CascadeType.ALL)
@@ -30,20 +30,18 @@ class Workspace {
         this.name = name
     }
 
+    Workspace(Workspace workspaceToCopy) {
+        this.id = workspaceToCopy.id
+        this.name = workspaceToCopy.name
+        this.clients = workspaceToCopy.clients
+    }
+
     Long getId() {
         return id
     }
 
     void setId(Long id) {
         this.id = id
-    }
-
-    Long getTogglId() {
-        return togglId
-    }
-
-    void setTogglId(Long togglId) {
-        this.togglId = togglId
     }
 
     String getName() {
@@ -58,11 +56,24 @@ class Workspace {
         return clients
     }
 
-    void setClients(Set<Client> clients) {
-        this.clients = clients
+    boolean hasClients() {
+        return !this.clients.isEmpty()
     }
 
     String toJson() {
         return "{\"name\": \"$name\"}"
+    }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
+
+        Workspace workspace = (Workspace) o
+
+        if (clients != workspace.clients) return false
+        if (id != workspace.id) return false
+        if (name != workspace.name) return false
+
+        return true
     }
 }

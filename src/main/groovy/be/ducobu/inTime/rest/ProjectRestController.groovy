@@ -4,10 +4,7 @@ import be.ducobu.inTime.dto.project.ProjectCreateDto
 import be.ducobu.inTime.dto.project.ProjectDto
 import be.ducobu.inTime.dto.project.ProjectSaveDto
 import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
-import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Client
 import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.service.ClientService
@@ -56,13 +53,6 @@ class ProjectRestController {
         )
     }
 
-    /*@GetMapping("/client/{clientId}")
-    List<ProjectDto> getByClientId(@PathVariable Long clientId) {
-        return modelMapper.map(projectService.findByClientId(clientId),
-                ProjectDto[].class
-        )
-    }*/
-
     @GetMapping("/{id}/timeentries")
     List<TimeEntryDto> getTimeEntriesById(@PathVariable Long id) {
         Project project = projectService.findById(id)
@@ -74,20 +64,29 @@ class ProjectRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
-        Client client = clientService.findByName(projectCreateDto.clientName)
-
         String projectName = projectCreateDto.name
+        Long clientId = projectCreateDto.clientId
+        String clientName = projectCreateDto.clientName
+
+        if (null == projectName)
+            throw new MissingNameException("Project")
+
+        if (null == clientName && null == clientId)
+            throw new MissingParentReferenceException("Project", "Client")
 
         try {
-            if (projectService.findByName(projectName) != null)
+            if (null != projectService.findByName(projectName))
                 throw new DuplicateEntryException("Project", "name", projectName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Project' found with this name, we can create it."
         }
 
+        Client client = null == clientId ?
+                clientService.findByName(clientName) :
+                clientService.findById(clientId)
+
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,
-                new Boolean(projectCreateDto.billable),
                 client
         )
 
@@ -107,18 +106,23 @@ class ProjectRestController {
     @PutMapping("/{id}")
     ProjectDto update(@PathVariable Long id, @RequestBody ProjectCreateDto projectCreateDto) {
         Project project = projectService.findById(id)
+        Project unmodifiedProject = new Project(project)
 
-        if (projectCreateDto.name != null)
+        if (projectCreateDto.isEmpty())
+            throw new NotModifiedEntityException("Project", id as String, "Nothing was sent in the body.")
+
+        if (null != projectCreateDto.name)
             project.name = projectCreateDto.name
 
-        if (projectCreateDto.billable != null)
-            project.billable = projectCreateDto.billable
-
-        if (projectCreateDto.togglId != null)
-            project.togglId = projectCreateDto.togglId
-
-        if (projectCreateDto.clientName != null)
+        if (null == projectCreateDto.clientId) {
             project.client = clientService.findByName(projectCreateDto.clientName)
+        } else {
+            project.client = clientService.findById(projectCreateDto.clientId)
+        }
+
+        // Check if any change were made to the Project
+        if (project == unmodifiedProject)
+            throw new NotModifiedEntityException("Project", id as String)
 
         return modelMapper.map(
                 projectService.save(project),
@@ -130,7 +134,7 @@ class ProjectRestController {
     ProjectDto deleteProject(@PathVariable Long id) {
         Project project = projectService.findById(id)
 
-        if (!project.getTimeEntries().isEmpty())
+        if (project.hasTimeEntries())
             throw new ExistingChildFoundException("TimeEntry")
 
         projectService.deleteById(id)

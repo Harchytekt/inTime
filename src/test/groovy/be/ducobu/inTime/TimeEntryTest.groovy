@@ -15,8 +15,6 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 
-import java.time.LocalDateTime
-
 import static org.hamcrest.Matchers.*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -27,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(
         locations = "classpath:application.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TimeEntryTest extends GroovyTestCase {
+class TimeEntryTest {
 
     @Autowired
     private MockMvc mvc
@@ -54,13 +52,13 @@ class TimeEntryTest extends GroovyTestCase {
     @Order(2)
     void whenGetTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
 
-        mvc.perform(get("/time_entry/3")
+        mvc.perform(get("/time_entry/404")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath('$.status', is(404)))
-                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '3' found!")))
-                .andExpect(jsonPath('$.path', is("/time_entry/3")))
+                .andExpect(jsonPath('$.message', is("No 'TimeEntry' with attribute '404' found!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/404")))
     }
 
     @Test
@@ -94,11 +92,9 @@ class TimeEntryTest extends GroovyTestCase {
 
         // when
         TimeEntry timeEntry = new TimeEntry()
-        LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 14, 30, 00)
 
         timeEntry.project = projectService.findById(2)
         timeEntry.description = "Test"
-        timeEntry.startDate = dateTime
 
         mvc.perform(post("/time_entry/")
                 .content(timeEntry.toJson())
@@ -216,6 +212,48 @@ class TimeEntryTest extends GroovyTestCase {
 
     @Test
     @Order(12)
+    void whenUpdateTimeEntryWithEmptyBody_thenReturnException_withStatus400() throws Exception {
+
+        mvc.perform(put("/time_entry/3")
+                .content('{}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'TimeEntry' with attribute '3' couldn't be updated! Nothing was sent in the body.")))
+                .andExpect(jsonPath('$.path', is("/time_entry/3")))
+    }
+
+    @Test
+    @Order(13)
+    void whenUpdateTimeEntryWithNoChange_thenReturnException_withStatus400() throws Exception {
+
+        mvc.perform(put("/time_entry/3")
+                .content('{"description": "Test with update"}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(400)))
+                .andExpect(jsonPath('$.message', is("The entity 'TimeEntry' with attribute '3' couldn't be updated! Please check the changes you've made.")))
+                .andExpect(jsonPath('$.path', is("/time_entry/3")))
+    }
+
+    @Test
+    @Order(14)
+    void whenUpdateTimeEntryWithIncorrectEndDate_thenReturnException_withStatus409() throws Exception {
+
+        mvc.perform(put("/time_entry/1")
+                .content('{"endDate": "2020-01-01T00:00:42"}')
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath('$.status', is(409)))
+                .andExpect(jsonPath('$.message', is("The end date should be after the start date: '2021-01-01T14:28:42' > '2020-01-01T00:00:42'!")))
+                .andExpect(jsonPath('$.path', is("/time_entry/1")))
+    }
+
+    @Test
+    @Order(15)
     void whenDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(delete("/time_entry/1")
@@ -230,7 +268,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(12)
+    @Order(16)
     void whenDeleteRunningTimeEntryById_thenReturnException_withStatus409() throws Exception {
 
         mvc.perform(delete("/time_entry/3")
@@ -243,7 +281,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(13)
+    @Order(17)
     void whenForceDeleteTimeEntryById_thenReturnDeletedTimeEntry_withStatus200() throws Exception {
 
         mvc.perform(delete("/time_entry/3/force")
@@ -259,7 +297,7 @@ class TimeEntryTest extends GroovyTestCase {
     }
 
     @Test
-    @Order(14)
+    @Order(18)
     void whenForceDeleteTimeEntryByWrongId_thenReturnException_withStatus404() throws Exception {
 
         mvc.perform(delete("/time_entry/3/force")

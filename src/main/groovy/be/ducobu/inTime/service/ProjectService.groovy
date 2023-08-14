@@ -32,10 +32,6 @@ class ProjectService {
                 .orElseThrow({ -> new CustomEntityNotFoundException("Project", name) })
     }
 
-    List<Project> findByClientId(Long clientId) {
-        return projectRepository.findByClientId(clientId)
-    }
-
     void deleteById(Long id) {
         projectRepository.deleteById(id)
     }

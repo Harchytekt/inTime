@@ -1,6 +1,7 @@
 package be.ducobu.inTime.dto.timeEntry
 
 import be.ducobu.inTime.model.Project
+
 import java.time.LocalDateTime
 
 class TimeEntrySaveDto {

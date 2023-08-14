@@ -6,12 +6,10 @@ class ProjectSaveDto {
 
     private Long id
     private String name
-    private boolean billable
     private Client client
 
-    ProjectSaveDto(String name, boolean billable, Client client) {
+    ProjectSaveDto(String name, Client client) {
         this.name = name
-        this.billable = billable
         this.client = client
     }
 
@@ -29,14 +27,6 @@ class ProjectSaveDto {
 
     void setName(String name) {
         this.name = name
-    }
-
-    boolean getBillable() {
-        return billable
-    }
-
-    void setBillable(boolean billable) {
-        this.billable = billable
     }
 
     Client getClient() {

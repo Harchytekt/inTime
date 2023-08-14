@@ -4,13 +4,8 @@ import be.ducobu.inTime.dto.client.ClientCreateDto
 import be.ducobu.inTime.dto.client.ClientDto
 import be.ducobu.inTime.dto.client.ClientSaveDto
 import be.ducobu.inTime.dto.project.ProjectDto
-import be.ducobu.inTime.dto.timeEntry.TimeEntryDto
-import be.ducobu.inTime.exception.CustomEntityNotFoundException
-import be.ducobu.inTime.exception.DuplicateEntryException
-import be.ducobu.inTime.exception.ExistingChildFoundException
-import be.ducobu.inTime.exception.NoEntryFoundException
+import be.ducobu.inTime.exception.*
 import be.ducobu.inTime.model.Client
-import be.ducobu.inTime.model.Project
 import be.ducobu.inTime.model.Workspace
 import be.ducobu.inTime.service.ClientService
 import be.ducobu.inTime.service.WorkspaceService
@@ -69,16 +64,26 @@ class ClientRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     ClientDto create(@RequestBody ClientCreateDto clientCreateDto) {
-        Workspace workspace = workspaceService.findByName(clientCreateDto.workspaceName)
-
         String clientName = clientCreateDto.name
+        Long workspaceId = clientCreateDto.workspaceId
+        String workspaceName = clientCreateDto.workspaceName
+
+        if (null == clientName)
+            throw new MissingNameException("Client")
+
+        if (null == workspaceName && null == workspaceId)
+            throw new MissingParentReferenceException("Client", "Workspace")
 
         try {
-            if (clientService.findByName(clientName) != null)
+            if (null != clientService.findByName(clientName))
                 throw new DuplicateEntryException("Client", "name", clientName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Client' found with this name, we can create it."
         }
+
+        Workspace workspace = null == workspaceId ?
+                workspaceService.findByName(workspaceName) :
+                workspaceService.findById(workspaceId)
 
         Client createdClient = clientService.save(
                 modelMapper.map(
@@ -96,15 +101,23 @@ class ClientRestController {
     @PutMapping("/{id}")
     ClientDto update(@PathVariable Long id, @RequestBody ClientCreateDto clientCreateDto) {
         Client client = clientService.findById(id)
+        Client unmodifiedClient = new Client(client)
 
-        if (clientCreateDto.name != null)
+        if (clientCreateDto.isEmpty())
+            throw new NotModifiedEntityException("Client", id as String, "Nothing was sent in the body.")
+
+        if (null != clientCreateDto.name)
             client.name = clientCreateDto.name
 
-        if (clientCreateDto.togglId != null)
-            client.togglId = clientCreateDto.togglId
-
-        if (clientCreateDto.workspaceName != null)
+        if (null == clientCreateDto.workspaceId) {
             client.workspace = workspaceService.findByName(clientCreateDto.workspaceName)
+        } else {
+            client.workspace = workspaceService.findById(clientCreateDto.workspaceId)
+        }
+
+        // Check if any change were made to the Client
+        if (client == unmodifiedClient)
+            throw new NotModifiedEntityException("Client", id as String)
 
         return modelMapper.map(
                 clientService.save(client),
@@ -116,7 +129,7 @@ class ClientRestController {
     ClientDto deleteClient(@PathVariable Long id) {
         Client client = clientService.findById(id)
 
-        if (!client.getProjects().isEmpty())
+        if (client.hasProjects())
             throw new ExistingChildFoundException("Project")
 
         clientService.deleteById(id)

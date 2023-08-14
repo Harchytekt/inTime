@@ -1,6 +1,6 @@
 # Create a New Time Entry
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -12,16 +12,13 @@ Create a new Time Entry on the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| description | string | The description of the Time Entry | ❌ |
-| workspaceId | long | The ID of the linked Workspace | ✔️ |
-| clientId | long | The ID of the linked Client | ✔️ |
-| projectId | long | The ID of the linked Project | ✔️ |
-| startDate | dateTime | The start date and time of the Time Entry | ❌ |
-| endDate | dateTime | The end date and time of the Time Entry | ❌ |
+| Name        | Type   | Description                       | Required |
+|:------------|:-------|:----------------------------------|:--------:|
+| description | string | The description of the Time Entry |    ❌     |
+| projectId   | long   | The ID of the linked Project      |    ✔️    |
+| projectName | string | The name of the linked Project    |    ✔️    |
 
-> The workspace ID will be required if there is no `client` or `project` defined.
+> Only one of `projectId` and `projectName` is required
 
 ## Response parameters
 
@@ -51,8 +48,6 @@ curl -X "POST" "http://localhost:8080/time_entry" \
   "duration": 0,
   "description": null,
   "running": true,
-  "workspaceId": 1,
-  "clientId": 1,
   "projectId": 1
 }
 ```

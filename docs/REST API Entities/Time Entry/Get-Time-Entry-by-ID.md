@@ -1,6 +1,6 @@
 # Get Time Entry by ID
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -12,23 +12,21 @@ Get a Time Entry by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Time Entry | ✔️ |
+| Name | Type | Description                        | Required |
+|:-----|:-----|:-----------------------------------|:--------:|
+| id   | long | The ID of the requested Time Entry |    ✔️    |
 
 ## Response parameters
 
-| Name | Type | Description |
-|:--|:--|:--|
-| id | long | The ID of the requested Time Entry |
-| workspaceId | long | The ID of the linked Workspace |
-| clientId | long | The ID of the linked Client |
-| projectId | long | The ID of the linked Project |
-| startDate | dateTime | The start date and time of the Time Entry |
-| endDate | dateTime | The end date and time of the Time Entry |
-| duration | long | The duration in seconds of the Time Entry |
-| description | string | The description of the Time Entry |
-| running | boolean | The running state of the Time Entry |
+| Name        | Type     | Description                               |
+|:------------|:---------|:------------------------------------------|
+| id          | long     | The ID of the requested Time Entry        |
+| startDate   | dateTime | The start date and time of the Time Entry |
+| endDate     | dateTime | The end date and time of the Time Entry   |
+| duration    | long     | The duration in seconds of the Time Entry |
+| description | string   | The description of the Time Entry         |
+| running     | boolean  | The running state of the Time Entry       |
+| projectId   | long     | The ID of the linked Project              |
 
 > The duration is calculated at call when the Time Entry is running.
 
@@ -52,8 +50,6 @@ curl "http://localhost:8080/time_entry/1"
   "duration": 4,
   "description": "description",
   "running": false,
-  "workspaceId": 1,
-  "clientId": 1,
   "projectId": 1
 }
 ```

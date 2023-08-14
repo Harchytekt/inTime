@@ -1,6 +1,6 @@
 # Create a New Client
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Client](../Client.md) | to [Summary](../../README.md)
 
@@ -12,10 +12,13 @@ Create a new Client on the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| name | string | The name of the requested Client | ✔️ |
-| workspaceId | long | The ID of the linked Workspace | ✔️ |
+| Name          | Type   | Description                      | Required |
+|:--------------|:-------|:---------------------------------|:--------:|
+| name          | string | The name of the requested Client |    ✔️    |
+| workspaceId   | long   | The ID of the linked Workspace   |    ✔️    |
+| workspaceName | string | The name of the linked Workspace |    ✔️    |
+
+> Only one of `workspaceId` and `workspaceName` is required
 
 ## Response parameters
 
@@ -29,7 +32,8 @@ For the description of the Client entity, see [Get Client by ID](Get-Client-by-I
 curl -X "POST" "http://localhost:8080/client" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "name": "My Third Client"
+  "name": "My Third Client",
+  "workspaceId": 1
 }'
 ```
 
@@ -41,7 +45,7 @@ curl -X "POST" "http://localhost:8080/client" \
 {
   "id": 3,
   "name": "My Third Client",
-  "workspaceId": null
+  "workspaceId": 1
 }
 ```
 
@@ -53,7 +57,8 @@ curl -X "POST" "http://localhost:8080/client" \
 curl -X "POST" "http://localhost:8080/client" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "name": "My First Client"
+  "name": "My First Client",
+  "workspaceId": 1
 }'
 ```
 

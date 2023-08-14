@@ -4,7 +4,7 @@ class ProjectDto {
 
     private Long id
     private String name
-    private String clientName
+    private Long clientId
 
     Long getId() {
         return id
@@ -22,11 +22,11 @@ class ProjectDto {
         this.name = name
     }
 
-    String getClientName() {
-        return clientName
+    Long getClientId() {
+        return clientId
     }
 
-    void setClientName(String clientName) {
-        this.clientName = clientName
+    void setClientId(Long clientId) {
+        this.clientId = clientId
     }
 }

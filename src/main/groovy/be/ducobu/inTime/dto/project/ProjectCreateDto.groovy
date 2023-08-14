@@ -3,6 +3,7 @@ package be.ducobu.inTime.dto.project
 class ProjectCreateDto {
 
     private String name
+    private Long clientId
     private String clientName
 
     String getName() {
@@ -15,6 +16,14 @@ class ProjectCreateDto {
 
     String getClientName() {
         return clientName
+    }
+
+    Long getClientId() {
+        return clientId
+    }
+
+    void setClientId(Long clientId) {
+        this.clientId = clientId
     }
 
     void setClientName(String clientName) {

@@ -1,6 +1,6 @@
 # Get Project by ID
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Project](../Project.md) | to [Summary](../../README.md)
 
@@ -12,17 +12,16 @@ Get a Project by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Project | ✔️ |
+| Name | Type | Description                     | Required |
+|:-----|:-----|:--------------------------------|:--------:|
+| id   | long | The ID of the requested Project |    ✔️    |
 
 ## Response parameters
 
-| Name | Type | Description |
-|:--|:--|:--|
-| name | string | The name of the requested Project |
-| workspaceId | long | The ID of the linked Workspace |
-| clientId | long | The ID of the linked Client |
+| Name     | Type   | Description                       |
+|:---------|:-------|:----------------------------------|
+| name     | string | The name of the requested Project |
+| clientId | long   | The ID of the linked Client       |
 
 ## Sample
 
@@ -40,7 +39,6 @@ curl "http://localhost:8080/project/1"
 {
   "id": 1,
   "name": "My First Project",
-  "workspaceId": 1,
   "clientId": 1
 }
 ```

@@ -24,6 +24,6 @@ class TimeEntryUpdateDto extends TimeEntryCreateDto {
     }
 
     boolean isEmpty() {
-        return description == null && projectName == null && startDate == null && endDate == null
+        return description == null && projectId == null && projectName == null && startDate == null && endDate == null
     }
 }

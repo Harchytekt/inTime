@@ -1,6 +1,6 @@
 # Create a New Workspace
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -12,9 +12,9 @@ Create a new Workspace on the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| name | String | The name of the requested Workspace | ✔️ |
+| Name | Type   | Description                         | Required |
+|:-----|:-------|:------------------------------------|:--------:|
+| name | string | The name of the Workspace to create |    ✔️    |
 
 ## Response parameters
 

@@ -1,6 +1,6 @@
 # Stop Current Time Entry
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -34,8 +34,6 @@ curl -X "PUT" "http://localhost:8080/time_entry/stop"
   "duration": 3666,
   "description": null,
   "running": false,
-  "workspaceId": 1,
-  "clientId": 1,
   "projectId": 1
 }
 ```

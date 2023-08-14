@@ -1,6 +1,6 @@
 # Get Workspace by ID
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Workspace](../Workspace.md) | to [Summary](../../README.md)
 
@@ -12,9 +12,9 @@ Force delete a Workspace by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | Long | The ID of the requested Workspace | ✔️ |
+| Name | Type | Description                       | Required |
+|:-----|:-----|:----------------------------------|:--------:|
+| id   | long | The ID of the requested Workspace |    ✔️    |
 
 ## Response parameters
 

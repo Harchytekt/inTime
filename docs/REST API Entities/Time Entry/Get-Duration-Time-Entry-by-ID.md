@@ -1,6 +1,6 @@
 # Get Duration for a Time Entry by ID
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Time Entry](../Time%20Entry.md) | to [Summary](../../README.md)
 
@@ -12,14 +12,14 @@ Get the duration of a Time Entry by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Time Entry | ✔️ |
+| Name | Type | Description                        | Required |
+|:-----|:-----|:-----------------------------------|:--------:|
+| id   | long | The ID of the requested Time Entry |    ✔️    |
 
 ## Response parameters
 
-| Name | Type | Description |
-|:--|:--|:--|
+| Name     | Type | Description                               |
+|:---------|:-----|:------------------------------------------|
 | duration | long | The duration in seconds of the Time Entry |
 
 > The duration is calculated at call when the Time Entry is running.

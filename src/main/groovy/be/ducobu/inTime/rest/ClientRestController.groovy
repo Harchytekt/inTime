@@ -65,13 +65,14 @@ class ClientRestController {
     @ResponseStatus(HttpStatus.CREATED)
     ClientDto create(@RequestBody ClientCreateDto clientCreateDto) {
         String clientName = clientCreateDto.name
+        Long workspaceId = clientCreateDto.workspaceId
         String workspaceName = clientCreateDto.workspaceName
 
         if (null == clientName)
             throw new MissingNameException("Client")
 
-        if (null == workspaceName)
-            throw new MissingNameException("Client", "workspaceName")
+        if (null == workspaceName && null == workspaceId)
+            throw new MissingParentReferenceException("Client", "Workspace")
 
         try {
             if (null != clientService.findByName(clientName))
@@ -80,7 +81,9 @@ class ClientRestController {
             logger.info "No 'Client' found with this name, we can create it."
         }
 
-        Workspace workspace = workspaceService.findByName(workspaceName)
+        Workspace workspace = null == workspaceId ?
+                workspaceService.findByName(workspaceName) :
+                workspaceService.findById(workspaceId)
 
         Client createdClient = clientService.save(
                 modelMapper.map(
@@ -106,8 +109,11 @@ class ClientRestController {
         if (null != clientCreateDto.name)
             client.name = clientCreateDto.name
 
-        if (null != clientCreateDto.workspaceName)
+        if (null == clientCreateDto.workspaceId) {
             client.workspace = workspaceService.findByName(clientCreateDto.workspaceName)
+        } else {
+            client.workspace = workspaceService.findById(clientCreateDto.workspaceId)
+        }
 
         // Check if any change were made to the Client
         if (client == unmodifiedClient)

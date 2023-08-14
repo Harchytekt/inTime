@@ -1,6 +1,6 @@
 # Get Client by ID
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Client](../Client.md) | to [Summary](../../README.md)
 
@@ -12,17 +12,17 @@ Get a Client by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Client | ✔️ |
+| Name | Type | Description                    | Required |
+|:-----|:-----|:-------------------------------|:--------:|
+| id   | long | The ID of the requested Client |    ✔️    |
 
 ## Response parameters
 
-| Name | Type | Description |
-|:--|:--|:--|
-| id | long | The ID of the requested Client |
-| name | string | The name of the requested Client |
-| workspaceId | long | The ID of the linked Workspace |
+| Name        | Type   | Description                      |
+|:------------|:-------|:---------------------------------|
+| id          | long   | The ID of the requested Client   |
+| name        | string | The name of the requested Client |
+| workspaceId | long   | The ID of the linked Workspace   |
 
 ## Sample
 

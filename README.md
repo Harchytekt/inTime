@@ -16,7 +16,7 @@ To stop them, run `docker-compose down`.
 > Then, we have to use the following option when running the `.jar`: `-Dspring.profiles.active=docker`.  
 > In this case, we can add it to the last line of the `Dockerfile`: `ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "/app.jar"]`.
 
-## Doc
+## Doc 📜
 - [Workspace](docs/REST%20API%20Entities/Workspace.md)
 	- [Create a New Workspace (`POST /workspace/{id}`) 🔗](docs/REST%20API%20Entities/Workspace/Create-New-Workspace.md)
 	- [Delete Workspace by ID (`DELETE /workspace/{id}`) 🔗](docs/REST%20API%20Entities/Workspace/Delete-Workspace-by-ID.md)

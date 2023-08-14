@@ -12,18 +12,15 @@ Update a Time Entry by ID.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| description | string | The description of the Time Entry | ❌ |
-| workspaceId | long | The ID of the linked Workspace | ❌ |
-| clientId | long | The ID of the linked Client | ❌ |
-| projectId | long | The ID of the linked Project | ❌ |
-| startDate | dateTime | The start date and time of the Time Entry | ❌ |
-| endDate | dateTime | The end date and time of the Time Entry | ❌ |
+| Name        | Type     | Description                               | Required |
+|:------------|:---------|:------------------------------------------|:--------:|
+| description | string   | The description of the Time Entry         |    ❌     |
+| projectId   | long     | The ID of the linked Project              |    ❌     |
+| projectName | String   | The name of the linked Project            |    ❌     |
+| startDate   | dateTime | The start date and time of the Time Entry |    ❌     |
+| endDate     | dateTime | The end date and time of the Time Entry   |    ❌     |
 
-> At least one of the six fields is needed.
-> Changing the Workspace will change the Client and Project (`null` by default).
-> Changing the Client will change the Workspace and will set the Project to `null` (_unless the Project isn't linked to any Client, and the Workspace is compatible with it_).
+> At least one of those fields is needed.
 
 ## Response parameters
 
@@ -37,7 +34,7 @@ For the description of the Time Entry entity, see [Get Time Entry by ID](Get-Tim
 curl -X "PUT" "http://localhost:8080/time_entry/1" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "workspaceId": 2
+  "projectId": 2
 }'
 ```
 
@@ -53,9 +50,7 @@ curl -X "PUT" "http://localhost:8080/time_entry/1" \
   "duration": 4,
   "description": "description",
   "running": false,
-  "workspaceId": 2,
-  "clientId": null,
-  "projectId": null
+  "projectId": 2
 }
 ```
 
@@ -67,7 +62,7 @@ curl -X "PUT" "http://localhost:8080/time_entry/1" \
 curl -X "PUT" "http://localhost:8080/time_entry/404" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "workspaceId": 2
+  "projectId": 3
 }'
 ```
 

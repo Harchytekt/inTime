@@ -34,8 +34,6 @@ curl -X "PUT" "http://localhost:8080/time_entry/restart"
   "duration": 3742,
   "description": null,
   "running": true,
-  "workspaceId": 1,
-  "clientId": 1,
   "projectId": 1
 }
 ```

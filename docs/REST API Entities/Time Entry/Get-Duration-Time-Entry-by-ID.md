@@ -12,14 +12,14 @@ Get the duration of a Time Entry by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Time Entry | ✔️ |
+| Name | Type | Description                        | Required |
+|:-----|:-----|:-----------------------------------|:--------:|
+| id   | long | The ID of the requested Time Entry |    ✔️    |
 
 ## Response parameters
 
-| Name | Type | Description |
-|:--|:--|:--|
+| Name     | Type | Description                               |
+|:---------|:-----|:------------------------------------------|
 | duration | long | The duration in seconds of the Time Entry |
 
 > The duration is calculated at call when the Time Entry is running.

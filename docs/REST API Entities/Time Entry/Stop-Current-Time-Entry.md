@@ -34,8 +34,6 @@ curl -X "PUT" "http://localhost:8080/time_entry/stop"
   "duration": 3666,
   "description": null,
   "running": false,
-  "workspaceId": 1,
-  "clientId": 1,
   "projectId": 1
 }
 ```

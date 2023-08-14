@@ -12,9 +12,9 @@ Force delete a Time Entry by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Time Entry | ✔️ |
+| Name | Type | Description                        | Required |
+|:-----|:-----|:-----------------------------------|:--------:|
+| id   | long | The ID of the requested Time Entry |    ✔️    |
 
 ## Response parameters
 
@@ -40,8 +40,6 @@ curl -X "DELETE" "http://localhost:8080/time_entry/2/force"
   "duration": 3666,
   "description": null,
   "running": true,
-  "workspaceId": 1,
-  "clientId": 1,
   "projectId": 1
 }
 ```

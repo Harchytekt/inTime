@@ -35,8 +35,6 @@ curl "http://localhost:8080/time_entry"
     "duration": 4,
     "description": "description",
     "running": false,
-    "workspaceId": 1,
-    "clientId": 1,
     "projectId": 1
   },
   {
@@ -46,8 +44,6 @@ curl "http://localhost:8080/time_entry"
     "duration": 3666,
     "description": null,
     "running": true,
-    "workspaceId": 1,
-    "clientId": 1,
     "projectId": 1
   }
 ]

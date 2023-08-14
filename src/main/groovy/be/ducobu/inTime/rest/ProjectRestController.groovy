@@ -65,13 +65,14 @@ class ProjectRestController {
     @ResponseStatus(HttpStatus.CREATED)
     ProjectDto create(@RequestBody ProjectCreateDto projectCreateDto) {
         String projectName = projectCreateDto.name
+        Long clientId = projectCreateDto.clientId
         String clientName = projectCreateDto.clientName
 
         if (null == projectName)
             throw new MissingNameException("Project")
 
-        if (null == clientName)
-            throw new MissingNameException("Project", "clientName")
+        if (null == clientName && null == clientId)
+            throw new MissingParentReferenceException("Project", "Client")
 
         try {
             if (null != projectService.findByName(projectName))
@@ -80,7 +81,9 @@ class ProjectRestController {
             logger.info "No 'Project' found with this name, we can create it."
         }
 
-        Client client = clientService.findByName(clientName)
+        Client client = null == clientId ?
+                clientService.findByName(clientName) :
+                clientService.findById(clientId)
 
         ProjectSaveDto projectSaveDto = new ProjectSaveDto(
                 projectName,

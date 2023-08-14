@@ -94,21 +94,12 @@ class TimeEntry {
 
     @Override
     String toString() {
-        return """TimeEntry {
-    id: $id,
-    startDate: 42,
-    description: '$description'
-}"""
-    }
-
-    /*@Override
-    String toString() {
         return "TimeEntry{" +
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", description='" + description + "'" +
                 "}"
-    }*/
+    }
 
     String toJson() {
         return "{\"projectName\": \"${project.name}\", \"description\": \"$description\"}"

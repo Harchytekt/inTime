@@ -1,6 +1,6 @@
 # Create a New Client
 
-> Last modified: 24/12/2021 (v0.0.4)
+> Last modified: 2023-08-14 (v0.0.6)
 
 Back to [Client](../Client.md) | to [Summary](../../README.md)
 

@@ -68,7 +68,7 @@ class TimeEntryRestController {
         LocalDateTime date = LocalDateTime.now()
         String projectName = timeEntryCreateDto.projectName
 
-        if (projectName == null)
+        if (null == projectName)
             throw new MissingNameException("TimeEntry", "projectName")
 
         try {
@@ -101,21 +101,22 @@ class TimeEntryRestController {
         if (timeEntryUpdateDto.isEmpty())
             throw new NotModifiedEntityException("TimeEntry", id as String, "Nothing was sent in the body.")
 
-        if (timeEntryUpdateDto.startDate != null)
+        if (null != timeEntryUpdateDto.startDate)
             timeEntry.startDate = timeEntryUpdateDto.startDate
 
         if (timeEntryUpdateDto.endDate != null) {
             if (Duration.between(timeEntry.startDate, timeEntryUpdateDto.endDate).getSeconds() > 0) {
+        if (null != timeEntryUpdateDto.endDate) {
                 timeEntry.updateEndDate(timeEntryUpdateDto.endDate)
             } else {
                 throw new EndDateExceededException(timeEntry.startDate, timeEntryUpdateDto.endDate)
             }
         }
 
-        if (timeEntryUpdateDto.description != null)
+        if (null != timeEntryUpdateDto.description)
             timeEntry.description = timeEntryUpdateDto.description
 
-        if (timeEntryUpdateDto.projectName != null)
+        if (null != timeEntryUpdateDto.projectName)
             timeEntry.project = projectService.findByName(timeEntryUpdateDto.projectName)
 
         // Check if any change were made to the Workspace
@@ -131,7 +132,7 @@ class TimeEntryRestController {
     @PutMapping("/stop")
     TimeEntryDto stopTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findRunningTimeEntry()
-        if (timeEntry == null)
+        if (null == timeEntry)
             throw new RunningTimeEntryNotFoundException()
 
         timeEntry.stop()
@@ -145,7 +146,7 @@ class TimeEntryRestController {
     @PutMapping("/restart")
     TimeEntryDto restartTimeEntry() {
         TimeEntry timeEntry = timeEntryService.findLastTimeEntry()
-        if (timeEntry.running)
+        if (timeEntry.isRunning())
             throw new RunningTimeEntryException("A 'TimeEntry' is already running!")
 
         timeEntry.restart()
@@ -160,7 +161,7 @@ class TimeEntryRestController {
     TimeEntryDto deleteTimeEntry(@PathVariable Long id) {
         TimeEntry timeEntry = timeEntryService.findById(id)
 
-        if (timeEntry.running)
+        if (timeEntry.isRunning())
             throw new RunningTimeEntryException("The 'TimeEntry' is still running!")
 
         timeEntryService.deleteById(id)

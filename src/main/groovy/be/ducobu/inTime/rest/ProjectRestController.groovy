@@ -67,14 +67,14 @@ class ProjectRestController {
         String projectName = projectCreateDto.name
         String clientName = projectCreateDto.clientName
 
-        if (projectName == null)
+        if (null == projectName)
             throw new MissingNameException("Project")
 
-        if (clientName == null)
+        if (null == clientName)
             throw new MissingNameException("Project", "clientName")
 
         try {
-            if (projectService.findByName(projectName) != null)
+            if (null != projectService.findByName(projectName))
                 throw new DuplicateEntryException("Project", "name", projectName)
         } catch (CustomEntityNotFoundException ignored) {
             logger.info "No 'Project' found with this name, we can create it."
@@ -108,10 +108,10 @@ class ProjectRestController {
         if (projectCreateDto.isEmpty())
             throw new NotModifiedEntityException("Project", id as String, "Nothing was sent in the body.")
 
-        if (projectCreateDto.name != null)
+        if (null != projectCreateDto.name)
             project.name = projectCreateDto.name
 
-        if (projectCreateDto.clientName != null)
+        if (null != projectCreateDto.clientName)
             project.client = clientService.findByName(projectCreateDto.clientName)
 
         // Check if any change were made to the Project

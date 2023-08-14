@@ -16,7 +16,7 @@ Update a Time Entry by ID.
 |:------------|:---------|:------------------------------------------|:--------:|
 | description | string   | The description of the Time Entry         |    ❌     |
 | projectId   | long     | The ID of the linked Project              |    ❌     |
-| projectName | String   | The name of the linked Project            |    ❌     |
+| projectName | string   | The name of the linked Project            |    ❌     |
 | startDate   | dateTime | The start date and time of the Time Entry |    ❌     |
 | endDate     | dateTime | The end date and time of the Time Entry   |    ❌     |
 

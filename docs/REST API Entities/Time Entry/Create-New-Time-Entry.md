@@ -16,7 +16,7 @@ Create a new Time Entry on the server.
 |:------------|:-------|:----------------------------------|:--------:|
 | description | string | The description of the Time Entry |    ❌     |
 | projectId   | long   | The ID of the linked Project      |    ✔️    |
-| projectName | String | The name of the linked Project    |    ✔️    |
+| projectName | string | The name of the linked Project    |    ✔️    |
 
 > Only one of `projectId` and `projectName` is required
 

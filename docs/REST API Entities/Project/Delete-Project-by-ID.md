@@ -12,9 +12,9 @@ Delete a Project by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Project | ✔️ |
+| Name | Type | Description                     | Required |
+|:-----|:-----|:--------------------------------|:--------:|
+| id   | long | The ID of the requested Project |    ✔️    |
 
 ## Response parameters
 
@@ -36,7 +36,6 @@ curl -X "DELETE" "http://localhost:8080/project/1"
 {
   "id": 1,
   "name": "My First Project",
-  "workspaceId": 1,
   "clientId": 1
 }
 ```

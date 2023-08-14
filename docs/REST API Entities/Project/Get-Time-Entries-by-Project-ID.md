@@ -12,9 +12,9 @@ Get a list of all Projects linked to the Project from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | Long | The ID of the Project | ✔️ |
+| Name | Type | Description           | Required |
+|:-----|:-----|:----------------------|:--------:|
+| id   | Long | The ID of the Project |    ✔️    |
 
 ## Response parameters
 
@@ -36,23 +36,21 @@ curl "http://localhost:8080/project/1/timeentries"
 [
   {
     "id": 1,
-    "togglId": null,
     "startDate": "2021-06-21T09:41:00",
     "endDate": "2021-06-21T09:45:00",
     "duration": 4,
     "description": "description",
     "running": false,
-    "projectName": "My First Project"
+    "projectId": 1
   },
   {
     "id": 2,
-    "togglId": null,
     "startDate": "2021-06-21T09:42:00",
     "endDate": null,
     "duration": 3666,
     "description": null,
     "running": true,
-    "projectName": "My First Project"
+    "projectId": 1
   }
 ]
 ```

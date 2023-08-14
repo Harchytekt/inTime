@@ -12,9 +12,9 @@ Force delete a Project by ID from the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| id | long | The ID of the requested Project | ✔️ |
+| Name | Type | Description                     | Required |
+|:-----|:-----|:--------------------------------|:--------:|
+| id   | long | The ID of the requested Project |    ✔️    |
 
 ## Response parameters
 
@@ -36,8 +36,7 @@ curl -X "DELETE" "http://localhost:8080/project/2/force"
 {
   "id": 2,
   "name": "My Second Project",
-  "workspaceId": 1,
-  "clientId": null
+  "clientId": 1
 }
 ```
 

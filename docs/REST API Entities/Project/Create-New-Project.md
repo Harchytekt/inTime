@@ -12,11 +12,13 @@ Create a new Project on the server.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| name | string | The name of the requested Project | ✔️ |
-| workspaceId | long | The ID of the linked Workspace | ✔️ |
-| clientId | long | The ID of the linked Client | ❌ |
+| Name       | Type   | Description                       | Required |
+|:-----------|:-------|:----------------------------------|:--------:|
+| name       | string | The name of the requested Project |    ✔️    |
+| clientId   | long   | The ID of the linked Client       |    ✔️    |
+| clientName | string | The name of the linked Client     |    ✔️    |
+
+> Only one of `clientId` and `clientName` is required
 
 ## Response parameters
 
@@ -31,7 +33,7 @@ curl -X "POST" "http://localhost:8080/cprojectlient" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
   "name": "My Third Project",
-  "workspaceId": 1
+  "clientId": 1
 }'
 ```
 
@@ -43,8 +45,7 @@ curl -X "POST" "http://localhost:8080/cprojectlient" \
 {
   "id": 3,
   "name": "My Third Project",
-  "workspaceId": 1,
-  "clientId": null
+  "clientId": 1
 }
 ```
 
@@ -79,7 +80,7 @@ curl -X "POST" "http://localhost:8080/project" \
 curl -X "POST" "http://localhost:8080/project" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
-  "workspaceId": 1
+  "clientId": 1
 }'
 ```
 

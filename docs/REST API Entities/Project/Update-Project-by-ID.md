@@ -12,13 +12,13 @@ Update a Project by ID.
 
 ## Request parameters
 
-| Name | Type | Description | Required |
-|:--|:--|:--|:--:|
-| name | String | The name of the requested Project | ❌ |
-| workspaceId | long | The ID of the linked Workspace | ❌ |
-| clientId | long | The ID of the linked Client | ❌ |
+| Name       | Type   | Description                       | Required |
+|:-----------|:-------|:----------------------------------|:--:|
+| name       | string | The name of the requested Project | ❌ |
+| clientId   | long   | The ID of the linked Client       | ❌ |
+| clientName | string | The name of the linked Client     | ❌ |
 
-> At least one of the three fields is needed.
+> At least one of those fields is required.
 
 ## Response parameters
 
@@ -44,7 +44,6 @@ curl -X "PUT" "http://localhost:8080/project/1" \
 {
   "id": 1,
   "name": "My First Project",
-  "workspaceId": 1,
   "clientId": 2
 }
 ```

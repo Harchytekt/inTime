@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 
+import java.sql.Timestamp
+
 @ControllerAdvice
 class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -25,7 +27,7 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         message = "A technical problem has occurred!"
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(
-                new Date(),
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
@@ -46,7 +48,7 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
         }
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(
-                new Date(),
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
@@ -63,7 +65,8 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
 
         message = ex.getMessage()
 
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
@@ -82,7 +85,8 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
 
         message = ex.getMessage()
 
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
@@ -97,13 +101,13 @@ class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHa
 
         message = ex.getMessage()
 
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Timestamp(new Date().getTime()).toLocalDateTime(),
                 status.value(),
                 message,
                 request.getDescription(false)
         )
         return new ResponseEntity<>(exceptionResponse, status)
     }
-
 
 }

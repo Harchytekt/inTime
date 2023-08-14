@@ -1,24 +1,26 @@
 package be.ducobu.inTime.exception
 
+import java.time.LocalDateTime
+
 class ExceptionResponse {
-    private Date timestamp
+    private String timestamp
     private Integer status
     private String message
     private String path
 
-    ExceptionResponse(Date timestamp, Integer status, String message, String path) {
+    ExceptionResponse(LocalDateTime timestamp, Integer status, String message, String path) {
         this.timestamp = timestamp
         this.status = status
         this.message = message
         this.path = path.startsWith("uri=") ? path.split("=")[1] : path
     }
 
-    Date getTimestamp() {
+    String getTimestamp() {
         return timestamp
     }
 
-    void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp
+    void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp.toString()
     }
 
     Integer getStatus() {

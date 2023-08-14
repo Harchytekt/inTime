@@ -23,7 +23,7 @@ class TimeEntryDto {
         this.id = id
     }
 
-    LocalDateTime getStartDate() {
+    String getStartDate() {
         return startDate
     }
 
@@ -31,7 +31,7 @@ class TimeEntryDto {
         this.startDate = startDate
     }
 
-    LocalDateTime getEndDate() {
+    String getEndDate() {
         return endDate
     }
 

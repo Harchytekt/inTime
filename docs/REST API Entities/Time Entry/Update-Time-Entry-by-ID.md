@@ -20,7 +20,7 @@ Update a Time Entry by ID.
 | startDate   | dateTime | The start date and time of the Time Entry |    ❌     |
 | endDate     | dateTime | The end date and time of the Time Entry   |    ❌     |
 
-> At least one of those fields is needed.
+> At least one of those fields is required.
 
 ## Response parameters
 
